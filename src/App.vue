@@ -1,19 +1,36 @@
 <template lang='pug'>
     #app
-        nav
-            router-link(to="/") Home
-            router-link(to="/about") About
+        Navbar
         router-view
+        SmallFooter
 </template>
 
+<script>
+import SmallFooter from './components/SmallFooter.vue'
+import Navbar from './components/Navbar.vue'
+
+export default {
+  components: {
+    SmallFooter, Navbar
+  },
+  mounted () {
+    console.info('App version ' + this.$store.getters.appVersion)
+  }
+}
+</script>
+
 <style lang='stylus'>
-    html,body,#app
-        min-height 100vh
-        height 100vh
+    html
+        height 100%
+        box-sizing border-box
     *
         margin 0
         padding 0
-    #app
-        background #222224
 
+    * *:before *:after
+        box-sizing inherit
+
+    body
+        min-height 100%
+        background #222224
 </style>
