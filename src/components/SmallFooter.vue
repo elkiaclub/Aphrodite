@@ -17,9 +17,14 @@ export default {
 
 <style lang="stylus" scoped>
     footer
-        background-color #efefef
+        //background-color #59a080
         text-align center
+        height 40px
         a
+            padding 5px
             text-decoration none
-            color: #311a2e
+            //color: #1d2935
+            color #59a080
+            line-height 30px
+
 </style>

@@ -1,5 +1,6 @@
 <template lang='pug'>
     #app
+        Header
         Navbar
         router-view
         SmallFooter
@@ -7,11 +8,12 @@
 
 <script>
 import SmallFooter from './components/SmallFooter.vue'
+import Header from './components/Header.vue'
 import Navbar from './components/Navbar.vue'
 
 export default {
   components: {
-    SmallFooter, Navbar
+    SmallFooter, Navbar, Header
   },
   mounted () {
     console.info('App version ' + this.$store.getters.appVersion)
@@ -20,6 +22,8 @@ export default {
 </script>
 
 <style lang='stylus'>
+    @import url('https://fonts.googleapis.com/css?family=Roboto');
+
     html
         height 100%
         box-sizing border-box
@@ -30,7 +34,95 @@ export default {
     * *:before *:after
         box-sizing inherit
 
-    body
+    body,#app
         min-height 100%
-        background #222224
+        background #1d2935
+
+
+    /** By default, use the local font and then fallback to web font. **/
+    body {
+        font-family: 'Segoe UI Local', 'Segoe UI Web (West European)';
+    }
+
+    /** In Chrome we can't use the semilight weight of the local web font. Use web fonts instead. **/
+    body:not(*:root) {
+        font-family: 'Segoe UI Web (West European)';
+        background-color: #ddd;
+    }
+
+    .example {
+        font-size: 72px;
+    }
+
+    .light {
+        font-weight: 100;
+    }
+
+    .semilight {
+        font-weight: 300;
+    }
+
+    .regular {
+        font-weight: 400;
+    }
+
+    .semibold {
+        font-weight: 600;
+    }
+
+    @font-face {
+        font-family: 'Segoe UI Local';
+        src: local('Segoe UI Light');
+        font-weight: 100;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Segoe UI Local';
+        src: local('Segoe UI Semilight');
+        font-weight: 300;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Segoe UI Local';
+        src: local('Segoe UI');
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Segoe UI Local';
+        src: local('Segoe UI Semibold');
+        font-weight: 600;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Segoe UI Web (West European)';
+        src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-light.woff2') format('woff2'), url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-light.woff') format('woff');
+        font-weight: 100;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Segoe UI Web (West European)';
+        src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-semilight.woff2') format('woff2'), url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-semilight.woff') format('woff');
+        font-weight: 300;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Segoe UI Web (West European)';
+        src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-regular.woff2') format('woff2'), url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-regular.woff') format('woff');
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Segoe UI Web (West European)';
+        src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-semibold.woff2') format('woff2'), url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-semibold.woff') format('woff');
+        font-weight: 600;
+        font-style: normal;
+    }
 </style>
