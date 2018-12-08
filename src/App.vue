@@ -1,19 +1,17 @@
 <template lang='pug'>
     #app
-        Header
-        Navbar
+        Sidebar
         router-view
         SmallFooter
 </template>
 
 <script>
 import SmallFooter from './components/SmallFooter.vue'
-import Header from './components/Header.vue'
-import Navbar from './components/Navbar.vue'
+import Sidebar from './components/Sidebar.vue'
 
 export default {
   components: {
-    SmallFooter, Navbar, Header
+    SmallFooter, Sidebar
   },
   mounted () {
     console.info('App version ' + this.$store.getters.appVersion)
@@ -34,9 +32,9 @@ export default {
     * *:before *:after
         box-sizing inherit
 
-    body,#app
+    body,html,#app
         min-height 100%
-        background #1d2935
+        background #1e2430
 
 
     /** By default, use the local font and then fallback to web font. **/

@@ -20,9 +20,11 @@ export default {
 
 <style lang="stylus" scoped>
     header
-        background #59a080
+        width: 50vw
+        margin 1.5em auto
+        background #374258
         height 104px
-        border-bottom rgba(0,0,0,0.2) solid 6px
+        border-radius 6px
 
     a
         text-decoration none
@@ -46,12 +48,13 @@ export default {
         border-radius: 50%
         background: #42b983
         animation: shadow-pulse 3s infinite;
-        transition: 0.3s
+        transition: all 500ms cubic-bezier(0.250, 0.460, 0.450, 0.940);
     .active
         color #3a5169
         font-size 3rem
         margin 2rem
         float right
+        cursor pointer
 
     .pulse:hover
         animation: active-pulse 1.5s infinite;
@@ -72,11 +75,14 @@ export default {
     @keyframes active-pulse
     {
         0% {
-                transform scale(1)
+                transform scale(1.2)
                 box-shadow: 0 0 0 17px rgba(255, 255, 255, 0.5);
         }
+        25% {
+                transform scale(1)
+        }
         100% {
-                transform scale(1.2)
+                transform scale(1)
                 box-shadow: 0 0 0 22px rgba(255, 255, 255, 0.3);
         }
     }

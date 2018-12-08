@@ -1,7 +1,7 @@
 <template lang="pug">
     footer
         a(href='https://github.com/elkiaclub/Aphrodite')
-            LogoGithubIcon
+            LogoGithubIcon(w="22px" h="22px")
             | Aphrodite {{ $store.getters.appBuild + ' ' + $store.getters.appVersion }}
 </template>
 
@@ -26,5 +26,7 @@ export default {
             //color: #1d2935
             color #59a080
             line-height 30px
+        .ion
+             padding 5px
 
 </style>
