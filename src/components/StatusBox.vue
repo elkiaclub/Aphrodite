@@ -1,36 +1,33 @@
 <template lang="pug">
     header
-        img.logo(src='../assets/logo.svg')
-        span.pulse(@mouseover="active = true" @mouseout="active = false")
         p.active(v-show="active") Online Status
+        span.pulse(@mouseover="active = true" @mouseout="active = false")
 
 </template>
-
 <script>
-export default {
-  name: 'Navbar',
-  data: function () {
-    return {
-      active: false
+    export default {
+        name: 'Navbar',
+        data: function () {
+            return {
+                active: false
+            }
+        }
     }
-  }
-}
-
 </script>
 
 <style lang="stylus" scoped>
     header
-        width: 50vw
+        width: 100%
         margin 1.5em auto
-        background #374258
-        height 104px
+        background linear-gradient(to bottom, rgba(55,66,88,1) 0%, rgba(55,66,88,0) 90%)
+        //background: #42b983
+        height 300px
         border-radius 6px
 
     a
         text-decoration none
         color #311a2
         padding-right 10px
-
 
     .logo
         padding 10px
@@ -43,8 +40,8 @@ export default {
         margin-top: 1.8rem
         float right
         display: block
-        width: 3rem
-        height: 3rem
+        width: 1em
+        height: 1em
         border-radius: 50%
         background: #42b983
         animation: shadow-pulse 3s infinite;
@@ -65,10 +62,10 @@ export default {
             box-shadow: 0 0 0 0px rgba(155, 190, 155, 0.4);
         }
         75% {
-            box-shadow: 0 0 0 17px rgba(155, 190, 155, 0.3);
+            box-shadow: 0 0 0 7px rgba(155, 190, 155, 0.3);
         }
         100% {
-            box-shadow: 0 0 0 22px rgba(155, 190, 155, 0);
+            box-shadow: 0 0 0 12px rgba(155, 190, 155, 0);
         }
     }
 
@@ -76,14 +73,14 @@ export default {
     {
         0% {
                 transform scale(1.2)
-                box-shadow: 0 0 0 17px rgba(255, 255, 255, 0.5);
+                box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.5);
         }
         25% {
                 transform scale(1)
         }
         100% {
                 transform scale(1)
-                box-shadow: 0 0 0 22px rgba(255, 255, 255, 0.3);
+                box-shadow: 0 0 0 12px rgba(255, 255, 255, 0.3);
         }
     }
 

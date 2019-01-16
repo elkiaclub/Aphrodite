@@ -14,15 +14,15 @@
                 .ui-sidebar-item
                     router-link(to="/info")
                         ListIcon(w="30px" h="30px")
-                        span Info
+                        span Journal
                 .ui-sidebar-item
                     router-link(to="/members")
                         PeopleIcon(w="30px" h="30px")
                         span Members
                 .ui-sidebar-item
-                    router-link(to="/meetups")
-                        TimerIcon(w="30px" h="30px")
-                        span Meetups
+                    router-link(to="/donations")
+                        UsdIcon(w="30px" h="30px")
+                        span Donations
                 .ui-sidebar-item
                     router-link(to="/competitions")
                         RibbonIcon(w="30px" h="30px")
@@ -31,21 +31,22 @@
 </template>
 
 <script>
-import CheckmarkIcon from 'icons/md-checkmark-circle-outline'
-import StatsIcon from 'icons/md-stats'
-import ListIcon from 'icons/ios-list-box'
-import PeopleIcon from 'icons/ios-people'
-import TimerIcon from 'icons/ios-timer'
-import RibbonIcon from 'icons/md-ribbon'
-export default {
-  name: 'Navbar',
-  components: {
-    CheckmarkIcon, StatsIcon, ListIcon, PeopleIcon, TimerIcon, RibbonIcon
-  }
-}
+    import CheckmarkIcon from 'icons/md-checkmark-circle-outline'
+    import StatsIcon from 'icons/md-stats'
+    import ListIcon from 'icons/md-journal'
+    import PeopleIcon from 'icons/ios-people'
+    import UsdIcon from 'icons/logo-usd'
+    import RibbonIcon from 'icons/md-ribbon'
+    export default {
+        name: 'Navbar',
+        components: {
+            CheckmarkIcon, StatsIcon, ListIcon, PeopleIcon, UsdIcon, RibbonIcon
+        }
+    }
 </script>
 
 <style lang="stylus" scoped>
+    ease-out-expo = cubic-bezier(0.19, 1, 0.22, 1)
     .ui-sidebar
         background #374258
         border-radius 6px
@@ -64,7 +65,16 @@ export default {
         background-repeat no-repeat
         height 238px
         width 238px
-        animation: 1s ease-out 0s 1 popLogoUp
+        background-position-y 244px
+        background-position-x -244px
+        opacity 0.0
+        animation .7s ease-out-expo popLogoUp forwards
+
+    @keyframes popLogoUp
+        to
+            background-position-y 0
+            background-position-x 0
+            opacity 1
 
     .ui-sidebar-main
         display: flex;
@@ -118,18 +128,6 @@ export default {
             opacity 0.3
         100%
             transform translateX(0)
-            opacity 1
-
-    @keyframes popLogoUp
-        0%
-            background-position-y 244px
-            background-position-x -244px
-            opacity 0.0
-        75%
-        background-position-y 44px
-        opacity 0.4
-        100%
-            background-position-y 0px
             opacity 1
 
 </style>

@@ -2,6 +2,7 @@
     .ui-component
         .sidebar-area
         .ui-overview
+            Quote
             StatusBox
             .container
                 .item
@@ -10,13 +11,14 @@
 </template>
 
 <script>
-import StatusBox from '../components/StatusBox.vue'
-export default {
-  name: 'Overview',
-  components: {
-	        StatusBox
-  }
-}
+    import StatusBox from '../components/StatusBox.vue'
+    import Quote from '../components/Quote.vue'
+    export default {
+        name: 'Overview',
+        components: {
+            StatusBox, Quote
+        }
+    }
 </script>
 
 <style lang='stylus' scoped>
@@ -34,6 +36,9 @@ export default {
         padding 3em
 
     .ui-overview
+        padding: 1em 2em
         width: 100%
+        margin 0 auto
+        max-width: 1100px
         height: 100vh
 </style>

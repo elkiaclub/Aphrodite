@@ -20,8 +20,6 @@ export default {
 </script>
 
 <style lang='stylus'>
-    @import url('https://fonts.googleapis.com/css?family=Roboto');
-
     html
         height 100%
         box-sizing border-box
@@ -36,15 +34,16 @@ export default {
         min-height 100%
         background #1e2430
 
+    @import url('https://fonts.googleapis.com/css?family=Raleway');
 
     /** By default, use the local font and then fallback to web font. **/
     body {
-        font-family: 'Segoe UI Local', 'Segoe UI Web (West European)';
+        font-family: 'Raleway', sans-serif;
     }
 
     /** In Chrome we can't use the semilight weight of the local web font. Use web fonts instead. **/
     body:not(*:root) {
-        font-family: 'Segoe UI Web (West European)';
+        font-family: 'Segoe UI Local','Segoe UI Web (West European)','Raleway', sans-serif;
         background-color: #ddd;
     }
 

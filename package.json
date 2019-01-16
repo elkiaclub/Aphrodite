@@ -9,24 +9,27 @@
     "ui": "vue ui"
   },
   "dependencies": {
-    "element-ui": "^2.4.11",
-    "vue": "^2.5.17",
+    "lodash": "^4.17.11",
+    "strip-ansi": "^5.0.0",
+    "vue": "^2.5.22",
     "vue-ionicons": "^2.2.1",
+    "vue-moment": "^4.0.0",
+    "vue-preload": "^0.1.11",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.2.0",
-    "@vue/cli-plugin-eslint": "^3.2.0",
-    "@vue/cli-service": "^3.2.0",
+    "@vue/cli-plugin-babel": "^3.3.0",
+    "@vue/cli-plugin-eslint": "^3.3.0",
+    "@vue/cli-service": "^3.3.0",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.1",
-    "eslint": "^5.8.0",
-    "eslint-plugin-vue": "^5.0.0-0",
+    "eslint": "^5.12.0",
+    "eslint-plugin-vue": "^5.1.0",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
-    "vue-template-compiler": "^2.5.17"
+    "vue-template-compiler": "^2.5.22"
   }
 }
