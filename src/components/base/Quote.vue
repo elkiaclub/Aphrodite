@@ -18,7 +18,7 @@
 
 <script>
     export default {
-        name: 'quote',
+        name: 'BaseQuote',
         data () {
             return {
                 quote: {
@@ -26,45 +26,6 @@
                     author: 'Tuigreve'
                 },
                 quoteVisible: true
-            }
-        },
-        props: {
-            hp: Boolean
-        },
-        created () {
-            this.fetchData()
-        },
-        watch: {
-            $route (to, from) {
-                if (to.name !== from.name) this.fetchData()
-            }
-        },
-        methods: {
-            fetchData () {
-                this.quoteVisible = false
-                const api = new API('quotes/random')
-                api.offline()
-                    .then(res => {
-                        if (res === null) return
-                        this.quote = res.quote
-                        this.quoteVisible = true
-                    })
-                    .catch(err => {
-                        console.error(err)
-                        this.quote = {
-                            quote: 'Citát nešlo načíst',
-                            author: 'Bio-senpai API'
-                        }
-                        this.quoteVisible = true
-                    })
-                api.call()
-                    .then(res => {
-                        this.quote = res.quote
-                        this.quoteVisible = true
-                    })
-                    .catch(err => {
-                        console.error(err)
-                    })
             }
         }
     }

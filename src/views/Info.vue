@@ -17,11 +17,10 @@
 
 <script>
     import OriginFlag from '../components/OriginFlag'
-    import Quote from '../components/Quote.vue'
     export default {
         name: 'Info',
         components: {
-            OriginFlag, Quote
+            OriginFlag
         }
     }
 </script>

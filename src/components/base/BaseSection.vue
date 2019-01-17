@@ -1,13 +1,10 @@
 <template lang='pug'>
-    .ui-component
-        .sidebar-area
-        .ui-overview
-            BaseQuote
+    section.ui-panel
 </template>
 
 <script>
     export default {
-        name: 'BaseLayout'
+        name: 'BaseSection'
     }
 </script>
 

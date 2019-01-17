@@ -14,11 +14,11 @@
         components: {
             FlagIcon
         },
-      data: function () {
-        return {
-          origin: new Date(1467018000000)
+        data: function () {
+            return {
+                origin: new Date(1467018000000)
+            }
         }
-    }
     }
 </script>
 

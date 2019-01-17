@@ -6,13 +6,13 @@
 </template>
 
 <script>
-import LogoGithubIcon from 'icons/logo-github'
-export default {
-  name: 'SmallFooter',
-  components: {
-    LogoGithubIcon
-  }
-}
+    import LogoGithubIcon from 'icons/logo-github'
+    export default {
+        name: 'SmallFooter',
+        components: {
+            LogoGithubIcon
+        }
+    }
 </script>
 
 <style lang="stylus" scoped>

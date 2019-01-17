@@ -19,6 +19,8 @@ Vue.use(VuePreload, {
   onPreLoading () {}
 })
 
+// Normalize.css
+require('normalize.css')
 // icons
 require('vue-ionicons/ionicons.css')
 

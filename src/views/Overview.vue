@@ -1,18 +1,11 @@
 <template lang='pug'>
-    .ui-component
-        .sidebar-area
-        .ui-overview
-            Quote
-            StatusBox
-            .container
-                .item
-                .item
-                .item
+    BaseLayout
+        BaseContentPanel
 </template>
 
 <script>
     import StatusBox from '../components/StatusBox.vue'
-    import Quote from '../components/Quote.vue'
+    import Quote from '../components/base/Quote.vue'
     export default {
         name: 'Overview',
         components: {

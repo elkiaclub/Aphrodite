@@ -6,17 +6,17 @@
 </template>
 
 <script>
-import SmallFooter from './components/SmallFooter.vue'
-import Sidebar from './components/Sidebar.vue'
+    import SmallFooter from './components/SmallFooter.vue'
+    import Sidebar from './components/Sidebar.vue'
 
-export default {
-  components: {
-    SmallFooter, Sidebar
-  },
-  mounted () {
-    console.info('App version ' + this.$store.getters.appVersion)
-  }
-}
+    export default {
+        components: {
+            SmallFooter, Sidebar
+        },
+        mounted () {
+            console.info('App version ' + this.$store.getters.appVersion)
+        }
+    }
 </script>
 
 <style lang='stylus'>

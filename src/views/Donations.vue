@@ -2,7 +2,7 @@
     .ui-component
         .sidebar-area
         .ui-overview
-            Quote
+            BaseQuote
             .container
                 .item
                     h3 All the operational costs are currently fully covered by @Cerx
@@ -17,14 +17,13 @@
 </template>
 
 <script>
-  import OriginFlag from '../components/OriginFlag'
-  import Quote from '../components/Quote.vue'
-  export default {
-    name: 'Donations',
-    components: {
-      OriginFlag, Quote
+    import OriginFlag from '../components/OriginFlag'
+    export default {
+        name: 'Donations',
+        components: {
+            OriginFlag
+        }
     }
-  }
 </script>
 
 <style lang='stylus' scoped>

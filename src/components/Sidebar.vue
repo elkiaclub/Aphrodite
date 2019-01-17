@@ -38,7 +38,7 @@
     import UsdIcon from 'icons/logo-usd'
     import RibbonIcon from 'icons/md-ribbon'
     export default {
-        name: 'Navbar',
+        name: 'Sidebar',
         components: {
             CheckmarkIcon, StatsIcon, ListIcon, PeopleIcon, UsdIcon, RibbonIcon
         }
@@ -77,12 +77,12 @@
             opacity 1
 
     .ui-sidebar-main
-        display: flex;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        justify-content: center;
-        align-content: stretch;
-        align-items: flex-start;
+        display: flex
+        flex-direction: column
+        flex-wrap: nowrap
+        justify-content: center
+        align-content: stretch
+        align-items: flex-start
         padding 1.5em
         width 100%
         box-sizing border-box
