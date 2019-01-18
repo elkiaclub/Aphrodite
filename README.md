@@ -17,6 +17,9 @@ https://vuejs.org/v2/guide/
 Vue.js — CLI
 https://cli.vuejs.org/
 
+ES6
+https://git.io/es6features
+
 ## Project setup
 ```
 npm install
