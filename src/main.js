@@ -7,6 +7,7 @@ import camelCase from 'lodash/camelCase'
 import VuePreload from 'vue-preload'
 
 // Use vue-preload to preload pages before clicking on a link
+// TODO: Implement this properly.
 Vue.use(VuePreload, {
   // show the native progress bar
   // put <preloading></preloading> in your root component
@@ -21,20 +22,22 @@ Vue.use(VuePreload, {
 
 // Normalize.css
 require('normalize.css')
-// icons
+
+// Ionicons
 require('vue-ionicons/ionicons.css')
 
 Vue.config.productionTip = false
 
 // Loads in moment js for date manipulation
+// TODO find a way to make this less than 50% off the total app size
 Vue.use(require('vue-moment'))
 
 // Makes components starting with *Base* available globally
 const requireComponent = require.context(
   // The relative path of the components folder
-  './components',
+  './components/base',
   // Whether or not to look in subfolders
-  true,
+  false,
   // The regular expression used to match base component filenames
   /Base[A-Z]\w+\.(vue|js)$/ // For everything starting with Base<Something>
 )

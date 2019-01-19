@@ -9,7 +9,7 @@ export default new Vuex.Store({
   },
   getters: {
     appBuild: (state) => {
-      return state.env.NODE_ENV === 'development' ? 'dev' : state.env.NODE_ENV === 'production' ? 'prod' : 'weird'
+      return state.env.NODE_ENV === 'development' ? 'dev' : state.env.NODE_ENV === 'production' ? 'build' : 'weird'
     },
     appVersion: (state) => {
       return state.env.VERSION

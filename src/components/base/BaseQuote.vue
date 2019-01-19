@@ -1,18 +1,14 @@
 <template>
     <header>
         <div class="kec">
-            <transition :name="hp ? 'fade' : 'quick'" mode="out-in">
-                <div class="kec-inner" :key="quote.quote">
-                    <q>{{quote.quote}}</q>
-                    <div class="author"><router-link :to="'/tym/' + quote.author">{{quote.author}}</router-link></div>
-                </div>
-            </transition>
-        </div>
-        <transition :name="hp ? 'fade' : 'quick'" mode="out-in">
-            <div class="hlava" :key="quote.author">
-                <img ref="image" width="60" src="https://minotar.net/avatar/user">
+            <div class="kec-inner" :key="quote.quote">
+                <q>{{quote.quote}}</q>
+                <div class="author"><router-link :to="'/tym/' + quote.author">{{quote.author}}</router-link></div>
             </div>
-        </transition>
+        </div>
+            <div class="hlava" :key="quote.author">
+                <img ref="image" width="60" v-bind:src="'https://minotar.net/avatar/' + quote.author">
+            </div>
     </header>
 </template>
 
@@ -22,8 +18,8 @@
         data () {
             return {
                 quote: {
-                    quote: 'Oh it\'s amazing, it\'s a head that automatically eats your ass"',
-                    author: 'Tuigreve'
+                    quote: 'Apple sucking regular penis has no real bad imagery, sucking penis is a perfectly valid thing to do',
+                    author: 'Caoimhin10'
                 },
                 quoteVisible: true
             }
@@ -31,7 +27,7 @@
     }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
     header
         position relative
         margin 2em 0 4em 0

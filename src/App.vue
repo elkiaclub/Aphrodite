@@ -1,17 +1,16 @@
 <template lang='pug'>
     #app
-        Sidebar
-        router-view
-        SmallFooter
+        BaseLayout
+            router-view
 </template>
 
 <script>
     import SmallFooter from './components/SmallFooter.vue'
-    import Sidebar from './components/Sidebar.vue'
-
+    import BaseLayout from './components/base/BaseLayout'
     export default {
         components: {
-            SmallFooter, Sidebar
+            BaseLayout,
+            SmallFooter
         },
         mounted () {
             console.info('App version ' + this.$store.getters.appVersion)
@@ -28,7 +27,7 @@
         padding 0
 
     * *:before *:after
-        box-sizing inherit
+        box-sizing border-box
 
     body,html,#app
         min-height 100%

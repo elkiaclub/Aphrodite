@@ -1,11 +1,10 @@
 <template lang='pug'>
-    BaseLayout
-        BaseContentPanel
+        BaseSection
 </template>
 
 <script>
     import StatusBox from '../components/StatusBox.vue'
-    import Quote from '../components/base/Quote.vue'
+    import Quote from '../components/base/BaseQuote.vue'
     export default {
         name: 'Overview',
         components: {

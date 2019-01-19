@@ -1,5 +1,6 @@
 <template lang='pug'>
-    section.ui-panel
+    section
+        slot
 </template>
 
 <script>
@@ -9,23 +10,13 @@
 </script>
 
 <style lang='stylus' scoped>
-
-    .ui-component
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-        align-content: stretch;
-        align-items: flex-start;
-
-    .sidebar-area
-        width 238px
-        padding 3em
-
-    .ui-overview
-        padding: 1em 2em
+    section
         width: 100%
-        margin 0 auto
-        max-width: 1100px
-        height: 100vh
+        margin 1.5em auto
+        background: #374258
+        border-radius 6px
+        color white
+        padding 1.5em
+        font-size: 1.1em
+        box-sizing: border-box;
 </style>

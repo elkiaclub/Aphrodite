@@ -1,19 +1,30 @@
 <template lang='pug'>
-    .ui-component
-        .sidebar-area
-        .ui-overview
+    .ap-layout
+        aside
+            keep-alive
+                Sidebar
+        main
             BaseQuote
+            slot
+            SmallFooter
 </template>
 
 <script>
+    import Sidebar from '../Sidebar'
+    import SmallFooter from '../SmallFooter'
     export default {
-        name: 'BaseLayout'
+        name: 'BaseLayout',
+        components: {
+            SmallFooter,
+            Sidebar
+        }
     }
 </script>
 
 <style lang='stylus' scoped>
 
-    .ui-component
+    .ap-layout
+        box-sizing: border-box;
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
@@ -21,14 +32,22 @@
         align-content: stretch;
         align-items: flex-start;
 
-    .sidebar-area
+    aside
         width 238px
-        padding 3em
+        padding 1.5em
+        height 100vh
 
-    .ui-overview
+    main
         padding: 1em 2em
         width: 100%
         margin 0 auto
         max-width: 1100px
         height: 100vh
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-content: center;
+        align-items: center;
 </style>

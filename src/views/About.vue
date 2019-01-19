@@ -1,5 +1,5 @@
 <template lang='pug'>
-    .about
+    BaseSection
         h1 About
 </template>
 

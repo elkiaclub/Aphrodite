@@ -17,6 +17,7 @@
 
 <style lang="stylus" scoped>
     footer
+        margin-top: auto;
         //background-color #59a080
         text-align center
         height 40px

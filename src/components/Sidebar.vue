@@ -1,8 +1,8 @@
 <template lang="pug">
     .ui-sidebar
         nav
-            .ui-sidebar-top
-            .ui-sidebar-main
+            header
+            main
                 .ui-sidebar-item
                     router-link(to="/" exact)
                         CheckmarkIcon(w="30px" h="30px")
@@ -41,6 +41,9 @@
         name: 'Sidebar',
         components: {
             CheckmarkIcon, StatsIcon, ListIcon, PeopleIcon, UsdIcon, RibbonIcon
+        },
+        created () {
+            console.log('sidebar created.')
         }
     }
 </script>
@@ -57,7 +60,7 @@
         transition: transform .5s cubic-bezier(.19,1,.22,1)
         //animation: 1s ease-out 0s 1 slideInFromLeft
 
-    .ui-sidebar-top
+    header
         background #3a5169
         border-radius 6px 6px 0 0
         background-image url('../assets/logo_without_text.svg')
@@ -76,7 +79,7 @@
             background-position-x 0
             opacity 1
 
-    .ui-sidebar-main
+    main
         display: flex
         flex-direction: column
         flex-wrap: nowrap
