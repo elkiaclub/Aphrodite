@@ -36,6 +36,7 @@
         align-items center
         justify-content flex-end
         height 6em
+        min-height 96px
 
     .hlava
         img
