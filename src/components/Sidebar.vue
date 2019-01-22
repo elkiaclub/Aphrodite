@@ -1,46 +1,47 @@
 <template lang="pug">
-    .ui-sidebar
-        nav
-            header
-            main
-                .ui-sidebar-item
-                    router-link(to="/" exact)
-                        CheckmarkIcon(w="30px" h="30px")
-                        span Overview
-                .ui-sidebar-item
-                    router-link(to="/stats")
-                        StatsIcon(w="30px" h="30px")
-                        span Stats
-                .ui-sidebar-item
-                    router-link(to="/info")
-                        ListIcon(w="30px" h="30px")
-                        span Journal
-                .ui-sidebar-item
-                    router-link(to="/members")
-                        PeopleIcon(w="30px" h="30px")
-                        span Members
-                .ui-sidebar-item
-                    router-link(to="/donations")
-                        UsdIcon(w="30px" h="30px")
-                        span Donations
-                .ui-sidebar-item
-                    router-link(to="/competitions")
-                        RibbonIcon(w="30px" h="30px")
-                        span Competitions
-
+    aside
+        .ui-sidebar
+            nav
+                header
+                main
+                    .ui-sidebar-item
+                        router-link(to="/" exact)
+                            CheckmarkIcon(w="30px" h="30px")
+                            span Overview
+                    .ui-sidebar-item
+                        router-link(to="/guidebook")
+                            CompassIcon(w="30px" h="30px")
+                            span Guidebook
+                    .ui-sidebar-item
+                        router-link(to="/members")
+                            PeopleIcon(w="30px" h="30px")
+                            span Members
+                    .ui-sidebar-item
+                        router-link(to="/donations")
+                            UsdIcon(w="30px" h="30px")
+                            span Donations
+                    .ui-sidebar-item
+                        router-link(to="/stats")
+                            StatsIcon(w="30px" h="30px")
+                            span Stats
+                    .ui-sidebar-item
+                        router-link(to="/info")
+                            ListIcon(w="30px" h="30px")
+                            span Info
 </template>
 
 <script>
-    import CheckmarkIcon from 'icons/md-checkmark-circle-outline'
+    import CheckmarkIcon from 'icons/md-today'
     import StatsIcon from 'icons/md-stats'
     import ListIcon from 'icons/md-journal'
     import PeopleIcon from 'icons/ios-people'
     import UsdIcon from 'icons/logo-usd'
     import RibbonIcon from 'icons/md-ribbon'
+    import CompassIcon from 'icons/md-compass'
     export default {
         name: 'Sidebar',
         components: {
-            CheckmarkIcon, StatsIcon, ListIcon, PeopleIcon, UsdIcon, RibbonIcon
+            CheckmarkIcon, StatsIcon, ListIcon, PeopleIcon, UsdIcon, RibbonIcon, CompassIcon
         },
         created () {
             console.log('sidebar created.')
@@ -49,8 +50,16 @@
 </script>
 
 <style lang="stylus" scoped>
+
+    aside
+        width 238px
+        margin 0 1.5em 0 1.5em
+        box-sizing: border-box;
+        min-height 100vh
+
     ease-out-expo = cubic-bezier(0.19, 1, 0.22, 1)
     .ui-sidebar
+        box-sizing: border-box;
         background #374258
         border-radius 6px
         position: fixed

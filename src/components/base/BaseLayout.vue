@@ -1,8 +1,7 @@
 <template lang='pug'>
     .ap-layout
-        aside
-            keep-alive
-                Sidebar
+        keep-alive
+            Sidebar
         main
             BaseQuote
             slot
@@ -32,13 +31,7 @@
         align-content: stretch;
         align-items: flex-start;
 
-    aside
-        width 238px
-        padding 1.5em
-        height 100vh
-
     main
-        padding: 1em 2em
         width: 100%
         margin 0 auto
         max-width: 1100px

@@ -10,7 +10,7 @@
 <script>
     import FlagIcon from 'icons/md-flag'
     export default {
-        name: 'originFlag',
+        name: 'OriginFlag',
         components: {
             FlagIcon
         },
@@ -23,6 +23,4 @@
 </script>
 
 <style lang="stylus" scoped>
-    .OriginFlag
-        background red
 </style>

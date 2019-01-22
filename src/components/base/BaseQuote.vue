@@ -18,8 +18,8 @@
         data () {
             return {
                 quote: {
-                    quote: 'Apple sucking regular penis has no real bad imagery, sucking penis is a perfectly valid thing to do',
-                    author: 'Caoimhin10'
+                    quote: 'CREDE UR THE BEST HOMIE',
+                    author: 'YoUngDRaCoGoD'
                 },
                 quoteVisible: true
             }
@@ -29,8 +29,9 @@
 
 <style lang="stylus" scoped>
     header
+        width 100%
         position relative
-        margin 2em 0 4em 0
+        margin 1.5em 0 4em 0
         display flex
         align-items center
         justify-content flex-end
