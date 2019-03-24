@@ -53,9 +53,10 @@
 
     aside
         width 238px
-        margin 0 1.5em 0 1.5em
+        margin 0 1.5em
         box-sizing: border-box;
         min-height 100vh
+        user-select none
 
     ease-out-expo = cubic-bezier(0.19, 1, 0.22, 1)
     .ui-sidebar

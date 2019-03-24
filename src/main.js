@@ -5,7 +5,13 @@ import store from './store'
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
 import VuePreload from 'vue-preload'
+import 'vue-loaders/dist/vue-loaders.css'
+import * as VueLoaders from 'vue-loaders'
+import VueMouseParallax from 'vue-mouse-parallax'
 
+Vue.use(VueMouseParallax)
+// css loader component
+Vue.use(VueLoaders)
 // Use vue-preload to preload pages before clicking on a link
 // TODO: Implement this properly.
 Vue.use(VuePreload, {

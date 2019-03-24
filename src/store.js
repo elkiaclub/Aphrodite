@@ -13,6 +13,12 @@ export default new Vuex.Store({
     },
     appVersion: (state) => {
       return state.env.VERSION
+    },
+    quote: () => {
+      return {
+        quote: 'CREDE UR THE BEST HOMIE',
+        author: 'YoUngDRaCoGoD'
+      }
     }
   },
   mutations: {

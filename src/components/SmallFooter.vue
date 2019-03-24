@@ -17,10 +17,16 @@
 
 <style lang="stylus" scoped>
     footer
+        position fixed
+        bottom 0px
+        left 0px
+        width 100%
+        background #1d2935
         margin-top: auto;
         //background-color #59a080
         text-align center
         height 40px
+
         a
             padding 5px
             text-decoration none
@@ -29,5 +35,6 @@
             line-height 30px
         .ion
              padding 5px
-
+    button
+        float right
 </style>

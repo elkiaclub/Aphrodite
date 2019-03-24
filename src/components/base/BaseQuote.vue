@@ -13,16 +13,11 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
     export default {
         name: 'BaseQuote',
-        data () {
-            return {
-                quote: {
-                    quote: 'CREDE UR THE BEST HOMIE',
-                    author: 'YoUngDRaCoGoD'
-                },
-                quoteVisible: true
-            }
+        computed: {
+            ...mapGetters(['quote'])
         }
     }
 </script>
@@ -37,6 +32,7 @@
         justify-content flex-end
         height 6em
         min-height 96px
+        user-select none
 
     .hlava
         img

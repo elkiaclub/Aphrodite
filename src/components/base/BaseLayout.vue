@@ -5,7 +5,7 @@
         main
             BaseQuote
             slot
-            SmallFooter
+        SmallFooter
 </template>
 
 <script>
@@ -35,12 +35,11 @@
         width: 100%
         margin 0 auto
         max-width: 1100px
-        height: 100vh
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
-        flex-wrap: nowrap;
         justify-content: flex-start;
         align-content: center;
         align-items: center;
+        padding-bottom 4em
 </style>
