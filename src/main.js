@@ -4,16 +4,23 @@ import router from './router'
 import store from './store'
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
-import VuePreload from 'vue-preload'
 import 'vue-loaders/dist/vue-loaders.css'
 import * as VueLoaders from 'vue-loaders'
-import VueMouseParallax from 'vue-mouse-parallax'
+import tilt from 'vanilla-tilt'
 
-Vue.use(VueMouseParallax)
+// Loads in moment js for date manipulation
+import moment from 'moment'
+
+// 3d parallax tilt library
+Object.defineProperty(Vue.prototype, '$tilt', { value: tilt })
+
 // css loader component
 Vue.use(VueLoaders)
+
 // Use vue-preload to preload pages before clicking on a link
 // TODO: Implement this properly.
+/*
+import VuePreload from 'vue-preload'
 Vue.use(VuePreload, {
   // show the native progress bar
   // put <preloading></preloading> in your root component
@@ -25,6 +32,7 @@ Vue.use(VuePreload, {
   // excutes when prefetching the state
   onPreLoading () {}
 })
+*/
 
 // Normalize.css
 require('normalize.css')
@@ -34,9 +42,8 @@ require('vue-ionicons/ionicons.css')
 
 Vue.config.productionTip = false
 
-// Loads in moment js for date manipulation
-// TODO find a way to make this less than 50% off the total app size
-Vue.use(require('vue-moment'))
+// Momentjs for Date manipulation
+Object.defineProperty(Vue.prototype, '$moment', { value: moment })
 
 // Makes components starting with *Base* available globally
 const requireComponent = require.context(

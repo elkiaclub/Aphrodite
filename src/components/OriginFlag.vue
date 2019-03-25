@@ -1,10 +1,9 @@
 <template lang="pug">
     .OriginFlag
-        h1
-            FlagIcon
-            | Conception
-        h2 {{ origin | moment("dddd, MMMM Do YYYY") }}
-        h2 {{ origin | moment("from", "now") }}
+        FlagIcon(w="60px" h="60px")
+        h1 Conception
+        h2 {{ timeAgo}}
+        h3 {{ originFormatted }}
 </template>
 
 <script>
@@ -18,9 +17,19 @@
             return {
                 origin: new Date(1467018000000)
             }
+        },
+        computed: {
+            timeAgo: function () {
+                return this.$moment(this.origin).fromNow()
+            },
+            originFormatted: function () {
+                return this.$moment(this.origin).format('LL')
+            }
         }
     }
 </script>
 
 <style lang="stylus" scoped>
+    .OriginFlag
+        text-align center
 </style>

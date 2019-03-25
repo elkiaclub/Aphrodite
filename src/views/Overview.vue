@@ -1,10 +1,9 @@
 <template lang='pug'>
         .container
-            parallax-container
-                parallax-element( :parallaxStrength="3" :type="'depth'")
-                    BaseSection.ui-s-guidebook(data-tilt)
-                        h1
-                            | Discover the Guidebook
+            //.p-con
+                BaseSection.ui-s-guidebook
+                    h1
+                        | Discover the Guidebook
             .yt-trailer-container
                 iframe(src='https://www.youtube-nocookie.com/embed/fr4zDBxKstQ?controls=0', frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='').yt-trailer
 
@@ -22,6 +21,9 @@
             StatusBox,
             Quote,
             CompassIcon
+        },
+        created () {
+            this.$tilt.init(document.querySelector('p-con'))
         }
     }
 </script>
@@ -29,7 +31,7 @@
 <style lang='stylus' scoped>
     .container
         width 100%
-    .ui-s-guidebook
+    /*.ui-s-guidebook
         background url('../assets/unknown.png')
         background-size cover
         background-position center center
@@ -37,6 +39,7 @@
         h1
             text-align center
             drop-shadow 2px 2px 7px 1px rgba(0,0,0,0.5)
+            */
     .yt-trailer
         position:absolute
         top:0

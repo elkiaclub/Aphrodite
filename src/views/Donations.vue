@@ -1,20 +1,24 @@
 <template lang='pug'>
-    BaseSection
-        h3 All the operational costs are currently fully covered by
-            BaseMemberLink(:member="Cerx")
-        h2 Donations are not mandatory for keeping us alive, however they are greatly appreciated.
-        p Current operational costs:
-        | Main server hosting (6GB Gold plan from Anvilnode) - ~25eur/mo
-        | Penguin server hosting (4GB, runs modded) - ~20eur/mo
-        | Domain name (elkia.club) - ~10eur/yr
-        | Script server (collects data and stuff) - ~7eur/mo
-        p Goals:
-        | Rent out storage from amazon or buy a big hard drive for incemental backups of the entire season, allowing to rollback to any desired day
+    .container
+        BaseSection
+            h2 Donations are greatly appreciated.
+
+            a(href="https://www.paypal.me/IamCerx/10USD")
+                | PayPal me.
+
 </template>
 
 <script>
     export default {
-        name: 'Donations'
+        name: 'Donations',
+        data: function () {
+            return {
+              credentials: {
+                    sandbox: 'AdxSTSeCw2mZ4Jd4bcujYaYgw3RjzAboouT5C8eCLq2Yyhf8fu4CgiZ81Qq6-yy8iWpVAPt-t8JTHIyc',
+                    production: 'ASULCt9N4CuphpwKyMgpkCMhZS-ZLTQLGrAvIbZPzaobTRzkDanqhk35HmARYWXdTVBxq8F8jNMWaEve'
+                }
+            }
+        }
     }
 </script>
 

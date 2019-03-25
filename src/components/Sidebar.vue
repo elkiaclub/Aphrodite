@@ -9,11 +9,11 @@
                             CheckmarkIcon(w="30px" h="30px")
                             span Overview
                     .ui-sidebar-item
-                        router-link(to="/guidebook")
+                        router-link(to="/guidebook").disabled
                             CompassIcon(w="30px" h="30px")
                             span Guidebook
                     .ui-sidebar-item
-                        router-link(to="/members")
+                        router-link(to="/members").disabled
                             PeopleIcon(w="30px" h="30px")
                             span Members
                     .ui-sidebar-item
@@ -21,7 +21,7 @@
                             UsdIcon(w="30px" h="30px")
                             span Donations
                     .ui-sidebar-item
-                        router-link(to="/stats")
+                        router-link(to="/stats").disabled
                             StatsIcon(w="30px" h="30px")
                             span Stats
                     .ui-sidebar-item
@@ -50,10 +50,9 @@
 </script>
 
 <style lang="stylus" scoped>
-
     aside
         width 238px
-        margin 0 1.5em
+        margin: 0 0 0 1.5em;
         box-sizing: border-box;
         min-height 100vh
         user-select none
@@ -119,6 +118,9 @@
             color #fff
             span
                 padding-left: 0.7em
+        a.disabled
+            pointer-events none
+            color gray
 
         .router-link-active
             color #7299ff
