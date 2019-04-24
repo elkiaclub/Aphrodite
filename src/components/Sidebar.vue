@@ -13,7 +13,7 @@
                             CompassIcon(w="30px" h="30px")
                             span Guidebook
                     .ui-sidebar-item
-                        router-link(to="/members").disabled
+                        router-link(to="/members")
                             PeopleIcon(w="30px" h="30px")
                             span Members
                     .ui-sidebar-item

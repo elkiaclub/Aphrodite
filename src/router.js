@@ -27,6 +27,12 @@ export default new Router({
       component: () => import(/* webpackChunkName: "info" */ './views/Info.vue')
     },
     {
+      path: '/members',
+      name: 'Members',
+      // route level code-splitting
+      component: () => import(/* webpackChunkName: "members" */ './views/Members.vue')
+    },
+    {
       path: '/donations',
       name: 'Donations',
       // route level code-splitting
