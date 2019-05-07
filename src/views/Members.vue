@@ -88,8 +88,7 @@
                            { uuid: 'c0430777b64745b0a0110c94f499b2bb', ign: 'Viperonic' },
                            { uuid: '48b1517f44fc4c24a908d9fa6944f96c', ign: 'Anubis_sama' },
                            { uuid: '8baa8de083ad4817b9000b78c7231f53', ign: 'Crashcp' },
-                           { uuid: '', ign: '_Wylker' },
-                           { uuid: '', ign: 'StormStep' } ]
+                           { uuid: '28e1a9bb56ac4752ba16c773bd097a26', ign: 'stormstormstorm' } ]
             }
         },
         created () {
