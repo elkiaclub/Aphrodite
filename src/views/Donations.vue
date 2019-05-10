@@ -13,7 +13,7 @@
         name: 'Donations',
         data: function () {
             return {
-              credentials: {
+                credentials: {
                     sandbox: 'AdxSTSeCw2mZ4Jd4bcujYaYgw3RjzAboouT5C8eCLq2Yyhf8fu4CgiZ81Qq6-yy8iWpVAPt-t8JTHIyc',
                     production: 'ASULCt9N4CuphpwKyMgpkCMhZS-ZLTQLGrAvIbZPzaobTRzkDanqhk35HmARYWXdTVBxq8F8jNMWaEve'
                 }

@@ -1,6 +1,6 @@
 <template lang='pug'>
     .entry
-        iframe(v-bind:src="link", frameborder='0', allowfullscreen='').head
+        img(v-bind:src="link").head
         .name(v-bind:content="name")
             span.nameText {{ name }}
 </template>
@@ -8,7 +8,7 @@
 <script>
     export default {
         name: 'Member',
-        props: ['ign'],
+        props: ['player'],
         data: function () {
             return {
                 link: 'https://reye.me/api/3dhead/?skin=' + this.ign,
@@ -16,6 +16,7 @@
             }
         }
     }
+
 </script>
 
 <style lang="stylus" scoped>
@@ -34,14 +35,15 @@
         font-weight: 300
 
     .head
-        width 100%
-        height 70%
+        width 140px
+        height 140px
+        margin 5px 5px 5px 5px
         background transparent
         position relative
 
     .name
         width 100%
-        height 30%
+        height 25%
         position relative
         text-align center
 
