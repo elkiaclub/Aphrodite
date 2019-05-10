@@ -11,7 +11,7 @@
         props: ['ign'],
         data: function () {
             return {
-                link: 'http://3dhead.reye.me/?skin=' + this.ign,
+                link: 'https://reye.me/api/3dhead/?skin=' + this.ign,
                 name: this.ign
             }
         }
