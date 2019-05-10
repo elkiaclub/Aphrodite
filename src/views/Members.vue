@@ -1,6 +1,6 @@
 <template lang='pug'>
     .container
-        Member(v-for="member in members" :player="member")
+        Member(v-for="member in members" :ign="member")
 </template>
 
 <script>

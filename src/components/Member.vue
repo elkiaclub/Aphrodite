@@ -1,6 +1,6 @@
 <template lang='pug'>
     .entry
-        img(v-bind:src="link").head
+        iframe(v-bind:src="link", frameborder="0").head
         .name(v-bind:content="name")
             span.nameText {{ name }}
 </template>
@@ -8,7 +8,7 @@
 <script>
     export default {
         name: 'Member',
-        props: ['player'],
+        props: ['ign'],
         data: function () {
             return {
                 link: 'https://reye.me/api/3dhead/?skin=' + this.ign,
