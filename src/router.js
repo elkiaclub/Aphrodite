@@ -29,6 +29,10 @@ export default new Router({
     {
       path: '/members',
       name: 'Members',
+      children: [{
+        path: ':page',
+        component: () => import(/* webpackChunkName: "members" */ './views/Members.vue')
+      }],
       // route level code-splitting
       component: () => import(/* webpackChunkName: "members" */ './views/Members.vue')
     },
