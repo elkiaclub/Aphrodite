@@ -12,6 +12,8 @@
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "normalize.css": "^8.0.1",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-vue": "^0.8.1",
     "vanilla-tilt": "^1.6.1",
     "vue": "^2.5.22",
     "vue-ionicons": "^2.2.1",

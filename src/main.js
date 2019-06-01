@@ -6,16 +6,14 @@ import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
 import 'vue-loaders/dist/vue-loaders.css'
 import * as VueLoaders from 'vue-loaders'
-import tilt from 'vanilla-tilt'
-
-// Loads in moment js for date manipulation
-import moment from 'moment'
-
-// 3d parallax tilt library
-Object.defineProperty(Vue.prototype, '$tilt', { value: tilt })
-
+import moment from 'moment' // Loads in moment js for date manipulation
+import SuiVue from 'semantic-ui-vue'
 // css loader component
 Vue.use(VueLoaders)
+// Normalize.css
+require('normalize.css')
+/* To help me with css - https://semantic-ui-vue.github.io/ */
+Vue.use(SuiVue)
 
 // Use vue-preload to preload pages before clicking on a link
 // TODO: Implement this properly.
@@ -34,11 +32,9 @@ Vue.use(VuePreload, {
 })
 */
 
-// Normalize.css
-require('normalize.css')
-
 // Ionicons
 require('vue-ionicons/ionicons.css')
+require('semantic-ui-css/semantic.css')
 
 Vue.config.productionTip = false
 
