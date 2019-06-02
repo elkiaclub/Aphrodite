@@ -59,7 +59,7 @@
                     const ch = Math.floor(i / this.itemsPerPage)
                     all[ch] = [].concat((all[ch] || []), one)
                     return all
-                }, [])
+                }, []).sort()
             }
         },
         methods: {
