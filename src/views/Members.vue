@@ -55,11 +55,11 @@
                 return typeof this.$route.params.page === 'undefined' ? 1 : parseInt(this.$route.params.page)
             },
             pages: function () {
-                return this.members.reduce((all, one, i) => {
+                return this.members.sort().reduce((all, one, i) => {
                     const ch = Math.floor(i / this.itemsPerPage)
                     all[ch] = [].concat((all[ch] || []), one)
                     return all
-                }, []).sort()
+                }, [])
             }
         },
         methods: {
