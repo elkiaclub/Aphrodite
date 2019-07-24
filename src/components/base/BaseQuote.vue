@@ -1,23 +1,31 @@
 <template>
     <header>
         <div class="kec">
-            <div class="kec-inner" :key="quote.quote">
-                <q>{{quote.quote}}</q>
-                <div class="author"><router-link :to="'/tym/' + quote.author">{{quote.author}}</router-link></div>
+            <div class="kec-inner" :key="randomQuote.id">
+                <q>{{randomQuote.content}}</q>
+                <div class="author"><router-link :to="'/member/' + randomQuote.author">{{randomQuote.author}}</router-link></div>
             </div>
         </div>
-            <div class="hlava" :key="quote.author">
-                <img ref="image" width="60" v-bind:src="'https://minotar.net/avatar/' + quote.author">
+            <div class="hlava" :key="randomQuote.author">
+                <img ref="image" width="60" v-bind:src="'https://minotar.net/avatar/' + randomQuote.author">
             </div>
     </header>
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
+    import gql from 'graphql-tag'
+    // import { mapGetters } from 'vuex'
     export default {
         name: 'BaseQuote',
-        computed: {
-            ...mapGetters(['quote'])
+        apollo: {
+            randomQuote: gql`
+            query {
+                randomQuote{
+                    id
+                    author
+                    content
+                }
+            }`
         }
     }
 </script>

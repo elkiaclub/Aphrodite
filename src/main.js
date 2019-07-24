@@ -8,6 +8,7 @@ import 'vue-loaders/dist/vue-loaders.css'
 import * as VueLoaders from 'vue-loaders'
 import moment from 'moment' // Loads in moment js for date manipulation
 import SuiVue from 'semantic-ui-vue'
+import { createProvider } from './vue-apollo'
 // css loader component
 Vue.use(VueLoaders)
 // Normalize.css
@@ -77,5 +78,6 @@ requireComponent.keys().forEach(fileName => {
 new Vue({
   router,
   store,
+  apolloProvider: createProvider(),
   render: h => h(App)
 }).$mount('#app')

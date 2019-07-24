@@ -16,6 +16,7 @@
     "semantic-ui-vue": "^0.8.1",
     "vanilla-tilt": "^1.6.1",
     "vue": "^2.5.22",
+    "vue-apollo": "^3.0.0-beta.11",
     "vue-ionicons": "^2.2.1",
     "vue-loaders": "^2.0.0",
     "vue-paypal-checkout": "^3.2.0",
@@ -31,10 +32,12 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.12.0",
     "eslint-plugin-vue": "^5.1.0",
+    "graphql-tag": "^2.9.0",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
+    "vue-cli-plugin-apollo": "^0.21.0",
     "vue-template-compiler": "^2.5.22"
   }
 }
