@@ -1,3 +1,4 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/376dffab-604d-44e9-bb14-65ff9d67c8c0/deploy-status)](https://app.netlify.com/sites/elkia/deploys)
 # Aphrodite
 A progressive single-page app in Vue.js
 
