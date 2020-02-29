@@ -1,21 +1,16 @@
 <template lang="pug">
-  #App
-    .page
-      Logo
-      .quotecontainer
-        Quote
+  #app
+    Lander
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import Quote from './components/Quote.vue'
-import Logo from '@/components/Logo.vue'
+import Lander from './components/Lander.vue'
 
 @Component({
 
   components: {
-    Logo,
-    Quote
+    Lander
   }
 
 })
@@ -34,18 +29,12 @@ export default class App extends Vue {}
   * *:before *:after
     box-sizing border-box
 
-  body,html,#app,.page
-    min-height 100vh
-    height 100vh
-    background #1e2430
+  html, body
+    min-height 100%
+    height 100%
 
-  .page
-    display flex
-    flex-direction column
-    justify-content center
-    align-items center
-
-  .quotecontainer
-    width: 790px
-    margin 0 auto
+  #app
+    min-height 100%
+    height 100%
+    min-width: 576px
 </style>

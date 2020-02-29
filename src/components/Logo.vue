@@ -33,21 +33,37 @@ export default class Logo extends Vue {}
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
+  @import '../styles/media'
+
   .logo
     width 100%
     font-weight: 800;
     display flex
+    flex-direction row
+    +maxMd()
+      flex-direction column
     justify-content center
     align-items center
-  svg {
-    display: block;
-    font: 10em 'Segoe UI';
+
+  svg
+    transition all .2s ease-in-out
+    display: block
+    font: 10em 'Segoe UI'
     width 700px
-  }
-  img {
-    height 120px;
-    margin-left: 30px;
-  }
+    +maxMd()
+      font: 8em 'Segoe UI'
+      margin-top -25px
+    +maxSm()
+      font: 6em 'Segoe UI'
+      margin-top -105px
+      width 100%
+
+  img
+    transition all .2s ease-in-out
+    height 120px
+    margin-left: 30px
+    +maxMd()
+      display none
 
   .text-copy {
     user-select: none;

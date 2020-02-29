@@ -30,90 +30,88 @@ export default class Quote extends Vue {}
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
-.messages {
+@import '../styles/media'
+
+.quote
+  width: 790px
+  margin 0 auto
+  +maxMd()
+    width 80%
+
+.messages
     padding-left .2em
+    +maxMd()
+      padding-left .6em
     border-radius 5px
     background: rgb(54, 57, 62)
-    padding: $section-header-height 20px 0
-
-    .message {
+    .message
       border-radius 5px
       border-bottom: solid 1px #4d5259
       position: relative
       padding: 15px 0 15px
-
-      .icon {
-        float: left;
-        height: 40px;
+      .icon
+        float: left
+        height: 40px
         width: 40px
-        margin-right: 8px;
-
-        img {
+        +maxMd()
+          height: 60px
+          width: 60px
+        margin-right: 8px
+        img
           width 40px
           height 40px
+          +maxMd()
+            height: 60px
+            width: 60px
           object-fit cover
-          border-radius: 50%;
-        }
-      }
-
-      .body {
-        margin-left: $icon-size + $body-padding;
-
-        .user-name {
-          color: white;
-          font-weight: bold;
-        }
-
-        p, .content {
-          color: hsla(0, 0%, 100%, .7);
-          font-size: 14px;
-          margin: 0;
-        }
-
-        .embed-wrapper {
-          margin-top: 5px;
-          display: flex;
-          line-height: 1.1em;
-
-          .content-inner {
-            background-color: rgba(46, 48, 54, .3);
-            border: solid 1px rgba(46, 48, 54, .6);
-            border-radius: 0 3px 3px 0;
-            padding: 8px 10px;
+          border-radius: 50%
+      .body
+        margin-left: $icon-size + $body-padding
+        .user-name
+          color: white
+          font-weight: bold
+          font-size: 16px
+          +maxMd()
+            font-size: 22px
+        p, .content
+          color: hsla(0, 0%, 100%, .7)
+          font-size: 14px
+          +maxMd()
+            font-size: 20px
+          margin: 0
+        .embed-wrapper
+          margin-top: 5px
+          display: flex
+          line-height: 1.1em
+          .content-inner
+            background-color: rgba(46, 48, 54, .3)
+            border: solid 1px rgba(46, 48, 54, .6)
+            border-radius: 0 3px 3px 0
+            padding: 8px 10px
             display: flex;
-            .content {
-              .title {
-                color: white;
-                font-weight: bold;
-              }
-              word-wrap: break-word;
-              flex: 1;
-              max-width: 300px;
-              color: hsla(0, 0%, 100%, .7);
-
-              font-size: 14px;
-            }
-
-            .thumb {
-              float: right;
-              max-height: 80px;
-              max-width: 80px;
-              width: auto;
-              border-radius: 3px;
-              object-fit: contain;
-              margin-left: 20px;
-            }
-          }
-
-          .color-pill {
-            float: left;
-            background-color: rgb(0, 80, 175);
-            border-radius: 3px 0 0 3px;
-            width: 4px;
-            flex-shrink: 0;
-          }
-        }
-      }
-    }
-  }
+            .content
+              .title
+                color: white
+                font-weight: bold
+              word-wrap: break-word
+              flex: 1
+              max-width: 300px
+              color: hsla(0, 0%, 100%, .7)
+              font-size: 14px
+              +maxMd()
+                font-size: 24px
+            .thumb
+              float: right
+              max-height: 80px
+              max-width: 80px
+              width: auto
+              border-radius: 3px
+              object-fit: contain
+              margin-left: 20px
+          .color-pill
+            float: left
+            background-color: rgb(0, 80, 175)
+            border-radius: 3px 0 0 3px
+            width: 4px
+            flex-shrink: 0
 </style>
