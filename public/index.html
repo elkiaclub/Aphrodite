@@ -1,33 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-        <!-- Preload stuff -->
-        <link rel="dns-prefetch" href="//elkia.club">
-        <!-- Favicons and stuff -->
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2.0">
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2.0">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2.0">
-        <link rel="manifest" href="/site.webmanifest?v=2.0">
-        <link rel="mask-icon" href="/safari-pinned-tab.svg?v=2.0" color="#3a5169">
-        <link rel="shortcut icon" href="/favicon.ico?v=2.0">
-        <meta name="apple-mobile-web-app-title" content="Aphrodite">
-        <meta name="application-name" content="Aphrodite">
-        <meta name="msapplication-TileColor" content="#1e2430">
-        <meta name="theme-color" content="#1e2430">
-
-        <title>Elkia.club</title>
-    </head>
-    <body>
-        <noscript>
-            <h1><strong>We're sorry but <a href="//elkia.club">elkia.club</a> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></h1>
-        </noscript>
-        <div id="app">
-            <h1>Fetching resources...</h1>
-        </div>
-        <!-- built files will be auto injected -->
-    </body>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
 </html>
