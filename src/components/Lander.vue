@@ -39,7 +39,7 @@ export default class Lander extends Vue {}
     width 100%
     height 65%
     +maxMd()
-      height auto
+      height 40%
     display flex
     flex-direction column
     justify-content flex-end
@@ -47,9 +47,6 @@ export default class Lander extends Vue {}
   footer
     width 100%
     height  45%
-    +maxMd()
-      height 65%
-      justify-content center
     display flex
     flex-direction column
     justify-content flex-start

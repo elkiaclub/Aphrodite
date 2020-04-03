@@ -39,17 +39,17 @@ export default class Quote extends Vue {}
     width 80%
 
 .messages
-    padding-left .2em
-    +maxMd()
-      padding-left .6em
     border-radius 5px
     background: rgb(54, 57, 62)
     .message
       border-radius 5px
       border-bottom: solid 1px #4d5259
       position: relative
-      padding: 15px 0 15px
+      padding: .5em 0
       .icon
+        padding-left .2em
+        +maxMd()
+          padding-left .6em
         float: left
         height: 40px
         width: 40px
@@ -66,6 +66,9 @@ export default class Quote extends Vue {}
           object-fit cover
           border-radius: 50%
       .body
+        min-height: 40px
+        +maxMd()
+          min-height: 60px
         margin-left: $icon-size + $body-padding
         .user-name
           color: white

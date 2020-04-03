@@ -17,7 +17,7 @@
         use.text-copy(xlink:href='#s-text')
         use.text-copy(xlink:href='#s-text')
         use.text-copy(xlink:href='#s-text')
-        use.text-copy(xlink:href='#s-text' style="user-select: text; z-index: 900;")
+        use.text-copy(xlink:href='#s-text')
 
   </g>
 </template>
@@ -53,10 +53,9 @@ export default class Logo extends Vue {}
     +maxMd()
       font: 8em 'Segoe UI'
       margin-top -25px
-    +maxSm()
-      font: 6em 'Segoe UI'
-      margin-top -105px
       width 100%
+    +maxSm()
+      font: 15vw 'Segoe UI'
 
   img
     transition all .2s ease-in-out
@@ -65,43 +64,38 @@ export default class Logo extends Vue {}
     +maxMd()
       display none
 
-  .text-copy {
-    user-select: none;
-    fill: none;
-    stroke-dasharray: 6% 29%;
-    stroke-width: 1px; //2px looks cool too
-    stroke-dashoffset: 0%;
-    animation: stroke-offset 7.5s infinite linear;
-    &::selection {
-      background: #fff2ac
-      background-image: linear-gradient(to right, #ffe359 0%, #fff2ac 100%);
-    }
-  }
+  .text-copy
+    user-select: none
+    fill none
+    stroke-dasharray: 6% 29%
+    stroke-width 2px
+    +maxSm()
+      stroke-width 1px
+    stroke-dashoffset 0
+    animation: stroke-offset 7.5s infinite linear
+    &::selection
+      background #fff2ac
+      background-image linear-gradient(to right, #ffe359 0%, #fff2ac 100%)
 
-  .text-copy:nth-child(1){
-    stroke: #7299FF;
-    animation-delay: -1;
-  }
+  .text-copy:nth-child(1)
+    stroke #7299FF
+    animation-delay -1
 
-  .text-copy:nth-child(2){
-    stroke: #91D1AB;
-    animation-delay: -2s;
-  }
+  .text-copy:nth-child(2)
+    stroke #91D1AB
+    animation-delay -2s
 
-  .text-copy:nth-child(3){
-    stroke: #B9A25E;
-    animation-delay: -3s;
-  }
+  .text-copy:nth-child(3)
+    stroke #B9A25E
+    animation-delay -3s
 
-  .text-copy:nth-child(4){
-    stroke: #B0734F;
-    animation-delay: -4s;
-  }
+  .text-copy:nth-child(4)
+    stroke #B0734F
+    animation-delay -4s
 
-  .text-copy:nth-child(5){
-    stroke: #AE5555;
-    animation-delay: -5s;
-  }
+  .text-copy:nth-child(5)
+    stroke #AE5555
+    animation-delay -5s
 
   @keyframes stroke-offset{
     100% {stroke-dashoffset: -35%;}
