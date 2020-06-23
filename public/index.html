@@ -20,13 +20,52 @@
         <meta name="theme-color" content="#1e2430">
 
         <title>Elkia.club</title>
+
+        <!-- Loader animation-->
+        <style>
+            * {
+                margin:0;
+            }
+            body {
+                height: 100%;
+                min-height: 100vh;
+                background: #1e2430;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .loader{
+                font-family: "Trebuchet MS", Helvetica, sans-serif;
+                color: #4d5259;
+                font-size: 2em;
+                width: 60vw;
+            }
+            .loadingBar {
+                border: 1px solid rgb(54, 57, 62);
+                height: 100%;
+                min-height: 10vh;
+                width: 100%;
+                background-image: linear-gradient(90deg, rgba(174,85,85,1) 0%, rgba(174,85,85,1) 0%, rgba(174,85,85,1) 20%, rgba(176,115,79,1) 20%, rgba(176,115,79,1) 40%, rgba(185,162,94,1) 40%, rgba(185,162,94,1) 60%, rgba(145,209,171,1) 60%, rgba(145,209,171,1) 80%, rgba(114,153,255,1) 80%, rgba(114,153,255,1) 100%);
+                background-repeat:repeat-x;
+                background-position:0px 0px;
+                animation: gradient 2s infinite;
+            }
+            @keyframes gradient {
+                to {
+                    background-position: -100vw 0;
+                }
+            }
+        </style>
     </head>
     <body>
         <noscript>
             <h1><strong>We're sorry but <a href="//elkia.club">elkia.club</a> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></h1>
         </noscript>
         <div id="app">
-            <h1>Fetching resources...</h1>
+            <div class="loader">
+                <p>fetching resources...</p>
+                <div class="loadingBar">
+            </div>
         </div>
         <!-- built files will be auto injected -->
     </body>

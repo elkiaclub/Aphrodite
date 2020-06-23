@@ -61,8 +61,6 @@ export default class Logo extends Vue {}
     transition all .2s ease-in-out
     height 120px
     margin-left: 30px
-    +maxMd()
-      display none
 
   .text-copy
     user-select: none
