@@ -94,75 +94,77 @@ export default class Quote extends Vue {
     width 80%
 
 .messages
-    border-radius 5px
-    background: rgb(54, 57, 62)
+  border-radius 5px
+  background: rgb(54, 57, 62)
+  blockquote
+    white-space pre
   .message
-      border-radius 5px
-      border-bottom: solid 1px #4d5259
-      position: relative
-      padding: .5em
-      .icon
-        padding-left .2em
-        float: left
-        height: 40px
-        width: 40px
+    border-radius 5px
+    border-bottom: solid 1px #4d5259
+    position: relative
+    padding: .5em
+    .icon
+      padding-left .2em
+      float: left
+      height: 40px
+      width: 40px
+      +maxMd()
+        height: 60px
+        width: 60px
+      +maxXs()
+        display none;
+      margin-right: 8px
+      img
+        width 40px
+        height 40px
         +maxMd()
           height: 60px
           width: 60px
-        +maxXs()
-          display none;
-        margin-right: 8px
-        img
-          width 40px
-          height 40px
-          +maxMd()
-            height: 60px
-            width: 60px
-          object-fit cover
-          border-radius: 50%
-      .body
-        min-height: 40px
-        margin-left: 40px + .5em + .2em + 11px
+        object-fit cover
+        border-radius: 50%
+    .body
+      min-height: 40px
+      margin-left: 40px + .5em + .2em + 11px
+      +maxMd()
+        min-height: 60px
+        margin-left: 60px + .5em + .2em + 11px
+      +maxXs()
+        margin auto
+      header
+        width 100%
+        display flex
+        flex-direction row
+        justify-content flex-start
+        .controls
+          margin-left: auto
+          .refresh
+            border-radius 50%
+            display flex
+            align-items center
+            transition .2s all
+            fill rgba(255,255,255,0.8)
+            :hover
+              background #292B2F
+      .user-name
+        display flex
+        flex-direction row
+        align-items flex-end
+        color: white
+        font-weight: bold
+        font-size: 1rem
         +maxMd()
-          min-height: 60px
-          margin-left: 60px + .5em + .2em + 11px
-        +maxXs()
-          margin auto
-        header
-          width 100%
-          display flex
-          flex-direction row
-          justify-content flex-start
-          .controls
-            margin-left: auto
-            .refresh
-              border-radius 50%
-              display flex
-              align-items center
-              transition .2s all
-              fill rgba(255,255,255,0.8)
-              :hover
-                background #292B2F
-        .user-name
-          display flex
-          flex-direction row
-          align-items flex-end
-          color: white
-          font-weight: bold
-          font-size: 1rem
-          +maxMd()
-            font-size: 22px
-        .user-membership-duration
-          padding-left 1em
-          margin-bottom 2px
-          font-size: 10px
-          color: #4d5259
-          +maxMd()
-            display none
-        p, .content
-          color: hsla(0, 0%, 100%, .7)
-          font-size: 1rem
-          +maxMd()
-            font-size: 20px
-          margin: 0
+          font-size: 22px
+      .user-membership-duration
+        padding-left 1em
+        margin-bottom 2px
+        font-size: 10px
+        color: #4d5259
+        +maxMd()
+          display none
+      p, .content
+        color: hsla(0, 0%, 100%, .7)
+        font-size: 1rem
+        +maxMd()
+          font-size: 20px
+        margin: 0
 </style>
