@@ -49,14 +49,9 @@ export default class Quote extends Vue {
   get joinedAtText (): string | false {
     const joinedAt = this.randomQuote.author?.joinedAt
     if (joinedAt) {
-      const treshold = 60 * 60 * 24 * 31 * 365 * 2 // 2 years
       const joined: Date = new Date(Date.parse(joinedAt))
-      const now = new Date()
-      if (now.getTime() - joined.getTime() >= treshold) {
-        const duration = moment.duration(now.getTime() - joined.getTime())
-        return `${duration.humanize()} member`
-      }
-      return `Joined ${moment(joined).format('MMMM Do YYYY')}`
+      const duration = moment(joinedAt).fromNow()
+      return `Joined ${duration}`
     }
     return false
   }
