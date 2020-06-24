@@ -3,6 +3,8 @@
   .lander
     header
       Logo
+      nav
+        Navigation
     footer
       Quote
 </template>
@@ -11,12 +13,12 @@
 import Logo from './Logo'
 import Quote from './Quote'
 import { Component, Vue } from 'vue-property-decorator'
+import Navigation from './Navigation'
 
 @Component({
   components: {
-    Logo, Quote
+    Navigation, Logo, Quote
   }
-
 })
 export default class Lander extends Vue {}
 </script>
@@ -38,12 +40,14 @@ export default class Lander extends Vue {}
   header
     width 100%
     height 65%
-    +maxMd()
-      height 40%
     display flex
     flex-direction column
     justify-content flex-end
     align-items center
+
+  nav
+    width 100%
+
   footer
     width 100%
     height  45%

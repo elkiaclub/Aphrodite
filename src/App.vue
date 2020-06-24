@@ -8,11 +8,9 @@ import { Component, Vue } from 'vue-property-decorator'
 import Lander from './components/Lander.vue'
 
 @Component({
-
   components: {
     Lander
   }
-
 })
 export default class App extends Vue {}
 </script>

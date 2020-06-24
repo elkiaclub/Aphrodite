@@ -4,28 +4,88 @@
       figure
         .message
           .icon
-            img(:src='avatarURL' :alt='displayName' rel="nofollow").avatar.responsive-img
+            img(:src='randomQuote.author.avatarURL' :alt='randomQuote.author.displayName' rel="nofollow").avatar.responsive-img
           .body
-            .user-name
-              figcaption
-              | {{displayName}}
+            header
+              .user-name
+                figcaption(:style='nameStyle') {{randomQuote.author.displayName}}
+                span.user-membership-duration(v-if="joinedAtText") {{joinedAtText}}
+              .controls
+                span(@click="getNewQuote")
+                  IosRepeatIcon(w="20px" h="20px" rootClass="refresh" style="color:#00e679;")
             .content
-              blockquote
-              | yeah the neon is a step up regardless
+              blockquote {{randomQuote.content}}
 </template>
 
 <script lang="ts">
+import IosRepeatIcon from 'vue-ionicons/dist/ios-repeat.vue'
+import CSS from 'csstype'
+import moment from 'moment'
+import quotes from '../assets/quotes.json'
+import members from '../assets/members.json'
 import { Component, Vue } from 'vue-property-decorator'
-const mdata = JSON.parse(
-  '{"id":"188353383516602378","avatarURL":"https://cdn.discordapp.com/avatars/188353383516602378/8720eed5b3e018ddeb6c54469a8e078a.png?size=2048","displayName":"Caoimhin","joinedAt":"2016-11-14T20:09:02.771Z","color":30859}'
-)
+
+interface QuoteData {
+  content: string;
+  author?: {
+    id: string;
+    avatarURL: string;
+    displayName: string;
+    joinedAt?: string;
+    color?: string;
+  };
+  postedAt?: string;
+}
 
 @Component({
-  data: function () {
-    return mdata
-  }
+  components: { IosRepeatIcon }
 })
-export default class Quote extends Vue {}
+export default class Quote extends Vue {
+  data = { quotes, members }
+  get randomQuote (): QuoteData {
+    return this.getRandomQuote()
+  }
+
+  get joinedAtText (): string | false {
+    const joinedAt = this.randomQuote.author?.joinedAt
+    if (joinedAt) {
+      const treshold = 60 * 60 * 24 * 31 * 365 * 2 // 2 years
+      const joined: Date = new Date(Date.parse(joinedAt))
+      const now = new Date()
+      if (now.getTime() - joined.getTime() >= treshold) {
+        const duration = moment.duration(now.getTime() - joined.getTime())
+        return `${duration.humanize()} member`
+      }
+      return `Joined ${moment(joined).format('MMMM Do YYYY')}`
+    }
+    return false
+  }
+
+  get nameStyle (): CSS.Properties {
+    return {
+      color: this.randomQuote.author?.color || ''
+    }
+  }
+
+  getNewQuote () {
+    // move values around to force the thing to update
+    const oldQuotes = this.data.quotes
+    const oldQuote: any = oldQuotes.shift()
+    const newQuotes = oldQuotes
+    newQuotes.push(oldQuote)
+    this.data.quotes = newQuotes
+  }
+
+  getRandomQuote (): QuoteData {
+    const quote = this.data.quotes[Math.floor(Math.random() * this.data.quotes.length)]
+    const author = members.find(member => member.id === quote.author)
+    const result = {
+      ...quote,
+      author
+    }
+    return result
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -41,21 +101,21 @@ export default class Quote extends Vue {}
 .messages
     border-radius 5px
     background: rgb(54, 57, 62)
-    .message
+  .message
       border-radius 5px
       border-bottom: solid 1px #4d5259
       position: relative
-      padding: .5em 0
+      padding: .5em
       .icon
         padding-left .2em
-        +maxMd()
-          padding-left .6em
         float: left
         height: 40px
         width: 40px
         +maxMd()
           height: 60px
           width: 60px
+        +maxXs()
+          display none;
         margin-right: 8px
         img
           width 40px
@@ -67,54 +127,47 @@ export default class Quote extends Vue {}
           border-radius: 50%
       .body
         min-height: 40px
+        margin-left: 40px + .5em + .2em + 11px
         +maxMd()
           min-height: 60px
-        margin-left: $icon-size + $body-padding
+          margin-left: 60px + .5em + .2em + 11px
+        +maxXs()
+          margin auto
+        header
+          width 100%
+          display flex
+          flex-direction row
+          justify-content flex-start
+          .controls
+            margin-left: auto
+            .refresh
+              border-radius 50%
+              display flex
+              align-items center
+              transition .2s all
+              fill rgba(255,255,255,0.8)
+              :hover
+                background #292B2F
         .user-name
+          display flex
+          flex-direction row
+          align-items flex-end
           color: white
           font-weight: bold
-          font-size: 16px
+          font-size: 1rem
           +maxMd()
             font-size: 22px
+        .user-membership-duration
+          padding-left 1em
+          margin-bottom 2px
+          font-size: 10px
+          color: #4d5259
+          +maxMd()
+            display none
         p, .content
           color: hsla(0, 0%, 100%, .7)
-          font-size: 14px
+          font-size: 1rem
           +maxMd()
             font-size: 20px
           margin: 0
-        .embed-wrapper
-          margin-top: 5px
-          display: flex
-          line-height: 1.1em
-          .content-inner
-            background-color: rgba(46, 48, 54, .3)
-            border: solid 1px rgba(46, 48, 54, .6)
-            border-radius: 0 3px 3px 0
-            padding: 8px 10px
-            display: flex;
-            .content
-              .title
-                color: white
-                font-weight: bold
-              word-wrap: break-word
-              flex: 1
-              max-width: 300px
-              color: hsla(0, 0%, 100%, .7)
-              font-size: 14px
-              +maxMd()
-                font-size: 24px
-            .thumb
-              float: right
-              max-height: 80px
-              max-width: 80px
-              width: auto
-              border-radius: 3px
-              object-fit: contain
-              margin-left: 20px
-          .color-pill
-            float: left
-            background-color: rgb(0, 80, 175)
-            border-radius: 3px 0 0 3px
-            width: 4px
-            flex-shrink: 0
 </style>
