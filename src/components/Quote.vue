@@ -97,7 +97,7 @@ export default class Quote extends Vue {
   border-radius 5px
   background: rgb(54, 57, 62)
   blockquote
-    white-space pre
+    white-space pre-line
   .message
     border-radius 5px
     border-bottom: solid 1px #4d5259
