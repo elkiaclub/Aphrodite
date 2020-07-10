@@ -44,24 +44,31 @@ export default class Logo extends Vue {}
       flex-direction column
     justify-content center
     align-items center
+    max-height 250px
 
   svg
     transition all .2s ease-in-out
     display: block
+    justify-content center
     font: 10em 'Segoe UI'
     width 700px
     +maxMd()
       font: 8em 'Segoe UI'
       margin-top -25px
       width 100%
-    +maxSm()
-      font: 15vw 'Segoe UI'
+    +maxXs()
+      font: 5em 'Segoe UI'
+      height auto
 
   img
     transition all .2s ease-in-out
     height 120px
     margin-left: 30px
-
+    +maxMd()
+      margin-left: 0
+    +maxXs()
+      width auto
+      max-width 80%
   .text-copy
     user-select: none
     fill none

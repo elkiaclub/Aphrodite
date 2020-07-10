@@ -150,8 +150,10 @@ export default class Quote extends Vue {
         flex-direction row
         align-items flex-end
         color: white
+        overflow hidden
         font-weight: bold
         font-size: 1rem
+        line-break anywhere
         +maxMd()
           font-size: 22px
       .user-membership-duration

@@ -36,15 +36,21 @@ export default class Lander extends Vue {}
   justify-content center
   align-items center
   transition all .2s ease-in-out
+  +maxXs()
+    height auto
 
   header
     width 100%
+    min-height 220px
     height 65%
     display flex
     flex-direction column
     justify-content flex-end
     align-items center
-
+    +maxMd()
+      min-height 460px
+    +maxXs()
+      height 480px
   nav
     width 100%
 
@@ -55,4 +61,7 @@ export default class Lander extends Vue {}
     flex-direction column
     justify-content flex-start
     align-items center
+    +maxMd()
+      min-height 100px
+      height auto
 </style>
