@@ -1,23 +1,27 @@
 <template lang="pug">
   //the screen user lands on
   .lander
-    header
-      Logo
+    .atlasContainer
+      Atlas
+    section
+      header
+        Logo
       nav
         Navigation
-    footer
-      Quote
+      footer
+        Quote
 </template>
 
 <script>
 import Logo from './Logo'
+import Atlas from './Atlas'
 import Quote from './Quote'
 import { Component, Vue } from 'vue-property-decorator'
 import Navigation from './Navigation'
 
 @Component({
   components: {
-    Navigation, Logo, Quote
+    Navigation, Logo, Quote, Atlas
   }
 })
 export default class Lander extends Vue {}
@@ -31,26 +35,38 @@ export default class Lander extends Vue {}
   width 100%
   min-height 100%
   height 100%
+  transition all .2s ease-in-out
+  section
+    z-index 2
+    //background rgba(3,4,6,.7);
+    +maxMd()
+      width 525px
+    +maxXs()
+      width 330px
+
+.atlasContainer
+  position: absolute
+  left: 0
+  top: 0
+  width 100%
+  min-height 100%
+  height 100%
+  z-index 1
+
+.lander,section
   display flex
   flex-direction column
   justify-content center
   align-items center
-  transition all .2s ease-in-out
   +maxXs()
     height auto
 
   header
     width 100%
-    min-height 220px
-    height 65%
     display flex
     flex-direction column
     justify-content flex-end
     align-items center
-    +maxMd()
-      min-height 460px
-    +maxXs()
-      height 480px
   nav
     width 100%
 

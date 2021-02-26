@@ -91,7 +91,7 @@ export default class Quote extends Vue {
   width: 790px
   margin 0 auto
   +maxMd()
-    width 80%
+    width: 100%
 
 .messages
   border-radius 5px

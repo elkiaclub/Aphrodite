@@ -34,7 +34,6 @@ export default class Logo extends Vue {}
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
   @import '../styles/media'
-
   .logo
     width 100%
     font-weight: 800;
@@ -65,10 +64,11 @@ export default class Logo extends Vue {}
     height 120px
     margin-left: 30px
     +maxMd()
+      position absolute
+      top 8px
+      left 8px
       margin-left: 0
-    +maxXs()
       width auto
-      max-width 80%
   .text-copy
     user-select: none
     fill none

@@ -40,7 +40,7 @@ export default class Navigation extends Vue {}
     padding .4em 2em
     +maxMd()
       padding .4em 1em
-      width 80%
+      width: auto;
     +maxXs()
       padding .4em 0
       flex-direction column
