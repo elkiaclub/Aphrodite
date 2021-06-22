@@ -1,38 +1,25 @@
-<template lang="pug">
-  #app
-    Lander
+<template>
+  <img alt="Vue logo" src="./assets/logo.png">
+  <HelloWorld msg="Welcome to Your Vue.js App"/>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import Lander from './components/Lander.vue'
+<script>
+import HelloWorld from './components/HelloWorld.vue'
 
-@Component({
+export default {
+  name: 'App',
   components: {
-    Lander
+    HelloWorld
   }
-})
-export default class App extends Vue {}
+}
 </script>
 
 <style lang="stylus">
-  html
-    height 100%
-    box-sizing border-box
-    font-family sans-serif;
-  *
-    margin 0
-    padding 0
-
-  * *:before *:after
-    box-sizing border-box
-
-  html, body
-    min-height 100%
-    height 100%
-    display block
-
-  #app
-    min-height 100%
-    height 100%
+#app
+  font-family Avenir, Helvetica, Arial, sans-serif
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
+  text-align center
+  color #2c3e50
+  margin-top 60px
 </style>
