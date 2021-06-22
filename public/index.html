@@ -1,17 +1,88 @@
 <!DOCTYPE html>
-<html lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+  <!-- Preload stuff -->
+  <link rel="dns-prefetch" href="//elkia.club">
+  <link rel="dns-prefetch" href="//olympus.elkia.club">
+
+  <!-- Favicons and stuff -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512.00001' clip-rule='evenodd' fill-rule='evenodd' stroke-linejoin='round' stroke-miterlimit='1.41420996'%3E%3Crect width='512' height='512' ry='135.27226' fill='%231b1b1e' fill-rule='nonzero' paint-order='markers stroke fill'/%3E%3Cdefs%3E%3Cfilter id='a' color-interpolation-filters='sRGB'%3E%3CfeFlood flood-opacity='1' flood-color='%23FFF07C' result='flood'/%3E%3CfeComposite in='flood' in2='SourceGraphic' operator='out' result='composite1'/%3E%3CfeGaussianBlur in='composite1' stdDeviation='5.5' result='blur'/%3E%3CfeOffset dx='5' dy='5' result='offset'/%3E%3CfeComposite in='offset' in2='SourceGraphic' operator='in' result='composite2'/%3E%3C/filter%3E%3C/defs%3E%3Cg fill-rule='nonzero' paint-order='markers stroke fill'%3E%3Cpath d='M322.64258 61.0465152l-33.22461 52.429686-43.66406-30.630858-38.02149 82.892578 43.53516 32.34766-20.53711 34.79687c-45.83795-14.22552-91.82227-18.06948-91.82227-1.20117 0 8.3549 4.15249 40.65566 9.4043 78.15039-5.9963 7.77274-10.93102 16.468-14.66211 24.80273-2.8885 6.45566 3.43085 15.97677 4.14649 23.01172 1.68231 21.80804-29.81141 21.82646-47.57813 38.48438-5.39321 8.75838 3.508399 20.97477.605469 30.83984-1.2639 4.2884-2.97678 8.87297-5.03711 13.64844l-.408203.6582.08398.0879c-6.575717 15.0502-16.495065 31.89902-26.433594 47.24024 21.682578 14.76982 47.916133 23.39453 76.242183 23.39453h121.03711c2.73922-5.64388 5.50893-10.87671 7.71094-13.98242 5.65003-7.9716 20.01419-8.54053 23.37305-17.7168 1.97087-23.03865-16.5654-46.49363.69922-58.08789 5.67312-3.61113 16.50268-4.51455 19.61914-10.46875 3.98215-7.61134 7.53278-16.30821 9.80664-25.25391 40.33221-20.26042 73.13086-39.42595 73.13086-48.16992 0-17.19974-34.52127-42.89354-74.78711-66.14258l12.16015-21.78906 55.30664 24.97461 33.7793-75.94727-34.95703-29.68945 25.61914-58.81836z' fill='%23477bff'/%3E%3Cpath d='M322.64258 62.277344l-33.22461 52.429686-43.66406-30.630858-38.02149 82.892578 43.53516 32.34766-20.53711 34.79687c-45.83795-14.22552-91.82227-18.06948-91.82227-1.20117 0 8.3549 4.15249 40.65566 9.4043 78.15039-5.9963 7.77274-10.93102 16.468-14.66211 24.80273-2.8885 6.45566 3.43085 15.97677 4.14649 23.01172 1.68231 21.80804-29.81141 21.82646-47.57813 38.48438-5.39321 8.75838 3.508399 20.97477.605469 30.83984-1.2639 4.2884-2.97678 8.87297-5.03711 13.64844l-.408203.6582.08398.0879c-6.575717 15.0502-16.495065 31.89902-26.433594 47.24024 21.682578 14.76982 47.916133 23.39453 76.242183 23.39453h121.03711c2.73922-5.64388 5.50893-10.87671 7.71094-13.98242 5.65003-7.9716 20.01419-8.54053 23.37305-17.7168 1.97087-23.03865-16.5654-46.49363.69922-58.08789 5.67312-3.61113 16.50268-4.51455 19.61914-10.46875 3.98215-7.61134 7.53278-16.30821 9.80664-25.25391 40.33221-20.26042 73.13086-39.42595 73.13086-48.16992 0-17.19974-34.52127-42.89354-74.78711-66.14258l12.16015-21.78906 55.30664 24.97461 33.7793-75.94727-34.95703-29.68945 25.61914-58.81836z' fill='%23fff07c' filter='url(%23a)' transform='translate(0 -1.2308288)'/%3E%3C/g%3E%3C/svg%3E%0A" type="image/svg+xml" sizes="any"/>
+  <!-- <link rel="icon" type="image/svg+xml" sizes="any" href="/img/icons/icon.svg"> -->
+  <link rel="icon" type="image/png" sizes="512x512" href="/img/icons/icon.png">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/apple-touch-icon.png?v=3">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicon-32x32.png?v=3">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/icons/favicon-16x16.png?v=3">
+  <link rel="manifest" href="/img/icons/site.webmanifest?v=3">
+  <link rel="mask-icon" href="/img/icons/safari-pinned-tab.svg?v=3" color="#477bff">
+  <link rel="shortcut icon" href="/img/icons/favicon.ico?v=3">
+  <meta name="msapplication-TileColor" content="#fff07c">
+  <meta name="msapplication-TileImage" content="/img/icons/mstile-144x144.png?v=3">
+  <meta name="msapplication-config" content="/img/icons/browserconfig.xml?v=3">
+  <meta name="theme-color" content="#fff07c">
+
+  <meta name="apple-mobile-web-app-title" content="Aphrodite">
+  <meta name="application-name" content="Aphrodite">
+
+  <!-- Title -->
+  <title>Elkia.club</title>
+
+  <!-- Loader animation-->
+  <style>
+    * {
+      margin:0;
+    }
+    html, body {
+      background: #1B1B1E;
+    }
+    html, body, #app {
+      height: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .loader{
+      font-family: "Trebuchet MS", Helvetica, sans-serif;
+      color: #4d5259;
+      font-size: 2em;
+      width: 60vw;
+    }
+    .loadingBar {
+      border: 1px solid rgb(54, 57, 62);
+      height: 100%;
+      min-height: 10vh;
+      width: 100%;
+      background-image: linear-gradient(90deg, rgba(174,85,85,1) 0%, rgba(174,85,85,1) 0%, rgba(174,85,85,1) 20%, rgba(176,115,79,1) 20%, rgba(176,115,79,1) 40%, rgba(185,162,94,1) 40%, rgba(185,162,94,1) 60%, rgba(145,209,171,1) 60%, rgba(145,209,171,1) 80%, rgba(114,153,255,1) 80%, rgba(114,153,255,1) 100%);
+      background-repeat:repeat-x;
+      background-position:0px 0px;
+      animation: gradient 2s infinite;
+    }
+    @keyframes gradient {
+      to {
+        background-position: -100vw 0;
+      }
+    }
+    #map-container { /* hide map while loading */
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<noscript>
+  <h1><strong>We're sorry but <a href="//elkia.club">elkia.club</a> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></h1>
+</noscript>
+<div id="map-container"></div>
+<div id="app">
+  <div class="loader">
+    <p>fetching resources...</p>
+    <div class="loadingBar"/>
+  </div>
+</div>
+<!-- built files will be auto injected -->
+</body>
 </html>

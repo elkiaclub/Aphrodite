@@ -1,0 +1,20 @@
+{
+    "name": "elkia.club",
+    "short_name": "elkia.club",
+    "icons": [
+        {
+            "src": "/img/icons/android-chrome-192x192.png?v=3",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/img/icons/android-chrome-512x512.png?v=3",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#fff07c",
+    "background_color": "#fff07c",
+    "start_url": "https://elkia.club",
+    "display": "standalone"
+}
