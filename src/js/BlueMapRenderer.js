@@ -1,36 +1,13 @@
 /*
- * This file is part of BlueMap, licensed under the MIT License (MIT).
- *
- * Copyright (c) Blue (Lukas Rieger) <https://bluecolored.de>
- * Copyright (c) contributors
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * This file modifies part of BlueMap, licensed under the MIT License (MIT).
  */
 import 'bluemap/src/BlueMap'
 import { MapViewer } from 'bluemap/src/MapViewer'
 import { MapControls } from 'bluemap/src/controls/map/MapControls'
 import { FreeFlightControls } from 'bluemap/src/controls/freeflight/FreeFlightControls'
-import { FileLoader, MathUtils, Vector3 } from 'three'
+import { FileLoader, MathUtils } from 'three'
 import { Map as BlueMapMap } from 'bluemap/src/map/Map'
 import { alert, animate, EasingFunctions, generateCacheHash } from 'bluemap/src/util/Utils'
-import { PlayerMarkerManager } from 'bluemap/src/markers/PlayerMarkerManager'
-import { MarkerFileManager } from 'bluemap/src/markers/MarkerFileManager'
 
 export class BlueMapApp {
   /**
@@ -44,15 +21,8 @@ export class BlueMapApp {
     this.mapControls = new MapControls(this.mapViewer.renderer.domElement)
     this.freeFlightControls = new FreeFlightControls(this.mapViewer.renderer.domElement)
 
-    /** @type {PlayerMarkerManager} */
-    this.playerMarkerManager = null
-    /** @type {MarkerFileManager} */
-    this.markerFileManager = null
-
     /** @type {{useCookies: boolean, freeFlightEnabled: boolean, maps: []}} */
     this.settings = null
-    this.savedUserSettings = new Map()
-
     /** @type BlueMapMap[] */
     this.maps = []
     /** @type Map<BlueMapMap> */
@@ -72,13 +42,7 @@ export class BlueMapApp {
       debug: false
     }
 
-    // init
-    this.updateControlsSettings()
-    this.initGeneralEvents()
-
     this.updateLoop = null
-
-    this.hashUpdateTimeout = null
     this.viewAnimation = null
   }
 
@@ -107,56 +71,17 @@ export class BlueMapApp {
     }
 
     // switch to map
-    if (!await this.loadPageAddress()) {
-      if (this.maps.length > 0) await this.switchMap(this.maps[0].data.id)
-      this.resetCamera()
-    }
-
-    // map position address
-    window.addEventListener('hashchange', this.loadPageAddress)
-    // this.events.addEventListener("bluemapCameraMoved", this.cameraMoved);
-    // this.events.addEventListener("bluemapMapInteraction", this.mapInteraction);
+    if (this.maps.length > 0) await this.switchMap(this.maps[0].data.id)
+    this.resetCamera()
 
     // start app update loop
     if (this.updateLoop) clearTimeout(this.updateLoop)
     this.updateLoop = setTimeout(this.update, 1000)
-
-    // load user settings
-    await this.loadUserSettings()
-
-    // save user settings
-    this.saveUserSettings()
   }
 
   update = async () => {
-    await this.followPlayerMarkerWorld()
+    // TODO
     this.updateLoop = setTimeout(this.update, 1000)
-  }
-
-  async followPlayerMarkerWorld () {
-    const player = this.mapViewer.controlsManager.controls
-      ? this.mapViewer.controlsManager.controls.data.followingPlayer
-      : false
-
-    if (this.mapViewer.map && player) {
-      if (player.world !== this.mapViewer.map.data.world) {
-        /** @type BlueMapMap */
-        let matchingMap = null
-        for (const map of this.maps) {
-          if (map.data.world === player.world) {
-            matchingMap = map
-            break
-          }
-        }
-
-        if (!matchingMap) {
-          if (this.mapViewer.controlsManager.controls.stopFollowingPlayerMarker) { this.mapViewer.controlsManager.controls.stopFollowingPlayerMarker() }
-          return
-        }
-
-        await this.switchMap(matchingMap.data.id)
-      }
-    }
   }
 
   /**
@@ -178,8 +103,6 @@ export class BlueMapApp {
           this.resetCamera()
         }
       }
-
-      this.updatePageAddress()
     })
   }
 
@@ -197,8 +120,6 @@ export class BlueMapApp {
     }
 
     controls.controls = this.mapControls
-    this.appState.controls.state = 'free'
-    this.updatePageAddress()
   }
 
   /**
@@ -259,65 +180,6 @@ export class BlueMapApp {
     })
   }
 
-  initPlayerMarkerManager () {
-    if (!this.mapViewer.map) return
-
-    if (this.playerMarkerManager) {
-      this.playerMarkerManager.worldId = this.mapViewer.map.data.world
-    } else {
-      this.playerMarkerManager = new PlayerMarkerManager(this.mapViewer.markers, 'live/players', this.mapViewer.map.data.world, this.events)
-    }
-
-    this.playerMarkerManager.setAutoUpdateInterval(0)
-    this.playerMarkerManager.update()
-      .then(() => {
-        this.playerMarkerManager.setAutoUpdateInterval(1000)
-      })
-      .catch(e => {
-        alert(this.events, e, 'warning')
-        this.playerMarkerManager.clear()
-        this.playerMarkerManager.dispose()
-      })
-  }
-
-  initMarkerFileManager () {
-    if (this.markerFileManager) {
-      this.markerFileManager.clear()
-      this.markerFileManager.dispose()
-    }
-
-    if (!this.mapViewer.map) return
-
-    this.markerFileManager = new MarkerFileManager(this.mapViewer.markers, 'data/markers.json', this.mapViewer.map.data.id, this.events)
-    this.markerFileManager.update()
-      .then(() => {
-        this.markerFileManager.setAutoUpdateInterval(1000 * 10)
-      })
-      .catch(e => {
-        alert(this.events, e, 'warning')
-        this.markerFileManager.clear()
-        this.markerFileManager.dispose()
-      })
-  }
-
-  updateControlsSettings () {
-    const mouseInvert = this.appState.controls.invertMouse ? -1 : 1
-
-    this.freeFlightControls.mouseRotate.speedCapture = -1.5 * this.appState.controls.mouseSensitivity
-    this.freeFlightControls.mouseAngle.speedCapture = -1.5 * this.appState.controls.mouseSensitivity * mouseInvert
-    this.freeFlightControls.mouseRotate.speedRight = -2 * this.appState.controls.mouseSensitivity
-    this.freeFlightControls.mouseAngle.speedRight = -2 * this.appState.controls.mouseSensitivity * mouseInvert
-  }
-
-  initGeneralEvents () {
-    // close menu on fullscreen
-    document.addEventListener('fullscreenchange', evt => {
-      if (document.fullscreen) {
-        this.mainMenu.closeAll()
-      }
-    })
-  }
-
   setPerspectiveView (transition = 0, minDistance = 5) {
     if (!this.mapViewer.map) return
     if (this.viewAnimation) this.viewAnimation.cancel()
@@ -348,7 +210,6 @@ export class BlueMapApp {
       this.mapControls.reset()
       if (finished) {
         cm.controls = this.mapControls
-        this.updatePageAddress()
       }
     })
 
@@ -381,7 +242,6 @@ export class BlueMapApp {
       this.mapControls.reset()
       if (finished) {
         cm.controls = this.mapControls
-        this.updatePageAddress()
       }
     })
 
@@ -431,152 +291,6 @@ export class BlueMapApp {
       this.mapViewer.stats.showPanel(0)
     } else {
       this.mapViewer.stats.showPanel(-1)
-    }
-  }
-
-  setTheme (theme) {
-    this.appState.theme = theme
-
-    if (theme === 'light') {
-      this.mapViewer.rootElement.classList.remove('theme-dark')
-      this.mapViewer.rootElement.classList.add('theme-light')
-    } else if (theme === 'dark') {
-      this.mapViewer.rootElement.classList.remove('theme-light')
-      this.mapViewer.rootElement.classList.add('theme-dark')
-    } else {
-      this.mapViewer.rootElement.classList.remove('theme-light')
-      this.mapViewer.rootElement.classList.remove('theme-dark')
-    }
-  }
-
-  async updateMap () {
-    try {
-      this.mapViewer.clearTileCache()
-      if (this.mapViewer.map) {
-        await this.switchMap(this.mapViewer.map.data.id)
-      }
-      this.saveUserSettings()
-    } catch (e) {
-      alert(this.events, e, 'error')
-    }
-  }
-
-  resetSettings () {
-    this.saveUserSetting('resetSettings', true)
-    location.reload()
-  }
-
-  async loadUserSettings () {
-    if (!this.settings.useCookies) return
-
-    if (this.loadUserSetting('resetSettings', false)) {
-      alert(this.events, 'Settings reset!', 'info')
-      this.saveUserSettings()
-      return
-    }
-
-    this.mapViewer.clearTileCache(this.loadUserSetting('tileCacheHash', this.mapViewer.tileCacheHash))
-
-    this.mapViewer.superSampling = this.loadUserSetting('superSampling', this.mapViewer.data.superSampling)
-    this.mapViewer.data.loadedHiresViewDistance = this.loadUserSetting('hiresViewDistance', this.mapViewer.data.loadedHiresViewDistance)
-    this.mapViewer.data.loadedLowresViewDistance = this.loadUserSetting('lowresViewDistance', this.mapViewer.data.loadedLowresViewDistance)
-    this.mapViewer.updateLoadedMapArea()
-    this.appState.controls.mouseSensitivity = this.loadUserSetting('mouseSensitivity', this.appState.controls.mouseSensitivity)
-    this.appState.controls.invertMouse = this.loadUserSetting('invertMouse', this.appState.controls.invertMouse)
-    this.updateControlsSettings()
-    this.setTheme(this.loadUserSetting('theme', this.appState.theme))
-    this.setDebug(this.loadUserSetting('debug', this.appState.debug))
-
-    alert(this.events, 'Settings loaded!', 'info')
-  }
-
-  saveUserSettings () {
-    if (!this.settings.useCookies) return
-
-    this.saveUserSetting('resetSettings', false)
-    this.saveUserSetting('tileCacheHash', this.mapViewer.tileCacheHash)
-
-    this.saveUserSetting('superSampling', this.mapViewer.data.superSampling)
-    this.saveUserSetting('hiresViewDistance', this.mapViewer.data.loadedHiresViewDistance)
-    this.saveUserSetting('lowresViewDistance', this.mapViewer.data.loadedLowresViewDistance)
-    this.saveUserSetting('mouseSensitivity', this.appState.controls.mouseSensitivity)
-    this.saveUserSetting('invertMouse', this.appState.controls.invertMouse)
-    this.saveUserSetting('theme', this.appState.theme)
-    this.saveUserSetting('debug', this.appState.debug)
-
-    alert(this.events, 'Settings saved!', 'info')
-  }
-
-  loadUserSetting (key, defaultValue) {
-    return defaultValue
-  }
-
-  saveUserSetting (key, value) {
-    if (this.savedUserSettings.get(key) !== value) {
-      this.savedUserSettings.set(key, value)
-    }
-  }
-
-  cameraMoved = () => {
-    if (this.hashUpdateTimeout) clearTimeout(this.hashUpdateTimeout)
-    this.hashUpdateTimeout = setTimeout(this.updatePageAddress, 1500)
-  }
-
-  loadPageAddress = async () => {
-    const hash = window.location.hash.substr(1)
-    const values = hash.split(':')
-
-    if (values.length !== 10) return false
-
-    const controls = this.mapViewer.controlsManager
-    controls.controls = null
-
-    if (!this.mapViewer.map || this.mapViewer.map.data.id !== values[0]) {
-      try {
-        await this.switchMap(values[0])
-      } catch (e) {
-        return false
-      }
-    }
-
-    controls.position.x = parseFloat(values[1])
-    controls.position.y = parseFloat(values[2])
-    controls.position.z = parseFloat(values[3])
-    controls.distance = parseFloat(values[4])
-    controls.rotation = parseFloat(values[5])
-    controls.angle = parseFloat(values[6])
-    controls.tilt = parseFloat(values[7])
-    controls.ortho = parseFloat(values[8])
-
-    switch (values[9]) {
-      case 'flat' : this.setFlatView(0); break
-      case 'free' : this.setFreeFlight(0, controls.position.y); break
-      default : this.setPerspectiveView(0); break
-    }
-
-    return true
-  }
-
-  mapInteraction = event => {
-    if (event.detail.data.doubleTap) {
-      const cm = this.mapViewer.controlsManager
-      const pos = (event.detail.hit ? event.detail.hit.point : false) || event.detail.object.getWorldPosition(new Vector3())
-
-      const startDistance = cm.distance
-      const targetDistance = Math.max(startDistance * 0.25, 5)
-
-      const startX = cm.position.x
-      const targetX = pos.x
-
-      const startZ = cm.position.z
-      const targetZ = pos.z
-
-      this.viewAnimation = animate(p => {
-        const ep = EasingFunctions.easeInOutQuad(p)
-        cm.distance = MathUtils.lerp(startDistance, targetDistance, ep)
-        cm.position.x = MathUtils.lerp(startX, targetX, ep)
-        cm.position.z = MathUtils.lerp(startZ, targetZ, ep)
-      }, 500)
     }
   }
 }
