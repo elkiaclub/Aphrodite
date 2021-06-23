@@ -1,14 +1,14 @@
-<template>
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<template lang="pug">
+Lander
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Lander from './Pages/Lander'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Lander
   }
 }
 </script>

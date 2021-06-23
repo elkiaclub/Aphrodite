@@ -32,9 +32,6 @@ export class BlueMapApp {
 
     this.appState = {
       controls: {
-        state: 'free',
-        mouseSensitivity: 1,
-        invertMouse: false,
         freeFlightEnabled: true
       },
       maps: [],
@@ -57,7 +54,6 @@ export class BlueMapApp {
 
     // load settings
     await this.getSettings()
-    this.appState.controls.freeFlightEnabled = this.settings.freeFlightEnabled
 
     // unload loaded maps
     await this.mapViewer.switchMap(null)
@@ -96,9 +92,6 @@ export class BlueMapApp {
     const oldWorld = this.mapViewer.map ? this.mapViewer.map.data.world : null
     return this.mapViewer.switchMap(map).then(() => {
       if (map) {
-        this.initPlayerMarkerManager()
-        this.initMarkerFileManager()
-
         if (resetCameraIfNewWorld && map.data.world !== oldWorld) {
           this.resetCamera()
         }
@@ -112,10 +105,10 @@ export class BlueMapApp {
 
     if (map) {
       controls.position.set(map.data.startPos.x, 90, map.data.startPos.z)
-      controls.distance = 500
+      controls.distance = 50
       controls.angle = 0
-      controls.rotation = 0
-      controls.tilt = 0
+      controls.rotation = 90
+      controls.tilt = 45
       controls.ortho = 0
     }
 
@@ -250,7 +243,6 @@ export class BlueMapApp {
 
   setFreeFlight (transition = 0, targetY = undefined) {
     if (!this.mapViewer.map) return
-    if (!this.settings.freeFlightEnabled) return this.setPerspectiveView(transition)
     if (this.viewAnimation) this.viewAnimation.cancel()
 
     const cm = this.mapViewer.controlsManager
