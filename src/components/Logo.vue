@@ -4,15 +4,15 @@
   svg(viewbox='0 0 100% 100%')
     symbol#s-text
       text(text-anchor='middle' x='50%' y='90%') elkia.club
-    filter(id="MyFilter")
+    filter(id="Neon")
       feGaussianBlur(in="Source" stdDeviation="3" result="blur")
-    g.g-ants(filter="url(#MyFilter)")
+    g.g-ants(filter="url(#Neon)") // NEON GLOW
       use.text-copy(xlink:href='#s-text')
       use.text-copy(xlink:href='#s-text')
       use.text-copy(xlink:href='#s-text')
       use.text-copy(xlink:href='#s-text')
       use.text-copy(xlink:href='#s-text')
-    g.g-ants
+    g.g-ants  // TEXT OUTLINE
       use.text-copy(xlink:href='#s-text')
       use.text-copy(xlink:href='#s-text')
       use.text-copy(xlink:href='#s-text')
@@ -86,6 +86,7 @@ export default {
     animation-delay -2s
 
   .text-copy:nth-child(3)
+    //stroke #fff07c
     stroke #B9A25E
     animation-delay -3s
 

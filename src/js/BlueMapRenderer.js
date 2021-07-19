@@ -1,10 +1,10 @@
+/* eslint-disable no-unused-vars */
 /*
  * This file modifies part of BlueMap, licensed under the MIT License (MIT).
  */
+
 import 'bluemap/src/BlueMap'
 import { MapViewer } from 'bluemap/src/MapViewer'
-import { MapControls } from 'bluemap/src/controls/map/MapControls'
-import { FreeFlightControls } from 'bluemap/src/controls/freeflight/FreeFlightControls'
 import { FileLoader, MathUtils } from 'three'
 import { Map as BlueMapMap } from 'bluemap/src/map/Map'
 import { alert, animate, EasingFunctions, generateCacheHash } from 'bluemap/src/util/Utils'
@@ -18,9 +18,6 @@ export class BlueMapApp {
 
     this.mapViewer = new MapViewer(rootElement, this.events)
 
-    this.mapControls = new MapControls(this.mapViewer.renderer.domElement)
-    this.freeFlightControls = new FreeFlightControls(this.mapViewer.renderer.domElement)
-
     /** @type {{useCookies: boolean, freeFlightEnabled: boolean, maps: []}} */
     this.settings = null
     /** @type BlueMapMap[] */
@@ -31,16 +28,11 @@ export class BlueMapApp {
     this.dataUrl = 'https://olympus.elkia.club/data/'
 
     this.appState = {
-      controls: {
-        freeFlightEnabled: true
-      },
       maps: [],
-      theme: null,
       debug: false
     }
 
     this.updateLoop = null
-    this.viewAnimation = null
   }
 
   /**
@@ -68,6 +60,8 @@ export class BlueMapApp {
 
     // switch to map
     if (this.maps.length > 0) await this.switchMap(this.maps[0].data.id)
+
+    // set view
     this.resetCamera()
 
     // start app update loop
@@ -77,6 +71,10 @@ export class BlueMapApp {
 
   update = async () => {
     // TODO
+    // const controls = this.mapViewer.controlsManager
+    // const { x, y, z } = controls.position
+    // controls.position.set(x + 1, y, z + 1)
+
     this.updateLoop = setTimeout(this.update, 1000)
   }
 
@@ -102,17 +100,18 @@ export class BlueMapApp {
   resetCamera () {
     const map = this.mapViewer.map
     const controls = this.mapViewer.controlsManager
-
     if (map) {
-      controls.position.set(map.data.startPos.x, 90, map.data.startPos.z)
-      controls.distance = 50
-      controls.angle = 0
-      controls.rotation = 90
-      controls.tilt = 45
+      controls.position.set(map.data.startPos.x, 85, map.data.startPos.z)
+      controls.distance = 0
+      controls.angle = Math.PI / 2
+      controls.rotation = 0
+      controls.tilt = 0
       controls.ortho = 0
     }
-
-    controls.controls = this.mapControls
+    // disable user controls
+    controls.controls = null
+    // rotate
+    this.beginAnimation()
   }
 
   /**
@@ -173,107 +172,18 @@ export class BlueMapApp {
     })
   }
 
-  setPerspectiveView (transition = 0, minDistance = 5) {
-    if (!this.mapViewer.map) return
-    if (this.viewAnimation) this.viewAnimation.cancel()
-
-    const cm = this.mapViewer.controlsManager
-    cm.controls = null
-
-    const startDistance = cm.distance
-    const targetDistance = Math.max(5, minDistance, startDistance)
-
-    const startY = cm.position.y
-    const targetY = MathUtils.lerp(this.mapViewer.map.terrainHeightAt(cm.position.x, cm.position.z) + 3, 0, targetDistance / 500)
-
-    const startAngle = cm.angle
-    const targetAngle = Math.min(Math.PI / 2, startAngle, this.mapControls.getMaxPerspectiveAngleForDistance(targetDistance))
-
-    const startOrtho = cm.ortho
-    const startTilt = cm.tilt
-
-    this.viewAnimation = animate(p => {
-      const ep = EasingFunctions.easeInOutQuad(p)
-      cm.position.y = MathUtils.lerp(startY, targetY, ep)
-      cm.distance = MathUtils.lerp(startDistance, targetDistance, ep)
-      cm.angle = MathUtils.lerp(startAngle, targetAngle, ep)
-      cm.ortho = MathUtils.lerp(startOrtho, 0, p)
-      cm.tilt = MathUtils.lerp(startTilt, 0, ep)
-    }, transition, finished => {
-      this.mapControls.reset()
-      if (finished) {
-        cm.controls = this.mapControls
-      }
-    })
-
-    this.appState.controls.state = 'perspective'
+  async beginAnimation () {
+    console.log('animating')
+    const controls = this.mapViewer.controlsManager
+    return this.transition(controls, controls.rotation, -Math.PI, 22000)
   }
 
-  setFlatView (transition = 0, minDistance = 5) {
-    if (!this.mapViewer.map) return
-    if (this.viewAnimation) this.viewAnimation.cancel()
-
-    const cm = this.mapViewer.controlsManager
-    cm.controls = null
-
-    const startDistance = cm.distance
-    const targetDistance = Math.max(5, minDistance, startDistance)
-
-    const startRotation = cm.rotation
-    const startAngle = cm.angle
-    const startOrtho = cm.ortho
-    const startTilt = cm.tilt
-
-    this.viewAnimation = animate(p => {
-      const ep = EasingFunctions.easeInOutQuad(p)
-      cm.distance = MathUtils.lerp(startDistance, targetDistance, ep)
-      cm.rotation = MathUtils.lerp(startRotation, 0, ep)
-      cm.angle = MathUtils.lerp(startAngle, 0, ep)
-      cm.ortho = MathUtils.lerp(startOrtho, 1, p)
-      cm.tilt = MathUtils.lerp(startTilt, 0, ep)
-    }, transition, finished => {
-      this.mapControls.reset()
-      if (finished) {
-        cm.controls = this.mapControls
-      }
-    })
-
-    this.appState.controls.state = 'flat'
-  }
-
-  setFreeFlight (transition = 0, targetY = undefined) {
-    if (!this.mapViewer.map) return
-    if (this.viewAnimation) this.viewAnimation.cancel()
-
-    const cm = this.mapViewer.controlsManager
-    cm.controls = null
-
-    const startDistance = cm.distance
-
-    const startY = cm.position.y
-    if (!targetY) targetY = this.mapViewer.map.terrainHeightAt(cm.position.x, cm.position.z) + 3
-
-    const startAngle = cm.angle
-    const targetAngle = Math.PI / 2
-
-    const startOrtho = cm.ortho
-    const startTilt = cm.tilt
-
-    this.viewAnimation = animate(p => {
-      const ep = EasingFunctions.easeInOutQuad(p)
-      cm.position.y = MathUtils.lerp(startY, targetY, ep)
-      cm.distance = MathUtils.lerp(startDistance, 0, ep)
-      cm.angle = MathUtils.lerp(startAngle, targetAngle, ep)
-      cm.ortho = MathUtils.lerp(startOrtho, 0, Math.min(p * 2, 1))
-      cm.tilt = MathUtils.lerp(startTilt, 0, ep)
-    }, transition, finished => {
-      if (finished) {
-        cm.controls = this.freeFlightControls
-        this.updatePageAddress()
-      }
-    })
-
-    this.appState.controls.state = 'free'
+  transition (controls, startRotation, targetRotation, duration) {
+    return animate(p => {
+      const ep = EasingFunctions.easeInOutQuint(p)
+      const rotation = MathUtils.lerp(startRotation, targetRotation, ep)
+      controls.rotation = rotation
+    }, duration)
   }
 
   setDebug (debug) {
