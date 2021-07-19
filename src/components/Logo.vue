@@ -1,34 +1,29 @@
 <template lang="pug">
-  .logo
-    img(src="../assets/logo_without_text.svg")
-    svg(viewbox='0 0 100% 100%')
-      symbol#s-text
-        text(text-anchor='middle' x='50%' y='90%') elkia.club
-      filter(id="MyFilter")
-        feGaussianBlur(in="Source" stdDeviation="3" result="blur")
-      g.g-ants(filter="url(#MyFilter)")
-        use.text-copy(xlink:href='#s-text')
-        use.text-copy(xlink:href='#s-text')
-        use.text-copy(xlink:href='#s-text')
-        use.text-copy(xlink:href='#s-text')
-        use.text-copy(xlink:href='#s-text')
-      g.g-ants
-        use.text-copy(xlink:href='#s-text')
-        use.text-copy(xlink:href='#s-text')
-        use.text-copy(xlink:href='#s-text')
-        use.text-copy(xlink:href='#s-text')
-        use.text-copy(xlink:href='#s-text')
-
-  </g>
+.logo
+  img(src="../assets/logo_without_text.svg")
+  svg(viewbox='0 0 100% 100%')
+    symbol#s-text
+      text(text-anchor='middle' x='50%' y='90%') elkia.club
+    filter(id="Neon")
+      feGaussianBlur(in="Source" stdDeviation="3" result="blur")
+    g.g-ants(filter="url(#Neon)") // NEON GLOW
+      use.text-copy(xlink:href='#s-text')
+      use.text-copy(xlink:href='#s-text')
+      use.text-copy(xlink:href='#s-text')
+      use.text-copy(xlink:href='#s-text')
+      use.text-copy(xlink:href='#s-text')
+    g.g-ants  // TEXT OUTLINE
+      use.text-copy(xlink:href='#s-text')
+      use.text-copy(xlink:href='#s-text')
+      use.text-copy(xlink:href='#s-text')
+      use.text-copy(xlink:href='#s-text')
+      use.text-copy(xlink:href='#s-text')
 </template>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-
-@Component({
-})
-
-export default class Logo extends Vue {}
+<script>
+export default {
+  name: 'Logo'
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -91,6 +86,7 @@ export default class Logo extends Vue {}
     animation-delay -2s
 
   .text-copy:nth-child(3)
+    //stroke #fff07c
     stroke #B9A25E
     animation-delay -3s
 

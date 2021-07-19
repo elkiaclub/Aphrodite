@@ -1,0 +1,14 @@
+{
+ "markers": [
+   {
+     "name": "Spawn",
+     "description": "The world's spawn location",
+     "coordinates": {
+       "x": 0,
+       "y": 85,
+       "z:": 0
+     }
+   },
+   {}
+ ]
+}
