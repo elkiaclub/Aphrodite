@@ -29,7 +29,7 @@ export class BlueMapApp {
 
     this.appState = {
       maps: [],
-      debug: false
+      debug: true
     }
 
     this.updateLoop = null
