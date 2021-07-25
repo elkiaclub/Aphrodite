@@ -1,1 +1,2 @@
-BlueMapWeb/*.js
+.BlueMapWeb/*
+.node_modules/*

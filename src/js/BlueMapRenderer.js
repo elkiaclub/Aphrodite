@@ -66,16 +66,6 @@ export class BlueMapApp {
 
     // start app update loop
     if (this.updateLoop) clearTimeout(this.updateLoop)
-    this.updateLoop = setTimeout(this.update, 1000)
-  }
-
-  update = async () => {
-    // TODO
-    // const controls = this.mapViewer.controlsManager
-    // const { x, y, z } = controls.position
-    // controls.position.set(x + 1, y, z + 1)
-
-    this.updateLoop = setTimeout(this.update, 1000)
   }
 
   /**
@@ -101,7 +91,7 @@ export class BlueMapApp {
     const map = this.mapViewer.map
     const controls = this.mapViewer.controlsManager
     if (map) {
-      controls.position.set(map.data.startPos.x, 85, map.data.startPos.z)
+      controls.position.set(2200, 100, -100)
       controls.distance = 0
       controls.angle = Math.PI / 2
       controls.rotation = 0

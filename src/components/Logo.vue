@@ -39,6 +39,7 @@ export default {
     justify-content center
     align-items center
     max-height 250px
+    will-change transform
 
   svg
     transition all .2s ease-in-out

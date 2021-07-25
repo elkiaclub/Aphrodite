@@ -8,9 +8,9 @@ const bluemap = new BlueMapApp(document.getElementById('map-container'))
 window.bluemap = bluemap
 
 // vue
-const vue = createApp(App).mount('#app')
+export const Vue = createApp(App).mount('#app')
 
 // load bluemap next tick (to let the assets load first)
-vue.$nextTick(() => {
+Vue.$nextTick(() => {
   bluemap.load().catch(error => console.error(error))
 })

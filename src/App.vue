@@ -3,14 +3,16 @@ Lander
 </template>
 
 <script>
+import { Vue } from './main'
+import { Component } from 'vue-property-decorator'
+
 import Lander from './Pages/Lander'
 
-export default {
-  name: 'App',
-  components: {
-    Lander
-  }
+@Component({ components: Lander })
+class App extends Vue {
+  // hello
 }
+export default App
 </script>
 
 <style lang="stylus">
@@ -36,6 +38,7 @@ export default {
     left: 0
     z-index 2
   #map-container
+    will-change transform
     min-height 100%
     height 100%
     width 100%
