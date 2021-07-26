@@ -4,14 +4,15 @@ module.exports = {
     node: true
   },
   extends: [
-    'plugin:vue/vue3-essential',
-    '@vue/standard'
+    'plugin:vue/recommended',
   ],
-  parserOptions: {
-    parser: 'babel-eslint'
-  },
+  parser: 'vue-eslint-parser',
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
+    'indent': ['warn', 2],
+    'vue/html-indent': ['warn', 2],
+    'vue/max-attributes-per-line': 'off',
+    'vue/custom-event-name-casing': 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    'no-prototype-builtins': 'off'
   },
 }

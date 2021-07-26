@@ -2,17 +2,8 @@
 Lander
 </template>
 
-<script>
-import { Vue } from './main'
-import { Component } from 'vue-property-decorator'
-
-import Lander from './Pages/Lander'
-
-@Component({ components: Lander })
-class App extends Vue {
-  // hello
-}
-export default App
+<script setup>
+import Lander from './pages/Lander.vue'
 </script>
 
 <style lang="stylus">

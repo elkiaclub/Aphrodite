@@ -21,35 +21,20 @@
         p {{ location.description }}
 </template>
 
-<script>
-import { Vue } from '../main'
+<script setup>
+import { defineProps, reactive } from 'vue'
 
-import { Component, Prop, Watch } from 'vue-property-decorator'
-
-@Component
-class LocationMarker extends Vue {
-  // display data
-
-  // {
-  //   name: String,
-  //   description: String,
-  //   coordinates: {
-  //     x: Number,
-  //     y: Number,
-  //     z: Number
-  //   }
-  // }
-  @Prop location
-
-  // animate data changing
-  @Watch('location')
-  transition () {
-    // TODO
-
-  }
-}
-
-export default LocationMarker
+defineProps({
+    location: {
+        name: String,
+        description: String,
+        coordinates: {
+            x: Number,
+            y: Number,
+            z: Number
+        }
+    }
+})
 </script>
 
 <style scoped lang="stylus">
