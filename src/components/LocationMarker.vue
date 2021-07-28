@@ -2,9 +2,9 @@
 .locationMarker
   .container
     .dropPinIcon
-      svg(viewbox='0 0 100% 100%' class="icon")
-        path(d="M336.76 161l-186.53 82.35c-10.47 4.8-6.95 20.67 4.57 20.67H244a4 4 0 014 4v89.18c0 11.52 16 15 20.78 4.56L351 175.24A10.73 10.73 0 00336.76 161z").pointythingy
-        path(fill="none" stroke-miterlimit="10" stroke-width="32" d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z").circle
+      svg(viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" class="icon")
+        path(d="M336.76 161l-186.53 82.35c-10.47 4.8-6.95 20.67 4.57 20.67H244a4 4 0 014 4v89.18c0 11.52 16 15 20.78 4.56L351 175.24A10.73 10.73 0 00336.76 161z" fill="#fff").pointythingy
+        path(fill="none" stroke-width="32" d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z").circle
     section.locationDetails
       header
         .name
@@ -22,21 +22,20 @@
 </template>
 
 <script setup>
-import { defineProps, reactive } from 'vue'
+import { defineProps } from 'vue'
 
-defineProps({
-    location: {
-        name: String,
-        description: String,
-        coordinates: {
-            x: Number,
-            y: Number,
-            z: Number
-        }
+const props = defineProps({
+  location: {
+    name: String,
+    description: String,
+    coordinates: {
+      x: Number,
+      y: Number,
+      z: Number
     }
+  }
 })
 </script>
-
 <style scoped lang="stylus">
   @import '../styles/media'
   text-color = #525252
@@ -46,13 +45,15 @@ defineProps({
       display flex
       flex-direction row
       align-items stretch
+
       .dropPinIcon
+        width 120px
         display flex
         justify-content center
         align-items center
         .pointythingy
           fill icon-color
-        .cicrcle
+        .circle
           stroke icon-color
 
       .locationDetails

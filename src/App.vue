@@ -28,6 +28,7 @@ import Lander from './pages/Lander.vue'
     top: 0
     left: 0
     z-index 2
+    animation fadeIn ease-in-out 1.2s
   #map-container
     will-change transform
     min-height 100%
@@ -39,4 +40,12 @@ import Lander from './pages/Lander.vue'
     left: 0
     z-index 1
     background #1B1B1E
+    animation fadeIn linear 6.66s
+
+  @keyframes fadeIn
+    from
+      opacity 0
+    to
+      opacity 1
+
 </style>

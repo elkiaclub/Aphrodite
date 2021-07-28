@@ -12,5 +12,5 @@ export const Vue = createApp(App).mount('#app')
 
 // load bluemap next tick (to let the assets load first)
 Vue.$nextTick(() => {
-    bluemap.load().catch(error => console.error(error))
+  bluemap.load().catch(error => console.error(error))
 })
