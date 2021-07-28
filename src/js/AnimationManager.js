@@ -28,17 +28,18 @@ export class AnimationManager {
         x: 0, y: 250, z: 0
       },
       rotation: 0,
-      angle: Math.PI / 2,
+      angle: Math.PI / 2 - 1,
     }
 
     return this.transition(this.controls, startPosition, targetPosition, 22000)
   }
 
+  // takes mapviewer controls and transitions from a start to end position
   transition (controls, startPosition, targetPosition, duration) {
     return animate(p => {
       const ep = EasingFunctions.easeInOutQuad(p)
       if(startPosition.coordinates !== targetPosition.coordinates)
-      controls.position =
+        controls.position =
         new Vector3(
           MathUtils.lerp(startPosition.coordinates.x, targetPosition.coordinates.x, ep),
           MathUtils.lerp(startPosition.coordinates.y, targetPosition.coordinates.y, ep),
@@ -54,16 +55,28 @@ export class AnimationManager {
     }, duration)
   }
 
-  start () {
-    const scene = {
-      title: 'Spawn',
-      lore: 'Where members begin their adventure. The farms at spawn are public to use, just make sure to replant and breed to replace animals.',
-      location: {
-        x: 0,
-        y: 90,
-        z: 0
-      }
-    }
+  // takes locations and turns them into animation
+  generateKeyframes () {
+    const scenes = [
+      {
+        title: 'Spawn',
+        lore: 'Where members begin their adventure. The farms at spawn are public to use, just make sure to replant and breed to replace animals.',
+        coordinates: {
+          x: 0,
+          y: 90,
+          z: 0
+        }
+      },
+      {
+        title: 'Caoimhin\'s Abode',
+        lore: 'Where members begin their adventure. The farms at spawn are public to use, just make sure to replant and breed to replace animals.',
+        coordinates: {
+          x: 45,
+          y: 90,
+          z: 130
+        }
+      },
+    ]
     const transition = {
       duration: 200,
       distanceModifier: 0.1

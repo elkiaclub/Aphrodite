@@ -11,14 +11,18 @@
           h2 {{ location.name }}
         .coordinates
           h4
-            b X:
-            | {{ location.coordinates.x }}
-            b Y:
-            | {{ location.coordinates.y }}
-            b Z:
-            | {{ location.coordinates.z }}
+            span
+              b X:
+              | {{ location.coordinates.x }}
+            span
+              b Y:
+              | {{ location.coordinates.y }}
+            span
+              b Z:
+              | {{ location.coordinates.z }}
       .lore
         p {{ location.description }}
+
 </template>
 
 <script setup>
@@ -38,9 +42,14 @@ const props = defineProps({
 </script>
 <style scoped lang="stylus">
   @import '../styles/media'
-  text-color = #525252
-  icon-color = #B5446E
+  bg = #1B1B1E
+  text-color = #4d5259
+  icon-color = #4d5259
   .locationMarker
+    position absolute
+    bottom 0
+    left 0
+    width 100%
     .container
       display flex
       flex-direction row
@@ -63,19 +72,22 @@ const props = defineProps({
         justify-content center
         align-items stretch
         header
-          color text-color
+          color lighten(text-color, 100)
           font-size 22px
           .name
             h2
-              font-size 1em
+              font-size 1.2em
           .coordinates
+            span
+              padding-right 10px
             h4
-              font-size .5em
-              b
-                color darken(text-color,.5)
-          .lore
-            p
-              color lighten(text-color,.2)
+              color lighten(text-color,20)
               font-size .8em
+              b
+                color lighten(text-color,50)
+        .lore
+          p
+            color text-color
+            font-size 1em
 
 </style>

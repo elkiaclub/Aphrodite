@@ -28,7 +28,7 @@
 <style scoped lang="stylus">
   @import '../styles/media'
   .logo
-    overflow hidden // fixes scrollbar appearing when resing the window too fast (while the transform is still resizing boxes)
+    overflow hidden // fixes scrollbar appearing when resizing the window too fast (while the transform is still animating width)
     width 100%
     font-weight: 800;
     display flex
@@ -38,16 +38,17 @@
     align-items center
     max-height 250px
     will-change transform
-
-    //contrast
     border-radius 33px
-    //box-shadow 0px 0px 2px 1px rgba(255, 240, 124, 0.75)
-    padding 0px
     background rgb(27, 27, 30)
+    border 1px solid #4d5259
     +maxXs()
       border-radius 0px
-      align-items space-around
+      border none
+      border-bottom 1px solid #4d5259
       width 100vw
+      position absolute
+      top 0
+      left 0
   svg
     transition all .2s ease-in-out
     display: block

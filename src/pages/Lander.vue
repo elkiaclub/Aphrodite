@@ -1,5 +1,5 @@
 <template lang="pug">
-.container
+.ui-container
   Logo
   LocationMarker(:location="state.currentMarker")
 </template>
