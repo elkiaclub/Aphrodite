@@ -17,42 +17,82 @@ export class AnimationManager {
 
     const startPosition = {
       coordinates: {
-        x: 0, y: 95, z: 0
+        x: 0, y: 85, z: 0
       },
-      rotation: 180 * Math.PI / 180,
-      angle: 0,
+      rotation: 0,
+      angle: Math.PI / 2,
     }
 
     const targetPosition = {
       coordinates: {
-        x: 0, y: 250, z: 0
+        x: -45, y: 85, z: 100
       },
-      rotation: 0,
-      angle: Math.PI / 2 - 1,
+      rotation: Math.PI,
+      angle: Math.PI / 2,
     }
+    setTimeout(()=> {
+      return this.flyToNewPosition(startPosition, targetPosition, 3000)
+    }, 6000, 'foo');
 
-    return this.transition(this.controls, startPosition, targetPosition, 22000)
   }
 
-  // takes mapviewer controls and transitions from a start to end position
-  transition (controls, startPosition, targetPosition, duration) {
-    return animate(p => {
-      const ep = EasingFunctions.easeInOutQuad(p)
-      if(startPosition.coordinates !== targetPosition.coordinates)
-        controls.position =
-        new Vector3(
-          MathUtils.lerp(startPosition.coordinates.x, targetPosition.coordinates.x, ep),
-          MathUtils.lerp(startPosition.coordinates.y, targetPosition.coordinates.y, ep),
-          MathUtils.lerp(startPosition.coordinates.z, targetPosition.coordinates.z, ep)
-        )
+  // animates a mapviewer transition between positions for a duration
+  async transition (
+    startPosition, endPosition, duration,
+    easingFunction = (p) => EasingFunctions.easeInOutQuad(p)
+  ) {
+    console.log(startPosition,endPosition)
+    // animate changed values for the duration
+    return new Promise((resolve, reject) => {
+      const animation = animate(p => {
 
-      if(startPosition.rotation !== targetPosition.rotation)
-        controls.rotation = MathUtils.lerp(startPosition.rotation, targetPosition.rotation, ep)
+        // position
+        if ( startPosition.coordinates !== endPosition.coordinates )
+          this.controls.position =
+            new Vector3(
+              MathUtils.lerp(startPosition.coordinates.x, endPosition.coordinates.x, easingFunction(p)),
+              MathUtils.lerp(startPosition.coordinates.y, endPosition.coordinates.y, easingFunction(p)),
+              MathUtils.lerp(startPosition.coordinates.z, endPosition.coordinates.z, easingFunction(p))
+            )
 
-      if(startPosition.angle !== targetPosition.angle)
-        controls.angle = MathUtils.lerp(startPosition.angle, targetPosition.angle, ep)
+        // rotation
+        if ( startPosition.rotation !== endPosition.rotation )
+          this.controls.rotation = MathUtils.lerp(startPosition.rotation, endPosition.rotation, easingFunction(p))
 
-    }, duration)
+        // angle
+        if ( startPosition.angle !== endPosition.angle )
+          this.controls.angle = MathUtils.lerp(startPosition.angle, endPosition.angle, easingFunction(p))
+
+      }, duration, resolve)
+      setTimeout(reject, duration+1000, 'foo');
+    })
+  }
+
+  // zooms out from the current position and quickly transitions over to a new location
+  async flyToNewPosition(startPosition, endPosition, duration) {
+    // creates "zoomed out" mid-points for the animation
+    console.log(startPosition.coordinates)
+    console.log(endPosition.coordinates)
+    const zoomOutStartPosition = {
+      ...startPosition,
+      coordinates: { ...startPosition.coordinates, y: 256},
+      angle: 0
+    }
+    const zoomOutEndPosition = {
+      ...endPosition,
+      coordinates: { ...endPosition.coordinates, y: 256},
+      angle: 0
+    }
+
+    console.log(startPosition.coordinates)
+    console.log(endPosition.coordinates)
+    // run animation
+    const animationStepDuration = duration / 4
+    const easingFunction = (p) => EasingFunctions.easeInOutQuint(p)
+    await this.transition(startPosition, zoomOutStartPosition, animationStepDuration, easingFunction)
+    await this.transition(zoomOutStartPosition, zoomOutEndPosition, animationStepDuration * 2)
+    await this.transition(zoomOutEndPosition, endPosition, animationStepDuration, easingFunction)
+    return true
   }
 
   // takes locations and turns them into animation
@@ -62,18 +102,25 @@ export class AnimationManager {
         title: 'Spawn',
         lore: 'Where members begin their adventure. The farms at spawn are public to use, just make sure to replant and breed to replace animals.',
         coordinates: {
-          x: 0,
-          y: 90,
-          z: 0
-        }
+          x: 0, y: 95, z: 0
+        },
+        keyframes: [
+          {
+            duration: 200,
+            coordinates: {
+              x: 0, y: 250, z: 0
+            },
+            rotation: 0,
+            angle: Math.PI / 2 - 1,
+          }
+        ]
+
       },
       {
         title: 'Caoimhin\'s Abode',
         lore: 'Where members begin their adventure. The farms at spawn are public to use, just make sure to replant and breed to replace animals.',
         coordinates: {
-          x: 45,
-          y: 90,
-          z: 130
+          x: 45, y: 90, z: 130
         }
       },
     ]

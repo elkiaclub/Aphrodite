@@ -95,7 +95,7 @@ export class BlueMapApp {
     const map = this.mapViewer.map
     const controls = this.mapViewer.controlsManager
     if (map) {
-      controls.position.set(0,128,0)
+      controls.position.set(0,85,0)
       controls.distance = 0
       controls.angle = Math.PI / 2
       controls.rotation = 0

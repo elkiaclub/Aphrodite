@@ -1,7 +1,7 @@
 <template lang="pug">
 .ui-container
   Logo
-  LocationMarker(:location="state.currentMarker")
+  //LocationMarker(:location="state.currentMarker")
 </template>
 
 <script setup>
