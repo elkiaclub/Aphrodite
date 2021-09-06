@@ -1,18 +1,9 @@
 <template lang="pug">
-  #app
-    Lander
+Lander
 </template>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import Lander from './components/Lander.vue'
-
-@Component({
-  components: {
-    Lander
-  }
-})
-export default class App extends Vue {}
+<script setup>
+import Lander from './pages/Lander.vue'
 </script>
 
 <style lang="stylus">
@@ -23,16 +14,38 @@ export default class App extends Vue {}
   *
     margin 0
     padding 0
-
   * *:before *:after
     box-sizing border-box
-
   html, body
     min-height 100%
     height 100%
     display block
-
   #app
     min-height 100%
     height 100%
+    width 100%
+    position absolute
+    top: 0
+    left: 0
+    z-index 2
+    animation fadeIn ease-in-out 1.2s
+  #map-container
+    will-change transform
+    min-height 100%
+    height 100%
+    width 100%
+    display flex
+    position absolute
+    top: 0
+    left: 0
+    z-index 1
+    background #1B1B1E
+    animation fadeIn linear 6.66s
+
+  @keyframes fadeIn
+    from
+      opacity 0
+    to
+      opacity 1
+
 </style>

@@ -5,14 +5,14 @@ module.exports = {
   },
   extends: [
     'plugin:vue/essential',
-    '@vue/standard',
-    '@vue/typescript/recommended'
   ],
-  parserOptions: {
-    ecmaVersion: 2020
-  },
+  parser: 'vue-eslint-parser',
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
-  }
+    'indent': ['warn', 2],
+    'vue/html-indent': ['warn', 2],
+    'vue/max-attributes-per-line': 'off',
+    'vue/custom-event-name-casing': 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    'no-prototype-builtins': 'off'
+  },
 }
