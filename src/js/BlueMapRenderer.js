@@ -99,7 +99,7 @@ export class BlueMapApp {
       controls.distance = 0
       controls.angle = Math.PI / 2
       controls.rotation = 0
-      controls.tilt = 1
+      controls.tilt = 0
       controls.ortho = 0
     }
     // disable user controls

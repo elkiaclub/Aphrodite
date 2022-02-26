@@ -1,38 +1,45 @@
 /*
  * Control map animation
  */
-import {animate, EasingFunctions } from 'bluemap/src/util/Utils'
+import { animate, EasingFunctions } from 'bluemap/src/util/Utils'
 import { MathUtils, Vector3} from 'three'
 
 export class AnimationManager {
   constructor (mapViewer) {
     this.scenes = []
+    // timing settings
+    this.config = {
+      startDelay: 3000,
+      transitionDuration: 200, // animation between slides in ms
+      sceneDuration: 3000, // default length of a scene
+
+    }
     // this is where I wish I had typescript lol
     this.controls = mapViewer.controlsManager
   }
 
-  //gets called when map is opened
+  // gets called when map is opened
   async beginAnimation () {
-    console.log('animating')
 
-    const startPosition = {
-      coordinates: {
-        x: 0, y: 85, z: 0
-      },
-      rotation: 0,
-      angle: Math.PI / 2,
+    // prepare scenes
+    const scenes = this.generateKeyframes()
+
+    // animation runner
+    const animation = () => {
+      // set controls to starting position
+
+      // play keyframes
+
+      // transition to new position
+
+      return this.flyToNewPosition(startPosition, targetPosition, 4500)
+
     }
 
-    const targetPosition = {
-      coordinates: {
-        x: -45, y: 85, z: 100
-      },
-      rotation: Math.PI,
-      angle: Math.PI / 2,
-    }
+    // execute
     setTimeout(()=> {
-      return this.flyToNewPosition(startPosition, targetPosition, 3000)
-    }, 6000, 'foo');
+      animation()
+    }, this.config.startDelay);
 
   }
 
@@ -55,11 +62,15 @@ export class AnimationManager {
               MathUtils.lerp(startPosition.coordinates.z, endPosition.coordinates.z, easingFunction(p))
             )
 
-        // rotation
+        // distance
+        if ( startPosition.distance !== endPosition.distance )
+          this.controls.distance = MathUtils.lerp(startPosition.distance, endPosition.distance, easingFunction(p))
+
+        // rotation (left - right)
         if ( startPosition.rotation !== endPosition.rotation )
           this.controls.rotation = MathUtils.lerp(startPosition.rotation, endPosition.rotation, easingFunction(p))
 
-        // angle
+        // angle (top - down)
         if ( startPosition.angle !== endPosition.angle )
           this.controls.angle = MathUtils.lerp(startPosition.angle, endPosition.angle, easingFunction(p))
 
@@ -76,22 +87,21 @@ export class AnimationManager {
     const zoomOutStartPosition = {
       ...startPosition,
       coordinates: { ...startPosition.coordinates, y: 256},
-      angle: 0
+      angle: 0,
     }
     const zoomOutEndPosition = {
       ...endPosition,
       coordinates: { ...endPosition.coordinates, y: 256},
-      angle: 0
+      angle: 0,
     }
 
     console.log(startPosition.coordinates)
     console.log(endPosition.coordinates)
     // run animation
     const animationStepDuration = duration / 4
-    const easingFunction = (p) => EasingFunctions.easeInOutQuint(p)
-    await this.transition(startPosition, zoomOutStartPosition, animationStepDuration, easingFunction)
-    await this.transition(zoomOutStartPosition, zoomOutEndPosition, animationStepDuration * 2)
-    await this.transition(zoomOutEndPosition, endPosition, animationStepDuration, easingFunction)
+    await this.transition(startPosition, zoomOutStartPosition, animationStepDuration, (p) => EasingFunctions.easeInQuint(p))
+    await this.transition(zoomOutStartPosition, zoomOutEndPosition, animationStepDuration * 2, (p) => EasingFunctions.easeInOutQuart(p))
+    await this.transition(zoomOutEndPosition, endPosition, animationStepDuration, (p) => EasingFunctions.easeOutQuint(p))
     return true
   }
 
@@ -106,7 +116,6 @@ export class AnimationManager {
         },
         keyframes: [
           {
-            duration: 200,
             coordinates: {
               x: 0, y: 250, z: 0
             },
@@ -126,7 +135,14 @@ export class AnimationManager {
     ]
     const transition = {
       duration: 200,
-      distanceModifier: 0.1
+    }
+
+    // generate keyframes
+    for(const scene in scenes) {
+      if(!scene.keyframes){
+      // create a rotating scene in a topdown view around the target coordinates
+        const animation = []
+      }
     }
   }
 }

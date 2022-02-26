@@ -1,7 +1,7 @@
 <template lang="pug">
 .ui-container
   Logo
-  //LocationMarker(:location="state.currentMarker")
+  LocationMarker(:location="state.currentMarker")
 </template>
 
 <script setup>
@@ -10,6 +10,7 @@ import LocationMarker from '../components/LocationMarker.vue'
 
 
 import { reactive } from 'vue'
+
 const state = reactive({
   currentMarker: {
     name: "Spawn",
@@ -21,6 +22,14 @@ const state = reactive({
     }
   }
 })
+
+function carouselPrev () {
+  state.currentMarker = state.currentMarker.prev
+}
+
+function carouselNext() {
+  state.currentMarker = state.currentMarker.next
+}
 </script>
 
 <style scoped>
