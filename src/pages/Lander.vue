@@ -1,36 +1,25 @@
-<template lang="pug">
-.ui-container
-  Logo
-  LocationMarker(:location="state.currentMarker")
-</template>
-
 <script setup>
 import Logo from '../components/Logo.vue'
 import LocationMarker from '../components/LocationMarker.vue'
-
+import {useRenderStore} from "../store/render";
 
 import { reactive } from 'vue'
+const render = useRenderStore()
 
-const state = reactive({
-  currentMarker: {
-    name: "Spawn",
-    description: "hello",
-    coordinates: {
-      x: 0,
-      y: 85,
-      z: 0
-    }
-  }
-})
-
-function carouselPrev () {
-  state.currentMarker = state.currentMarker.prev
+function carouselNext () {
+  render.nextLocation(window.bluemap)
 }
 
-function carouselNext() {
-  state.currentMarker = state.currentMarker.next
-}
 </script>
+
+<template lang="pug">
+.ui-container
+  Logo
+  button(@click="carouselNext")
+    | Next Location
+  LocationMarker(:location="render.locationMarker")
+</template>
+
 
 <style scoped>
 

@@ -32,7 +32,7 @@ export class AnimationManager {
 
       // transition to new position
 
-      return this.flyToNewPosition(startPosition, targetPosition, 4500)
+      // return this.flyToNewPosition(startPosition, targetPosition, 4500)
 
     }
 
@@ -103,6 +103,24 @@ export class AnimationManager {
     await this.transition(zoomOutStartPosition, zoomOutEndPosition, animationStepDuration * 2, (p) => EasingFunctions.easeInOutQuart(p))
     await this.transition(zoomOutEndPosition, endPosition, animationStepDuration, (p) => EasingFunctions.easeOutQuint(p))
     return true
+  }
+
+  setLocation(position) {
+    // set location
+    // this.controls.position = new Vector3(position.coordinates.x, position.coordinates.y, position.coordinates.z)
+    const startPosition = {
+      coordinates: { x: this.controls.position.x, y: this.controls.position.y, z: this.controls.position.z },
+      distance: this.controls.distance,
+      rotation: this.controls.rotation,
+      angle: this.controls.angle,
+    }
+    const endPosition = {
+      coordinates: { x: position.coordinates.x, y: position.coordinates.y, z: position.coordinates.z },
+      distance: position.distance,
+      rotation: position.rotation,
+      angle: position.angle,
+    }
+    this.flyToNewPosition(startPosition, endPosition, 4000)
   }
 
   // takes locations and turns them into animation

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "bluemap": "file:./BlueMapWeb",
+    "pinia": "^2.0.11",
     "vite": "^2.8.4",
     "vue": "^3.2.25"
   },

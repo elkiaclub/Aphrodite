@@ -32,20 +32,15 @@ import Lander from './pages/Lander.vue'
     animation fadeIn ease-in-out 1.2s
   #map-container
     will-change transform
-    min-height 100%
     height 100%
     width 100%
     display flex
-    position absolute
-    top: 0
-    left: 0
     z-index 1
+    box-sizing border-box
     animation fadeIn linear 6.66s
     div
       +minXs()
         animation growInVignette linear 3.33s forwards
-
-
   @keyframes fadeIn
     from
       opacity 0

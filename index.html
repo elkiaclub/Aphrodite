@@ -29,10 +29,14 @@
   <meta name="application-name" content="Aphrodite">
 
   <!-- Title -->
-  <title>Elkia.club</title>
+  <title>elkia.club</title>
+  <meta name="description" content="slightly above average">
 
   <!-- More tags -->
-  <!-- TODO: add thumbnail image and stuff -->
+    <meta property="og:title" content="elkia.club" />
+    <meta property="og:description" content="slightly above average" />
+    <meta property="og:image" content="https://elkia.club/img/icons/icon.png" />
+    <meta property="og:video" content="https://cdn.discordapp.com/attachments/247684180895465472/881674066321350666/elkia.club_screenshots.mp4" />
 
   <!-- Loader animation-->
   <style>
@@ -73,6 +77,28 @@
         background-position: -60vw 0;
       }
     }
+    noscript {
+        border: 1px solid rgb(54, 57, 62);
+        padding: 10%;
+        box-sizing: border-box;
+        background: #1B1B1E;
+        color: #4d5259;
+        z-index: 99999;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    noscript a {
+        color: #1B1B1E;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-image: linear-gradient(90deg, rgba(174,85,85,1) 0%, rgba(174,85,85,1) 0%, rgba(174,85,85,1) 20%, rgba(176,115,79,1) 20%, rgba(176,115,79,1) 40%, rgba(185,162,94,1) 40%, rgba(185,162,94,1) 60%, rgba(145,209,171,1) 60%, rgba(145,209,171,1) 80%, rgba(114,153,255,1) 80%, rgba(114,153,255,1) 100%);
+    }
     #map-container { /* hide map while loading */
       display: none;
     }
@@ -91,7 +117,11 @@
       <p>fetching resources...</p>
     </div>
   </div>
+<footer style="position: absolute; bottom: 3px; color: #4d5259;">
+    <i>slightly above average</i>
+</footer>
 </div>
+
 <script type="module" src="/src/main.js"></script>
 </body>
 </html>

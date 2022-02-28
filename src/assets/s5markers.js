@@ -1,4 +1,4 @@
-export const markers = [
+export const s5markers = [
   {
     ign: 'MoneyMiner',
     x: 270, y: 68, z:2086
