@@ -49,6 +49,11 @@
       position absolute
       top 0
       left 0
+
+    &:hover
+      transform scale(1.05)
+      transition all 0.2s ease-in-out
+
   svg
     transition all .2s ease-in-out
     display: block
@@ -86,9 +91,6 @@
       stroke-width 1px
     stroke-dashoffset 0
     animation: stroke-offset 7.5s infinite linear
-    &::selection
-      background #fff2ac
-      background-image linear-gradient(to right, #ffe359 0%, #fff2ac 100%)
 
   .text-copy:nth-child(1)
     stroke #7299FF

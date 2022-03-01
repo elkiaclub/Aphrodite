@@ -16,6 +16,7 @@ export class AnimationManager {
     }
     // this is where I wish I had typescript lol
     this.controls = mapViewer.controlsManager
+    this.animation = null
   }
 
   // gets called when map is opened
@@ -48,11 +49,10 @@ export class AnimationManager {
     startPosition, endPosition, duration,
     easingFunction = (p) => EasingFunctions.easeInOutQuad(p)
   ) {
-    console.log(startPosition,endPosition)
+    // console.log(startPosition,endPosition)
     // animate changed values for the duration
     return new Promise((resolve, reject) => {
       const animation = animate(p => {
-
         // position
         if ( startPosition.coordinates !== endPosition.coordinates )
           this.controls.position =
@@ -75,23 +75,24 @@ export class AnimationManager {
           this.controls.angle = MathUtils.lerp(startPosition.angle, endPosition.angle, easingFunction(p))
 
       }, duration, resolve)
-      setTimeout(reject, duration+1000, 'foo');
+      this.animation = animation
+      setTimeout(reject, duration+1000, 'A frame took too long to render')
     })
   }
 
   // zooms out from the current position and quickly transitions over to a new location
   async flyToNewPosition(startPosition, endPosition, duration) {
     // creates "zoomed out" mid-points for the animation
-    console.log(startPosition.coordinates)
-    console.log(endPosition.coordinates)
     const zoomOutStartPosition = {
       ...startPosition,
-      coordinates: { ...startPosition.coordinates, y: 256},
+      coordinates: { ...startPosition.coordinates, y: startPosition.coordinates.y + 128 },
       angle: 0,
+      distance: 0,
     }
     const zoomOutEndPosition = {
       ...endPosition,
-      coordinates: { ...endPosition.coordinates, y: 256},
+      distance: 0,
+      coordinates: { ...endPosition.coordinates, y: endPosition.coordinates.y + 128 },
       angle: 0,
     }
 
@@ -105,7 +106,53 @@ export class AnimationManager {
     return true
   }
 
-  setLocation(position) {
+  async highlightLocation () {
+    // Picks a random distance and angle to animate idle camera
+    while(this.idle) {
+    this.ready = false
+    const randomDistance = Math.random() * (64 - 22) + 22
+    const randomRotation = Math.random() * Math.PI * 2
+    const randomAngle = Math.random() * (Math.PI / 2 - 0.2)
+
+    const startPosition = {
+      distance: this.controls.distance,
+      rotation: this.controls.rotation,
+      angle: this.controls.angle,
+    }
+    const endPosition = {
+      distance: randomDistance,
+      rotation: randomRotation,
+      angle: Math.PI / 2 - randomAngle,
+    }
+    await this.transition(startPosition, endPosition, 6000)
+    if(!this.idle) {
+      this.ready = true
+    }
+    }
+  }
+
+  async awaitReadyState(){
+    return new Promise(async (resolve, reject) => {
+      const checkReady = () => {
+        if(!!this.ready) {
+          resolve()
+        } else {
+          setTimeout(this, 100)
+        }
+      }
+      setTimeout(reject,10000)
+    })
+  }
+
+  async setLocation(position) {
+    console.log(position)
+    this.idle = false
+    if(this.animation) {
+      this.animation.cancel()
+      this.animation = null
+      await this.awaitReadyState()
+
+    }
     // set location
     // this.controls.position = new Vector3(position.coordinates.x, position.coordinates.y, position.coordinates.z)
     const startPosition = {
@@ -114,13 +161,24 @@ export class AnimationManager {
       rotation: this.controls.rotation,
       angle: this.controls.angle,
     }
+
+    const randomDistance = Math.random() * (64 - 22) + 22
+    const randomRotation = Math.random() * Math.PI * 2 - Math.PI
+    const randomAngle = Math.random() * (Math.PI / 2 - 0.25)
+
     const endPosition = {
       coordinates: { x: position.coordinates.x, y: position.coordinates.y, z: position.coordinates.z },
-      distance: position.distance,
-      rotation: position.rotation,
-      angle: position.angle,
+      // distance: position.distance,
+      // rotation: position.rotation,
+      // angle: position.angle,
+      distance: randomDistance,
+      rotation: randomRotation,
+      angle: Math.PI / 2 - randomAngle,
     }
-    this.flyToNewPosition(startPosition, endPosition, 4000)
+    await this.flyToNewPosition(startPosition, endPosition, 3500)
+    this.idle = true
+    this.ready = false
+    await this.highlightLocation()
   }
 
   // takes locations and turns them into animation

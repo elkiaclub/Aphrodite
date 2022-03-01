@@ -45,6 +45,16 @@ const props = defineProps({
   bg = #1B1B1E
   text-color = #4d5259
   icon-color = #4d5259
+
+  @keyframes progress-bar-stripes {
+    from {
+      background-position: 0% 0%
+    }
+    to {
+      background-position: 200% 0%
+    }
+  }
+
   .locationMarker
     position absolute
     bottom 0
@@ -52,6 +62,11 @@ const props = defineProps({
     width 100%
     .container
       display flex
+      //background-image: linear-gradient(90deg, rgba(174,85,85,1) 0%, rgba(174,85,85,1) 0%, rgba(174,85,85,1) 20%, rgba(176,115,79,1) 20%, rgba(176,115,79,1) 40%, rgba(185,162,94,1) 40%, rgba(185,162,94,1) 60%, rgba(145,209,171,1) 60%, rgba(145,209,171,1) 80%, rgba(114,153,255,1) 80%, rgba(114,153,255,1) 100%);
+      box-sizing border-box
+      background-origin: content-box;
+      background-size: 200%;
+      animation 3.33s ease-in-out infinite progress-bar-stripes;
       flex-direction row
       align-items stretch
       margin-bottom 16px
@@ -121,9 +136,9 @@ const props = defineProps({
                 padding-left 0
                 padding-right 10px
             h4
-              color lighten(text-color,66)
+              color lighten(text-color,60)
               font-size .8em
               b
-                color lighten(text-color,22)
+                color text-color
 
 </style>

@@ -52,5 +52,7 @@ import Lander from './pages/Lander.vue'
       box-shadow: 0 0 50vmin 100vmin rgba(0,0,0,1) inset
     to
       box-shadow: 0 0 15vmin 10vmin rgba(27, 27, 30, 0.8) inset
-
+*
+  &::selection
+    background rgba( 77, 82, 89, 0.75 )
 </style>

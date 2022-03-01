@@ -79,6 +79,7 @@ export class BlueMapApp {
    */
   switchMap (mapId, resetCameraIfNewWorld = false) {
     const map = this.mapsMap.get(mapId)
+    console.log(map)
     if (!map) return Promise.reject(new Error(`There is no map with the id "${mapId}" loaded!`))
 
     const oldWorld = this.mapViewer.map ? this.mapViewer.map.data.world : null

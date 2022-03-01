@@ -4,6 +4,7 @@ import LocationMarker from '../components/LocationMarker.vue'
 import {useRenderStore} from "../store/render";
 
 import { reactive } from 'vue'
+import SeasonMarker from "../components/SeasonMarker.vue";
 const render = useRenderStore()
 
 function carouselNext () {
@@ -13,11 +14,13 @@ function carouselNext () {
 </script>
 
 <template lang="pug">
+
 .ui-container
-  Logo
-  button(@click="carouselNext")
-    | Next Location
-  LocationMarker(:location="render.locationMarker")
+  header
+    SeasonMarker
+  main.content
+    Logo(@click="carouselNext")
+    LocationMarker(:location="render.locationMarker")
 </template>
 
 
