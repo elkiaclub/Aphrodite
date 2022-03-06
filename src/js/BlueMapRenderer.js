@@ -15,9 +15,7 @@ export class BlueMapApp {
    * @param rootElement {Element}
    */
   constructor (rootElement) {
-    this.events = rootElement
-
-    this.mapViewer = new MapViewer(rootElement, this.events)
+    this.mapViewer = new MapViewer(rootElement)
 
     /** @type {{useCookies: boolean, freeFlightEnabled: boolean, maps: []}} */
     this.settings = null
@@ -27,7 +25,7 @@ export class BlueMapApp {
     this.mapsMap = new Map()
 
     // map data
-    this.dataUrl = 'https://olympus.elkia.club/data/'
+    this.dataUrl = null
 
     // give animation manager access to controls
     this.animationManager = new AnimationManager(this.mapViewer)
@@ -90,6 +88,10 @@ export class BlueMapApp {
         }
       }
     })
+  }
+
+  setDataUrl (dataUrl) {
+    this.dataUrl = dataUrl
   }
 
   resetCamera () {

@@ -46,6 +46,10 @@ export const s6markers = [
     x: 572, y: 67, z: -1253
   },
   {
+    ign: 'Unknown',
+    x: 1521, y: 90, z: 329
+  },
+  {
     ign: 'Lord Anubis',
     lore: 'YES! I have become Death, Anubis, Lord of Edgde!',
     x: -83, y: 86, z: -89

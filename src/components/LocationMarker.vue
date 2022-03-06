@@ -7,38 +7,32 @@
           path(d="M336.76 161l-186.53 82.35c-10.47 4.8-6.95 20.67 4.57 20.67H244a4 4 0 014 4v89.18c0 11.52 16 15 20.78 4.56L351 175.24A10.73 10.73 0 00336.76 161z" fill="#fff").pointythingy
           path(fill="none" stroke-width="32" d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z").circle
       .lore
-        p {{ location.description }}
+        p {{ render.location.description }}
 
     section.locationDetails
       header
         .name
-          h2 {{ location.name }}
+          h2 {{ render.location.name }}
         .coordinates
           h4
             span
               b X:
-              | {{ location.coordinates.x }}
+              | {{ render.location.coordinates.x }}
             span
               b Y:
-              | {{ location.coordinates.y }}
+              | {{ render.location.coordinates.y }}
             span
               b Z:
-              | {{ location.coordinates.z }}
+              | {{ render.location.coordinates.z }}
 
 </template>
 
 <script setup>
-const props = defineProps({
-  location: {
-    name: String,
-    description: String,
-    coordinates: {
-      x: Number,
-      y: Number,
-      z: Number
-    }
-  }
-})
+import {useRenderStore} from "../store/render";
+import {reactive} from "vue";
+const render = reactive(useRenderStore())
+
+const animationState = 'loading' // traveling / loading / idle
 </script>
 <style scoped lang="stylus">
   @import '../styles/media'
@@ -62,6 +56,7 @@ const props = defineProps({
     width 100%
     .container
       display flex
+      background #1b1b1e
       //background-image: linear-gradient(90deg, rgba(174,85,85,1) 0%, rgba(174,85,85,1) 0%, rgba(174,85,85,1) 20%, rgba(176,115,79,1) 20%, rgba(176,115,79,1) 40%, rgba(185,162,94,1) 40%, rgba(185,162,94,1) 60%, rgba(145,209,171,1) 60%, rgba(145,209,171,1) 80%, rgba(114,153,255,1) 80%, rgba(114,153,255,1) 100%);
       box-sizing border-box
       background-origin: content-box;
@@ -72,7 +67,8 @@ const props = defineProps({
       margin-bottom 16px
       +maxXs()
         flex-direction column-reverse
-        background rgba(0, 0, 0, 0.75)
+        background rgba(27, 27, 30, 0.90)
+        border-top: 1px solid text-color
         margin-bottom 0px
         padding-bottom 6px
         padding-top 6px

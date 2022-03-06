@@ -21,8 +21,10 @@ import Lander from './pages/Lander.vue'
     min-height 100%
     height 100%
     display block
+    min-width 420px
   #app
     min-height 100%
+    min-width 420px
     height 100%
     width 100%
     position absolute
@@ -37,10 +39,10 @@ import Lander from './pages/Lander.vue'
     display flex
     z-index 1
     box-sizing border-box
-    animation fadeIn linear 6.66s
+    animation fadeIn linear 3.33s
     div
-      +minXs()
-        animation growInVignette linear 3.33s forwards
+      //+minXs()
+      animation growInVignette linear 2.22s forwards
   @keyframes fadeIn
     from
       opacity 0
@@ -49,9 +51,9 @@ import Lander from './pages/Lander.vue'
 
   @keyframes growInVignette
     from
-      box-shadow: 0 0 50vmin 100vmin rgba(0,0,0,1) inset
+      box-shadow: 0 0 100vmin 100vmin rgba(27, 27, 30 ,1) inset
     to
-      box-shadow: 0 0 15vmin 10vmin rgba(27, 27, 30, 0.8) inset
+      box-shadow: 0 0 15vmin 15vmin rgba(27, 27, 30, 0.5) inset
 *
   &::selection
     background rgba( 77, 82, 89, 0.75 )

@@ -21,9 +21,9 @@ export class AnimationManager {
 
   // gets called when map is opened
   async beginAnimation () {
-
-    // prepare scenes
-    const scenes = this.generateKeyframes()
+    //
+    // // prepare scenes
+    // const scenes = this.generateKeyframes()
 
     // animation runner
     const animation = () => {
@@ -133,14 +133,13 @@ export class AnimationManager {
 
   async awaitReadyState(){
     return new Promise(async (resolve, reject) => {
-      const checkReady = () => {
+      setInterval(async () => {
         if(!!this.ready) {
           resolve()
         } else {
-          setTimeout(this, 100)
+          await setTimeout(() => { return }, 100)
         }
-      }
-      setTimeout(reject,10000)
+      }, 100)
     })
   }
 

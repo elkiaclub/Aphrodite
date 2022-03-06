@@ -3,8 +3,14 @@
 <script setup>
 import {useRenderStore} from "../store/render";
 import {seasons} from "../assets/seasons";
+import {reactive} from "vue";
 const render = useRenderStore();
-const selectedSeason = render.season;
+const selectedSeason = reactive(render.season);
+
+function updateSeason(season) {
+  render.updateMap(season);
+}
+
 </script>
 
 <template lang="pug">
@@ -13,8 +19,8 @@ const selectedSeason = render.season;
     header
       h1 {{ selectedSeason.name }}
     nav(class="dropdown")
-      .season(v-for="season in seasons")
-        button(:disabled="!season.dataUrl")
+      .season(v-for="season in seasons" :key="season")
+        button(:disabled="!season.dataUrl" @click="updateSeason(season)")
           b(v-if="selectedSeason.name === season.name") {{ season.name }}
           p(v-else) {{ season.name }}
         .download(v-if="!!season.worldDownloadUrl")

@@ -1,29 +1,80 @@
 <script setup>
 import Logo from '../components/Logo.vue'
 import LocationMarker from '../components/LocationMarker.vue'
-import {useRenderStore} from "../store/render";
 
-import { reactive } from 'vue'
+import {onMounted, reactive} from 'vue'
 import SeasonMarker from "../components/SeasonMarker.vue";
+import { BlueMapApp } from '../js/BlueMapRenderer.js'
+
+import {useRenderStore} from "../store/render";
 const render = useRenderStore()
 
-function carouselNext () {
-  render.nextLocation(window.bluemap)
-}
+onMounted(() => {
+  // bluemap app
+  const bluemap = new BlueMapApp(document.getElementById('map-container'))
+  bluemap.setDebug(true)
+  const dataUrl = render.season.dataUrl
+  bluemap.setDataUrl(dataUrl)
+  // TODO: reload bluemap when the current season changes
+
+
+  // Load map data
+  bluemap.load()
+  render.bluemap = bluemap
+  // Begin the render loop
+  render.start()
+})
+
+
 
 </script>
 
 <template lang="pug">
 
 .ui-container
+  //| {{ render.season }}
   header
     SeasonMarker
-  main.content
-    Logo(@click="carouselNext")
-    LocationMarker(:location="render.locationMarker")
+  main
+    Logo
+  footer
+    LocationMarker
 </template>
 
 
-<style scoped>
-
+<style scoped lang="stylus">
+@import '../styles/media.styl'
+.ui-container
+  height: 100%
+  width 100%
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  +maxXs()
+    flex-direction column-reverse
+  main
+    width: 100%
+    height: 100%
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    position static
+    +maxXs()
+      position: absolute
+      top: .5em
+      left: 1em
+      height auto
+      width auto
+  header
+    //background red
+    justify-self flex-start
+    align-self flex-start
+    width: 100%
+    position: absolute
+    top: 0
+    left: 0
+    +maxXs()
+      position: relative
 </style>

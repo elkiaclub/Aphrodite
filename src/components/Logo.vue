@@ -20,16 +20,13 @@
       use.text-copy(xlink:href='#s-text')
 </template>
 
-<script setup>
-
-</script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
   @import '../styles/media'
   .logo
     overflow hidden // fixes scrollbar appearing when resizing the window too fast (while the transform is still animating width)
-    width 100%
+    width auto
     font-weight: 800;
     display flex
     font-size 24px
@@ -42,13 +39,13 @@
     background rgb(27, 27, 30)
     border 1px solid #4d5259
     +maxXs()
-      border-radius 0px
-      border none
+      border-radius .8em
+      //border none
       border-bottom 1px solid #4d5259
-      width 100vw
-      position absolute
-      top 0
-      left 0
+      //width 100vw
+      //position absolute
+      //top 0
+      //left 0
 
     &:hover
       transform scale(1.05)
@@ -68,18 +65,18 @@
       height 100px
       margin-right 10px
     +maxXs()
-      height 60px
-      font-size: 2.5em
-      min-width 250px
-      margin-right none
-
+      height 66px
+      font-size: 2.8em
+      min-width 300px
+      margin-right 0
+      margin-left -8px
   img
     transition all .2s ease-in-out
     height 120px
     +maxMd()
       height 100px
     +maxXs()
-      height 60px
+      height 66px
   .text-copy
     user-select: none
     fill none
