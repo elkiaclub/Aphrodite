@@ -1,3 +1,4 @@
+import {s4markers} from "./s4markers";
 import {s5markers} from "./s5markers";
 import {s6markers} from "./s6markers";
 export const seasons = [
@@ -16,12 +17,14 @@ export const seasons = [
   {
     name: 'Season 4',
     worldDownloadUrl: 'https://mega.nz/file/mgdiXIBZ#UkccTCVuTU0b-pKLFfBS9TTP8pTZd_ZdpJrnsDVt5t4',
+    dataUrl: '//olympus.elkia.club/s4mapData/web/data/',
+    locations: s4markers,
     date: 'Ended June 22nd 2020 ',
   },
   {
     name: 'Season 5',
     date: 'Started June 24th 2020 - Ended June 11th 2021',
-    worldDownloadUrl: 'https://mega.nz/file/gE0xjayS#iOil1rvKY8yhN9gzsUPqM2YoFfuKoLEhFiTWWkJ6xLU',
+    worldDownloadUrl: 'https://mega.nz/file/VcMwnLIb#2FaWJ-92DKC8fnhW0t7ALBhoU-IRk2BGbrIVYIfTmGM',
     dataUrl: '//olympus.elkia.club/s5mapData/web/data/',
     locations: s5markers,
   },
