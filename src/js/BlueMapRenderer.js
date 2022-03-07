@@ -40,6 +40,9 @@ export class BlueMapApp {
   /**
    * @returns {Promise<void|never>}
    */
+  destroy(){
+    this.animationManager.cancel()
+  }
   async load () {
     console.log('Loading BlueMap...')
     this.animationManager = new AnimationManager(this.mapViewer)

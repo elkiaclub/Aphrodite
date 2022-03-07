@@ -1,5 +1,5 @@
 <template lang="pug">
-.locationMarker
+.locationMarker(v-if="render.location")
   .container
     .dropPinIcon
       .icon

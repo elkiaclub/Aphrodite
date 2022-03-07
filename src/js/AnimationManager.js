@@ -4,19 +4,30 @@
 import { animate, EasingFunctions } from 'bluemap/src/util/Utils'
 import { MathUtils, Vector3} from 'three'
 
+import {useRenderStore} from "../store/render";
+import {reactive} from "vue";
+
 export class AnimationManager {
   constructor (mapViewer) {
     this.scenes = []
     // timing settings
     this.config = {
-      startDelay: 3000,
+      startDelay: 1200,
       transitionDuration: 200, // animation between slides in ms
-      sceneDuration: 3000, // default length of a scene
+      sceneDuration: 15000, // default length of a scene
 
     }
     // this is where I wish I had typescript lol
     this.controls = mapViewer.controlsManager
     this.animation = null
+    this.loop = null
+  }
+
+  cancel () {
+    if(this.loop){
+      clearInterval(this.loop)
+      this.loop = null
+    }
   }
 
   // gets called when map is opened
@@ -24,24 +35,18 @@ export class AnimationManager {
     //
     // // prepare scenes
     // const scenes = this.generateKeyframes()
+    const render = useRenderStore()
 
     // animation runner
     const animation = () => {
-      // set controls to starting position
-
-      // play keyframes
-
-      // transition to new position
-
-      // return this.flyToNewPosition(startPosition, targetPosition, 4500)
-
+      render.nextLocation()
     }
 
     // execute
     setTimeout(()=> {
       animation()
+      this.loop = setInterval(animation, this.config.sceneDuration)
     }, this.config.startDelay);
-
   }
 
   // animates a mapviewer transition between positions for a duration

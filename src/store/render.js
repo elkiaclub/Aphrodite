@@ -24,32 +24,23 @@ export const useRenderStore = defineStore({
   id: 'render',
   state: () => ({
     season: selectRandomSeason(),
-    location: {
-      id: 0,
-      name: 'World spawn',
-      description: 'the begining.',
-      dimension: 'Overworld',
-      coordinates: {
-        x: 0,
-        y: 85,
-        z: 0
-      }
-    },
     bluemap: null,
+    location: null,
     locations: [],
   }),
   actions: {
     async start() {
-        this.locations = this.getNextLocationSequence()
-        while (this.locations) {
-        const penis = new Promise((resolve, reject) => {
-          this.nextLocation()
-          setTimeout(() => {
-            resolve()
-          }, 15000)
-        })
-        await penis
-      }
+
+      //   this.locations = this.getNextLocationSequence()
+      //   while (this.locations) {
+      //   const penis = new Promise((resolve, reject) => {
+      //     this.nextLocation()
+      //     setTimeout(() => {
+      //       resolve()
+      //     }, 15000)
+      //   })
+      //   await penis
+      // }
     },
 
     shuffleLocations() {
@@ -58,13 +49,18 @@ export const useRenderStore = defineStore({
       }
     },
 
-    updateMap(season) {
+    async updateMap(season) {
       console.log('updateMap', season);
-      if(validSeasons.filter(s => s.name === season.name)) {
+      if(validSeasons.filter(s => s.name === season?.name)) {
+        if(this.bluemap) {
+          await this.bluemap.destroy();
+          this.location = null
+          this.locations = []
+        }
         this.season = season
         const bluemap = new BlueMapApp(this.bluemapContainer)
         bluemap.setDataUrl(this.season.dataUrl)
-        bluemap.load()
+        await bluemap.load()
         this.bluemap = bluemap
       }
     },
@@ -90,11 +86,12 @@ export const useRenderStore = defineStore({
     },
 
     // Selects a random location from the current season
-    nextLocation ()  {
+    async nextLocation ()  {
       console.log('nextLocation')
       if (this.locations.length === 0) {
-        if(!this.season) {
-          this.updateMap(selectRandomSeason())
+        if(!this.season || this.season.update) {
+          this.season.update = false
+          await this.updateMap(selectRandomSeason())
         }
         this.locations = this.getNextLocationSequence()
       }
@@ -102,7 +99,7 @@ export const useRenderStore = defineStore({
       // update locations to remove the one we just visited
       this.locations = this.locations.filter(location => location.id !== next.id)
       if (this.locations.length === 0) {
-        this.season = null
+        this.season.update = true
       }
       const nextLocation = {
         ...next,
@@ -110,9 +107,8 @@ export const useRenderStore = defineStore({
         rotation: 0,
         angle: 0,
       }
-
-      this.bluemap.animationManager.setLocation(nextLocation)
       this.location = next
+      await this.bluemap.animationManager.setLocation(nextLocation)
     }
   }
 })

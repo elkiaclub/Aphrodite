@@ -4,7 +4,7 @@
 import {useRenderStore} from "../store/render";
 import {seasons} from "../assets/seasons";
 import {reactive} from "vue";
-const render = reactive(useRenderStore());
+const render = reactive(useRenderStore())
 
 function updateSeason(season) {
   render.updateMap(season);
@@ -14,12 +14,12 @@ function updateSeason(season) {
 
 <template lang="pug">
 // A simple dropdown menu for selecting a map to show.
-.container(v-if="render.season")
+.container(v-if="!!render.season")
     header
       h1 {{ render.season.name }}
     nav(class="dropdown")
       .season(v-for="season in seasons" :key="season")
-        button(:disabled="!season.dataUrl" @click="updateSeason(season)")
+        button(:disabled="!season.dataUrl || season.name === render.season.name" @click="updateSeason(season)")
           b(v-if="render.season.name === season.name") {{ season.name }}
           p(v-else) {{ season.name }}
         .download(v-if="!!season.worldDownloadUrl")
