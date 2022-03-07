@@ -11,17 +11,17 @@ const render = useRenderStore()
 
 onMounted(() => {
   // bluemap app
-  const bluemap = new BlueMapApp(document.getElementById('map-container'))
-  bluemap.setDebug(true)
-  const dataUrl = render.season.dataUrl
-  bluemap.setDataUrl(dataUrl)
-  // TODO: reload bluemap when the current season changes
-
-
-  // Load map data
-  bluemap.load()
-  render.bluemap = bluemap
+  // bluemap.setDebug(true)
+  // const dataUrl = render.season.dataUrl
+  // bluemap.setDataUrl(dataUrl)
+  // // TODO: reload bluemap when the current season changes
+  //
+  //
+  // // Load map data
+  // bluemap.load()
+  render.bluemapContainer = document.getElementById('map-container')
   // Begin the render loop
+  render.updateMap(render.season)
   render.start()
 })
 

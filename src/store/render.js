@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
 import {seasons} from "../assets/seasons";
 import {shuffle} from "../js/shuffleArray";
+import {AnimationManager} from "../js/AnimationManager";
+import {BlueMapApp} from "../js/BlueMapRenderer";
 // Manages data for the map render
 
 // const selectedSeason = seasons.find(season => season.name === 'Season 6');
 const validSeasons = seasons.filter(season => !!season.dataUrl && !!season.locations) // find seasons with valid dataUrl and markers
-console.log(validSeasons);
 
 let lastIndex = -1;
 const selectRandomSeason = () => {
@@ -35,6 +36,7 @@ export const useRenderStore = defineStore({
       }
     },
     bluemap: null,
+    locations: [],
   }),
   actions: {
     async start() {
@@ -58,13 +60,16 @@ export const useRenderStore = defineStore({
 
     updateMap(season) {
       console.log('updateMap', season);
-      this.state.season = validSeasons.find(s=> s.name === season.name);
-      this.bluemap.setDataUrl(this.state.season.dataUrl)
-      this.bluemap.load()
+      if(validSeasons.filter(s => s.name === season.name)) {
+        this.season = season
+        const bluemap = new BlueMapApp(this.bluemapContainer)
+        bluemap.setDataUrl(this.season.dataUrl)
+        bluemap.load()
+        this.bluemap = bluemap
+      }
     },
 
     getNextLocationSequence() {
-
       const locations = this.season.locations.map((location, index) => {
         const marker = {
           id: index,
@@ -82,14 +87,25 @@ export const useRenderStore = defineStore({
 
       const locationSequence = shuffle(locations)
       return locationSequence
-
     },
+
+    // Selects a random location from the current season
     nextLocation ()  {
       console.log('nextLocation')
-      const locations = this.locations
-      const next = locations[[Math.floor(Math.random()*locations.length)]]
+      if (this.locations.length === 0) {
+        if(!this.season) {
+          this.updateMap(selectRandomSeason())
+        }
+        this.locations = this.getNextLocationSequence()
+      }
+      const next = this.locations[[Math.floor(Math.random()*this.locations.length)]]
+      // update locations to remove the one we just visited
+      this.locations = this.locations.filter(location => location.id !== next.id)
+      if (this.locations.length === 0) {
+        this.season = null
+      }
       const nextLocation = {
-        coordinates: { ...next.coordinates },
+        ...next,
         distance: 1,
         rotation: 0,
         angle: 0,

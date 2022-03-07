@@ -22,14 +22,14 @@ export const seasons = [
     name: 'Season 5',
     date: 'Started June 24th 2020 - Ended June 11th 2021',
     worldDownloadUrl: 'https://mega.nz/file/gE0xjayS#iOil1rvKY8yhN9gzsUPqM2YoFfuKoLEhFiTWWkJ6xLU',
-    dataUrl: 'https://olympus.elkia.club/data/',
+    dataUrl: 'http://168.138.92.143/s5mapData/web/data/',
     locations: s5markers,
   },
   {
     name: 'Season 6',
     description: 'Used a custom preset for wild floating islands that presented a very challenging terrain.',
     date: 'Started June 11th 2021 - Ended June 11th 2021',
-    dataUrl: 'http://168.138.92.143/data/',
+    dataUrl: 'http://168.138.92.143/s6mapData/web/data/',
     worldDownloadUrl: 'https://mega.nz/file/II1W0ApR#Z8CfaunLHqlriJl_QuBznZRm8Dfn84U5mq7i3f95Yps',
     locations: s6markers,
 

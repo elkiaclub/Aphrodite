@@ -28,7 +28,7 @@ export class BlueMapApp {
     this.dataUrl = null
 
     // give animation manager access to controls
-    this.animationManager = new AnimationManager(this.mapViewer)
+    this.animationManager = null
 
     this.appState = {
       maps: [],
@@ -41,6 +41,8 @@ export class BlueMapApp {
    * @returns {Promise<void|never>}
    */
   async load () {
+    console.log('Loading BlueMap...')
+    this.animationManager = new AnimationManager(this.mapViewer)
     const oldMaps = this.maps
     this.maps = []
     this.appState.maps.splice(0, this.appState.maps.length)
@@ -92,6 +94,8 @@ export class BlueMapApp {
 
   setDataUrl (dataUrl) {
     this.dataUrl = dataUrl
+    // re-load maps
+    this.settings = null
   }
 
   resetCamera () {
