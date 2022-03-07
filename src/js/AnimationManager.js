@@ -12,8 +12,8 @@ export class AnimationManager {
     this.scenes = []
     // timing settings
     this.config = {
-      startDelay: 1200,
-      transitionDuration: 200, // animation between slides in ms
+      startDelay: 200,
+      transitionDuration: 1200, // animation between slides in ms
       sceneDuration: 15000, // default length of a scene
 
     }
@@ -24,6 +24,7 @@ export class AnimationManager {
   }
 
   cancel () {
+    console.log('cancelling animation')
     if(this.loop){
       clearInterval(this.loop)
       this.loop = null
@@ -39,14 +40,11 @@ export class AnimationManager {
 
     // animation runner
     const animation = () => {
+      console.log('animation loop')
       render.nextLocation()
     }
-
-    // execute
-    setTimeout(()=> {
-      animation()
-      this.loop = setInterval(animation, this.config.sceneDuration)
-    }, this.config.startDelay);
+    setTimeout( animation(), this.transitionDuration)
+    this.loop = setInterval( animation, this.config.sceneDuration + this.config.transitionDuration)
   }
 
   // animates a mapviewer transition between positions for a duration

@@ -50,18 +50,19 @@ export const useRenderStore = defineStore({
     },
 
     async updateMap(season) {
-      console.log('updateMap', season);
+      console.log('updating map')
+      console.log(lastIndex)
       if(validSeasons.filter(s => s.name === season?.name)) {
         if(this.bluemap) {
+          this.location = null;
           await this.bluemap.destroy();
-          this.location = null
-          this.locations = []
         }
         this.season = season
+        this.locations = this.getNextLocationSequence()
         const bluemap = new BlueMapApp(this.bluemapContainer)
         bluemap.setDataUrl(this.season.dataUrl)
-        await bluemap.load()
         this.bluemap = bluemap
+        await bluemap.load()
       }
     },
 
@@ -86,29 +87,36 @@ export const useRenderStore = defineStore({
     },
 
     // Selects a random location from the current season
-    async nextLocation ()  {
+    async nextLocation () {
       console.log('nextLocation')
+
       if (this.locations.length === 0) {
-        if(!this.season || this.season.update) {
+        if (!this.season || this.season.update) {
+          const season = selectRandomSeason()
+          console.log('next locations is a new season', season)
           this.season.update = false
-          await this.updateMap(selectRandomSeason())
+          this.location = null
+          await this.updateMap(season)
         }
-        this.locations = this.getNextLocationSequence()
+      } else {
+
+        const next = this.locations[[Math.floor(Math.random() * this.locations.length)]]
+        // update locations to remove the one we just visited
+        this.locations = this.locations.filter(location => location.id !== next.id)
+        if (this.locations.length === 0) {
+          this.season.update = true
+        }
+        const nextLocation = {
+          ...next,
+          distance: 1,
+          rotation: 0,
+          angle: 0,
+        }
+        this.location = next
+        console.log(this.bluemap)
+        await this.bluemap.animationManager.setLocation(nextLocation)
       }
-      const next = this.locations[[Math.floor(Math.random()*this.locations.length)]]
-      // update locations to remove the one we just visited
-      this.locations = this.locations.filter(location => location.id !== next.id)
-      if (this.locations.length === 0) {
-        this.season.update = true
-      }
-      const nextLocation = {
-        ...next,
-        distance: 1,
-        rotation: 0,
-        angle: 0,
-      }
-      this.location = next
-      await this.bluemap.animationManager.setLocation(nextLocation)
     }
-  }
+    }
+
 })
