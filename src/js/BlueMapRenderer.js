@@ -40,23 +40,22 @@ export class BlueMapApp {
   /**
    * @returns {Promise<void|never>}
    */
-  destroy(){
-    this.animationManager.cancel()
-  }
   async load () {
     console.log('Loading BlueMap...')
-    this.animationManager = new AnimationManager(this.mapViewer)
+    // cancel previous update loop
+    if(this.animationManager) this.animationManager.cancel()
+
+    // clear maps
     const oldMaps = this.maps
     this.maps = []
     this.appState.maps.splice(0, this.appState.maps.length)
     this.mapsMap.clear()
-
-    // load settings
-    await this.getSettings()
-
     // unload loaded maps
     await this.mapViewer.switchMap(null)
     oldMaps.forEach(map => map.dispose())
+
+    // load settings
+    await this.getSettings()
 
     // load maps
     this.maps = this.loadMaps()
@@ -70,9 +69,11 @@ export class BlueMapApp {
 
     // set view
     this.resetCamera()
+    this.setDebug(true)
 
     // start app update loop
-    if (this.updateLoop) clearTimeout(this.updateLoop)
+    this.animationManager = new AnimationManager(this.mapViewer)
+    await this.animationManager.beginAnimation()
   }
 
   /**
@@ -98,25 +99,22 @@ export class BlueMapApp {
   setDataUrl (dataUrl) {
     this.dataUrl = dataUrl
     // re-load maps
-    this.settings = null
+    // re-load maps
   }
 
   resetCamera () {
     const map = this.mapViewer.map
     const controls = this.mapViewer.controlsManager
     if (map) {
-      controls.position.set(0,85,0)
+      controls.position.set(0,64,0)
       controls.distance = 0
-      controls.angle = Math.PI / 2
+      controls.angle = 0
       controls.rotation = 0
       controls.tilt = 0
       controls.ortho = 0
     }
     // disable user controls
     controls.controls = null
-
-    // start animation
-    this.animationManager.beginAnimation()
   }
 
   /**
@@ -177,25 +175,15 @@ export class BlueMapApp {
     })
   }
 
-  // async beginAnimation () {
-  //   console.log('animating')
-  //   const controls = this.mapViewer.controlsManager
-  //   return this.transition(controls, controls.rotation, -Math.PI, 22000)
-  // }
-  //
-  // transition (controls, startRotation, targetRotation, duration) {
-  //   return animate(p => {
-  //     const ep = EasingFunctions.easeInOutQuint(p)
-  //     const rotation = MathUtils.lerp(startRotation, targetRotation, ep)
-  //     controls.rotation = rotation
-  //   }, duration)
-  // }
-
   setDebug (debug) {
     this.appState.debug = debug
 
     if (debug) {
+      // fps
       this.mapViewer.stats.showPanel(0)
+      // memory
+      // this.mapViewer.stats.showPanel(3)
+
     } else {
       this.mapViewer.stats.showPanel(-1)
     }

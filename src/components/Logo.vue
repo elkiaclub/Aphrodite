@@ -1,6 +1,6 @@
 <template lang="pug">
 .logo
-  img(src="../assets/logo_without_text.svg")
+  img(src="../assets/icon.svg")
   svg(viewbox='0 0 100% 100%')
     symbol#s-text
       text(text-anchor='middle' x='50%' y='90%') elkia.club
@@ -36,7 +36,7 @@
     max-height 250px
     will-change transform
     border-radius 33px
-    background rgb(27, 27, 30)
+    background rgba(27, 27, 30, 0.88)
     border 1px solid #4d5259
     +maxXs()
       border-radius .8em

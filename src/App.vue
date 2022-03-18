@@ -1,10 +1,22 @@
+<script setup>
+import Lander from './pages/Lander.vue'
+import {onMounted} from 'vue'
+
+import {useRenderStore} from "./store/render";
+const render = useRenderStore()
+
+onMounted(() => {
+  console.log('app mounted')
+  // Load map data
+  render.bluemapContainer = document.getElementById('map-container')
+  render.load()
+})
+
+</script>
+
 <template lang="pug">
 Lander
 </template>
-
-<script setup>
-import Lander from './pages/Lander.vue'
-</script>
 
 <style lang="stylus">
   @import './styles/media'
@@ -38,6 +50,7 @@ import Lander from './pages/Lander.vue'
     width 100%
     display flex
     z-index 1
+    //background red
     box-sizing border-box
     animation fadeIn linear 3.33s
     div

@@ -1,13 +1,15 @@
-import { defineStore } from 'pinia'
-import {seasons} from "../assets/seasons";
-import {shuffle} from "../js/shuffleArray";
-import {AnimationManager} from "../js/AnimationManager";
-import {BlueMapApp} from "../js/BlueMapRenderer";
 // Manages data for the map render
+// this gets injected the bluemapContainer DOMelement value whenever the app is loaded
+import { defineStore } from 'pinia'
+import { seasons } from "../assets/seasons"
+import { shuffle } from "../js/shuffleArray"
+import { AnimationManager } from "../js/AnimationManager"
+import { BlueMapApp } from "../js/BlueMapRenderer"
 
-// const selectedSeason = seasons.find(season => season.name === 'Season 6');
 const validSeasons = seasons.filter(season => !!season.dataUrl && !!season.locations) // find seasons with valid dataUrl and markers
+// const selectedSeason = seasons.find(season => season.name === 'Season 6');
 
+// initialize on a random season
 let lastIndex = -1;
 const selectRandomSeason = () => {
   do {
@@ -20,27 +22,22 @@ const selectRandomSeason = () => {
   return validSeasons[index]
 }
 
+// the store and its methods
 export const useRenderStore = defineStore({
   id: 'render',
   state: () => ({
     season: selectRandomSeason(),
     bluemap: null,
+    bluemapContainer: null,
     location: null,
     locations: [],
   }),
   actions: {
-    async start() {
-
-      //   this.locations = this.getNextLocationSequence()
-      //   while (this.locations) {
-      //   const penis = new Promise((resolve, reject) => {
-      //     this.nextLocation()
-      //     setTimeout(() => {
-      //       resolve()
-      //     }, 15000)
-      //   })
-      //   await penis
-      // }
+    // handles bluemap initialization
+    async load() {
+      this.bluemap = new BlueMapApp(this.bluemapContainer)
+      await this.updateMap(this.season)
+      console.log('~~bluemap complete~~')
     },
 
     shuffleLocations() {
@@ -51,18 +48,11 @@ export const useRenderStore = defineStore({
 
     async updateMap(season) {
       console.log('updating map')
-      console.log(lastIndex)
       if(validSeasons.filter(s => s.name === season?.name)) {
-        if(this.bluemap) {
-          this.location = null;
-          await this.bluemap.destroy();
-        }
         this.season = season
         this.locations = this.getNextLocationSequence()
-        const bluemap = new BlueMapApp(this.bluemapContainer)
-        bluemap.setDataUrl(this.season.dataUrl)
-        this.bluemap = bluemap
-        await bluemap.load()
+        this.bluemap.setDataUrl(this.season.dataUrl)
+        await this.bluemap.load()
       }
     },
 
@@ -72,7 +62,6 @@ export const useRenderStore = defineStore({
           id: index,
           name: location.ign,
           description: location.lore,
-          dimension: !!location.dimension ? location.dimension : 'Overworld',
           coordinates: {
             x: location.x,
             y: location.y,
@@ -117,6 +106,6 @@ export const useRenderStore = defineStore({
         await this.bluemap.animationManager.setLocation(nextLocation)
       }
     }
-    }
+  }
 
 })

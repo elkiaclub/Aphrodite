@@ -1,31 +1,10 @@
 <script setup>
 import Logo from '../components/Logo.vue'
 import LocationMarker from '../components/LocationMarker.vue'
-
-import {onMounted, reactive} from 'vue'
 import SeasonMarker from "../components/SeasonMarker.vue";
-import { BlueMapApp } from '../js/BlueMapRenderer.js'
 
 import {useRenderStore} from "../store/render";
 const render = useRenderStore()
-
-onMounted(() => {
-  // bluemap app
-  // bluemap.setDebug(true)
-  // const dataUrl = render.season.dataUrl
-  // bluemap.setDataUrl(dataUrl)
-  // // TODO: reload bluemap when the current season changes
-  //
-  //
-  // // Load map data
-  // bluemap.load()
-  render.bluemapContainer = document.getElementById('map-container')
-  // Begin the render loop
-  render.updateMap(render.season)
-  render.start()
-})
-
-
 
 </script>
 
@@ -35,8 +14,8 @@ onMounted(() => {
   //| {{ render.season }}
   header
     SeasonMarker
-  main
-    Logo
+  //main
+  //  Logo(@click="render.nextLocation()")
   footer
     LocationMarker
 </template>
@@ -45,6 +24,7 @@ onMounted(() => {
 <style scoped lang="stylus">
 @import '../styles/media.styl'
 .ui-container
+  background none
   height: 100%
   width 100%
   display: flex
@@ -68,7 +48,6 @@ onMounted(() => {
       height auto
       width auto
   header
-    //background red
     justify-self flex-start
     align-self flex-start
     width: 100%

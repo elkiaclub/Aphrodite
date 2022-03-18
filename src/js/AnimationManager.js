@@ -4,6 +4,11 @@
 import { animate, EasingFunctions } from 'bluemap/src/util/Utils'
 import { MathUtils, Vector3} from 'three'
 
+// covert degrees (0-360) to radians (0-2PI)
+function degToRad(degrees) {
+  return degrees * ( Math.PI / 180);
+}
+
 import {useRenderStore} from "../store/render";
 import {reactive} from "vue";
 
@@ -29,13 +34,14 @@ export class AnimationManager {
       clearInterval(this.loop)
       this.loop = null
     }
+    if(this.animation){
+      this.animation.cancel()
+      this.animation = null
+    }
   }
 
   // gets called when map is opened
   async beginAnimation () {
-    //
-    // // prepare scenes
-    // const scenes = this.generateKeyframes()
     const render = useRenderStore()
 
     // animation runner
@@ -114,7 +120,7 @@ export class AnimationManager {
     while(this.idle) {
     this.ready = false
     const randomDistance = Math.random() * (64 - 22) + 22
-    const randomRotation = Math.random() * Math.PI * 2
+    const randomRotation = degToRad(Math.random() * 360)
     const randomAngle = Math.random() * (Math.PI / 2 - 0.2)
 
     const startPosition = {
@@ -181,46 +187,5 @@ export class AnimationManager {
     this.idle = true
     this.ready = false
     await this.highlightLocation()
-  }
-
-  // takes locations and turns them into animation
-  generateKeyframes () {
-    const scenes = [
-      {
-        title: 'Spawn',
-        lore: 'Where members begin their adventure. The farms at spawn are public to use, just make sure to replant and breed to replace animals.',
-        coordinates: {
-          x: 0, y: 95, z: 0
-        },
-        keyframes: [
-          {
-            coordinates: {
-              x: 0, y: 250, z: 0
-            },
-            rotation: 0,
-            angle: Math.PI / 2 - 1,
-          }
-        ]
-
-      },
-      {
-        title: 'Caoimhin\'s Abode',
-        lore: 'Where members begin their adventure. The farms at spawn are public to use, just make sure to replant and breed to replace animals.',
-        coordinates: {
-          x: 45, y: 90, z: 130
-        }
-      },
-    ]
-    const transition = {
-      duration: 200,
-    }
-
-    // generate keyframes
-    for(const scene in scenes) {
-      if(!scene.keyframes){
-      // create a rotating scene in a topdown view around the target coordinates
-        const animation = []
-      }
-    }
   }
 }

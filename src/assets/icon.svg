@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512.00001" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.41420996">
-    <rect width="512" height="512" ry="135.27226" fill="#1b1b1e" fill-rule="nonzero" paint-order="markers stroke fill"/>
+<!--    <rect width="512" height="512" ry="135.27226" fill="#1b1b1e" fill-rule="nonzero" paint-order="markers stroke fill"/>-->
     <defs>
         <filter id="a" color-interpolation-filters="sRGB">
             <feFlood flood-opacity="1" flood-color="#FFF07C" result="flood"/>

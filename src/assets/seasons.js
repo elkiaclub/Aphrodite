@@ -1,6 +1,7 @@
 import {s4markers} from "./s4markers";
 import {s5markers} from "./s5markers";
 import {s6markers} from "./s6markers";
+import {s3markers} from "./s3markers";
 export const seasons = [
   {
     name: 'Season 1',
@@ -12,7 +13,9 @@ export const seasons = [
   },
   {
     name: 'Season 3',
-    worldDownloadUrl: 'https://mega.nz/file/Ko0RgJCa#cssJoFqgLXr2JmWuMEsBKv0mGvoGBWSGAJNRJYNWAqI'
+    worldDownloadUrl: 'https://mega.nz/file/Ko0RgJCa#cssJoFqgLXr2JmWuMEsBKv0mGvoGBWSGAJNRJYNWAqI',
+    dataUrl: '//olympus.elkia.club/s3mapData/web/data/',
+    locations: s3markers,
   },
   {
     name: 'Season 4',

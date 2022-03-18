@@ -29,7 +29,7 @@ export const s5markers = [
   },
   {
     ign: 'Donuthoofd',
-    x: 7000, y: 64, z: 8900
+    x: 7000, y: 73, z: 8900
   },
   {
     ign: 'DogsEatFood',

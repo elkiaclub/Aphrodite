@@ -3,11 +3,11 @@ export const s4markers = [
     ign: 'Spawn Island',
     x: 800, y: 64, z: -1600,
   },  {
-    ign: 'Shopping District',
-    x: 1050, y: 64, z: 1250,
+    ign: 'Underwater Shopping District',
+    x: 1050, y: 45, z: -1250,
   },  {
     ign: 'Westworld',
-    x: -4200, y: 64, z: -900,
+    x: -4147, y: 85, z: -872,
   },  {
     ign: 'Cerx\'s settlement',
     lore: 'It\'s a hole',
@@ -24,12 +24,11 @@ export const s4markers = [
     ign: 'Colorized\'s Main Island',
     lore: 'It ain\'t much, but it\'s home',
     x: 696, y: 64, z: 3146,
+  }, {
+    ign: 'Goose\'s TRee',
+    lore: 'Is big tree. what else can I say?',
+    x: 1439, y: 200, z: -447,
   },
-  // {
-  //   ign: 'Goose\'s TRee',
-  //   lore: 'Is big tree. what else can I say?',
-  //   x: 750, y: 64, z: -1500,
-  // },
   {
     ign: 'Parthenon',
     x: 1660, y: 94, z: -1912,
@@ -70,8 +69,22 @@ export const s4markers = [
     lore: 'It\'s far more functional than it is pretty',
     x: -184, y: 64, z: -2281,
   }, {
-    ign: 'The big tunnel',
-    lore: 'This tunnel was dug out of boredom one day as a 2x2 hole, later made bigger.',
-    x: 638, y: 64, z: -1521,
+    ign: 'Cor\'s castle',
+    x: 678, y: 83, z: -1536,
+  }, {
+    ign: 'Borg Cube',
+    x: -1713, y: 185, z: -529,
+  }, {
+    ign: '14-inch Coastal Battery',
+    lore: 'A turret protecting against potential naval invasions, this coastal battery is intended to be manned by 20 personnel. Thankfully, no naval invasion has taken place ... so far.',
+    x: 856, y: 75, z: -978,
+  },  {
+    ign: 'Bridge to Brooklyn Heights',
+    lore: 'The pathway between the Estate of Cor and Brooklyn Heights is well-illuminated to guide travelers and ward off hostile entities at nighttime.',
+    x: 773, y: 69, z: -966,
+  },  {
+    ign: 'St. BeeUK Multidenominational Cathedral',
+    lore: 'Dedicated in honor of St. BeeUK, this cathedral serves as a center of worship for the residents of Brooklyn Heights. It is constructed out of concrete, brick, and granite, along with Nether-sourced resources such as Quartz and Pigmen Gold.',
+    x: 803, y: 70, z: -847,
   }
 ]
