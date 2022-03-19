@@ -118,25 +118,25 @@ export class AnimationManager {
   async highlightLocation () {
     // Picks a random distance and angle to animate idle camera
     while(this.idle) {
-    this.ready = false
-    const randomDistance = Math.random() * (64 - 22) + 22
-    const randomRotation = degToRad(Math.random() * 360)
-    const randomAngle = Math.random() * (Math.PI / 2 - 0.2)
+      this.ready = false
+      const randomDistance = Math.random() * (64 - 22) + 22
+      const randomRotation = degToRad(Math.random() * 360)
+      const randomAngle = Math.random() * (Math.PI / 2 - 0.2)
 
-    const startPosition = {
-      distance: this.controls.distance,
-      rotation: this.controls.rotation,
-      angle: this.controls.angle,
-    }
-    const endPosition = {
-      distance: randomDistance,
-      rotation: randomRotation,
-      angle: Math.PI / 2 - randomAngle,
-    }
-    await this.transition(startPosition, endPosition, 6000)
-    if(!this.idle) {
-      this.ready = true
-    }
+      const startPosition = {
+        distance: this.controls.distance,
+        rotation: this.controls.rotation,
+        angle: this.controls.angle,
+      }
+      const endPosition = {
+        distance: randomDistance,
+        rotation: randomRotation,
+        angle: Math.PI / 2 - randomAngle,
+      }
+      await this.transition(startPosition, endPosition, 6000)
+      if(!this.idle) {
+        this.ready = true
+      }
     }
   }
 
