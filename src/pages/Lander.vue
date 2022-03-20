@@ -14,8 +14,8 @@ const render = useRenderStore()
   //| {{ render.season }}
   header
     SeasonMarker
-  //main
-  //  Logo(@click="render.nextLocation()")
+  main
+    Logo(@click="render.nextLocation()")
   footer
     LocationMarker
 </template>

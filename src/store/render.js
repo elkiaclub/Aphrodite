@@ -35,7 +35,6 @@ export const useRenderStore = defineStore({
   actions: {
     // handles bluemap initialization
     async load() {
-      this.bluemap = new BlueMapApp(this.bluemapContainer)
       await this.updateMap(this.season)
       console.log('~~bluemap complete~~')
     },
@@ -49,10 +48,16 @@ export const useRenderStore = defineStore({
     async updateMap(season) {
       console.log('updating map')
       if(validSeasons.filter(s => s.name === season?.name)) {
-        this.season = season
-        this.locations = this.getNextLocationSequence()
-        this.bluemap.setDataUrl(this.season.dataUrl)
-        await this.bluemap.load()
+        if(this.bluemap) {
+          await this.bluemap.destroy()
+          this.bluemap = null
+        }
+          this.season = season
+          this.locations = this.getNextLocationSequence()
+          this.bluemap = new BlueMapApp(this.bluemapContainer)
+
+          this.bluemap.setDataUrl(this.season.dataUrl)
+          await this.bluemap.load()
       }
     },
 

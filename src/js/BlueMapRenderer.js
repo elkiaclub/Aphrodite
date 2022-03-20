@@ -30,10 +30,6 @@ export class BlueMapApp {
     // give animation manager access to controls
     this.animationManager = null
 
-    this.appState = {
-      maps: [],
-    }
-
     this.updateLoop = null
   }
 
@@ -41,18 +37,18 @@ export class BlueMapApp {
    * @returns {Promise<void|never>}
    */
   async load () {
+
     console.log('Loading BlueMap...')
-    // cancel previous update loop
-    if(this.animationManager) this.animationManager.cancel()
+    console.log(this.mapViewer.renderer.info)
 
     // clear maps
     const oldMaps = this.maps
     this.maps = []
-    this.appState.maps.splice(0, this.appState.maps.length)
     this.mapsMap.clear()
     // unload loaded maps
-    await this.mapViewer.switchMap(null)
-    oldMaps.forEach(map => map.dispose())
+    this.mapViewer.clearTileCache()
+    await this.mapViewer.switchMap(null);
+    oldMaps.forEach(map => map.dispose());
 
     // load settings
     await this.getSettings()
@@ -61,7 +57,6 @@ export class BlueMapApp {
     this.maps = this.loadMaps()
     for (const map of this.maps) {
       this.mapsMap.set(map.data.id, map)
-      this.appState.maps.push(map.data)
     }
 
     // switch to map
@@ -74,6 +69,29 @@ export class BlueMapApp {
     // start app update loop
     this.animationManager = new AnimationManager(this.mapViewer)
     await this.animationManager.beginAnimation()
+  }
+
+  async unload () {
+    if(this.animationManager) this.animationManager.cancel()
+    console.log('Unloading BlueMap...')
+    //stop render loop
+    console.log(this.mapViewer.renderLoop)
+    await cancelAnimationFrame(this.mapViewer.nextFrame)
+    this.mapViewer.renderer.dispose()
+
+
+
+    console.log('penis')
+    // await this.mapViewer.switchMap(null)
+    // oldMaps.forEach(map => {
+    //   console.log('Unloading map:', map.data.id)
+    //   map.dispose()
+    // });
+
+  }
+
+  async destroy () {
+    await this.unload()
   }
 
   /**
@@ -99,14 +117,14 @@ export class BlueMapApp {
   setDataUrl (dataUrl) {
     this.dataUrl = dataUrl
     // re-load maps
-    // re-load maps
+    this.settings = null
   }
 
   resetCamera () {
     const map = this.mapViewer.map
     const controls = this.mapViewer.controlsManager
     if (map) {
-      controls.position.set(0,64,0)
+      controls.position.set(0,128,0)
       controls.distance = 0
       controls.angle = 0
       controls.rotation = 0
@@ -176,8 +194,6 @@ export class BlueMapApp {
   }
 
   setDebug (debug) {
-    this.appState.debug = debug
-
     if (debug) {
       // fps
       this.mapViewer.stats.showPanel(0)
