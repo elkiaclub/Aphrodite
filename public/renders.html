@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <!-- Title -->
+    <title>elkia.club map renders</title>
+
+    <!-- The most basic css in existence -->
+    <style>
+        * {
+            margin:0;
+            box-sizing: border-box;
+        }
+        html, body {
+            height: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        body {
+            background: #1B1B1E;
+            font-family: "Trebuchet MS", Helvetica, sans-serif;
+            color: #4d5259;
+            font-size: 1.8em;
+        }
+        ul  {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+
+        }
+        h1 {
+            font-size: 2.5em;
+            padding-bottom: .1em;
+            justify-self: start;
+        }
+        @media only screen and (max-width: 1200px) {
+            h1 {
+                text-align: center;
+                font-size: 1.5em;
+                padding-bottom: .5em;
+                justify-self: start;
+            }
+        }
+        li {
+            border: 1px solid rgb(54, 57, 62);
+            padding: 1em;
+            box-sizing: border-box;
+            background: #1B1B1E;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        a {
+            color: #4d5259;
+            text-decoration: none;
+        }
+        .rainbow {
+            color: #1B1B1E;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(90deg, rgba(174,85,85,1) 0%, rgba(174,85,85,1) 0%, rgba(174,85,85,1) 20%, rgba(176,115,79,1) 20%, rgba(176,115,79,1) 40%, rgba(185,162,94,1) 40%, rgba(185,162,94,1) 60%, rgba(145,209,171,1) 60%, rgba(145,209,171,1) 80%, rgba(114,153,255,1) 80%, rgba(114,153,255,1) 100%);
+        }
+        a:hover {
+            color: rgba(114,153,255,1);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1><span class="rainbow"><a href="//elkia.club">elkia.club</a></span> map&nbsp;renders</h1>
+    <ul>
+        <li> <a href="//olympus.elkia.club/s1mapData/web/"> Season 1 </a></li>
+        <li> <a href="//olympus.elkia.club/s2mapData/web/"> Season 2 </a></li>
+        <li> <a href="//olympus.elkia.club/s3mapData/web/"> Season 3 </a></li>
+        <li> <a href="//olympus.elkia.club/s4mapData/web/"> Season 4 </a></li>
+        <li> <a href="//olympus.elkia.club/s5mapData/web/"> Season 5 </a></li>
+        <li> <a href="//olympus.elkia.club/s6mapData/web/"> Season 6 </a></li>
+    </ul>
+</body>
+</html>
+

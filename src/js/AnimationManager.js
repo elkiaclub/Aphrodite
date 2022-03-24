@@ -9,8 +9,15 @@ function degToRad(degrees) {
   return degrees * ( Math.PI / 180);
 }
 
-import {useRenderStore} from "../store/render";
-import {reactive} from "vue";
+function keyframeCamera (position, lookingAt) {
+  // calculate the camera angle and rotation from the position and lookingAt
+  // vectors
+  let cameraAngle = Math.atan2(lookingAt.y, lookingAt.x)
+  let cameraRotation = Math.atan2(lookingAt.z, lookingAt.x)
+}
+
+import { useRenderStore } from "../store/render";
+
 
 export class AnimationManager {
   constructor (mapViewer) {
@@ -94,14 +101,14 @@ export class AnimationManager {
     // creates "zoomed out" mid-points for the animation
     const zoomOutStartPosition = {
       ...startPosition,
-      coordinates: { ...startPosition.coordinates, y: startPosition.coordinates.y + 128 },
+      coordinates: { ...startPosition.coordinates, y: startPosition.coordinates.y <= 256 ? startPosition.coordinates.y + 512 : startPosition.coordinates.y },
       angle: 0,
       distance: 0,
     }
     const zoomOutEndPosition = {
       ...endPosition,
       distance: 0,
-      coordinates: { ...endPosition.coordinates, y: endPosition.coordinates.y + 128 },
+      coordinates: { ...endPosition.coordinates, y: endPosition.coordinates.y + 512 },
       angle: 0,
     }
 
@@ -109,9 +116,13 @@ export class AnimationManager {
     console.log(endPosition.coordinates)
     // run animation
     const animationStepDuration = duration / 4
+    this.controls.trackPosition.highRes = true
     await this.transition(startPosition, zoomOutStartPosition, animationStepDuration, (p) => EasingFunctions.easeInQuint(p))
+    this.controls.trackPosition.highRes = false
     await this.transition(zoomOutStartPosition, zoomOutEndPosition, animationStepDuration * 2, (p) => EasingFunctions.easeInOutQuart(p))
+    this.controls.trackPosition.highRes = true
     await this.transition(zoomOutEndPosition, endPosition, animationStepDuration, (p) => EasingFunctions.easeOutQuint(p))
+    this.controls.trackPosition.highRes = false
     return true
   }
 
@@ -183,7 +194,10 @@ export class AnimationManager {
       rotation: randomRotation,
       angle: Math.PI / 2 - randomAngle,
     }
+    // load low poly
+    this.controls.trackPosition.lowRes = true
     await this.flyToNewPosition(startPosition, endPosition, 3500)
+    this.controls.trackPosition.lowRes = false
     this.idle = true
     this.ready = false
     await this.highlightLocation()

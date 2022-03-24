@@ -28,8 +28,7 @@ export const s4markers = [
     ign: 'Goose\'s TRee',
     lore: 'Is big tree. what else can I say?',
     x: 1439, y: 200, z: -447,
-  },
-  {
+  }, {
     ign: 'Parthenon',
     x: 1660, y: 94, z: -1912,
   },  {
@@ -88,3 +87,26 @@ export const s4markers = [
     x: 803, y: 70, z: -847,
   }
 ]
+
+// TODO: add missing markers from this list:
+// Shopping: 1049, 35, -1240
+// lukefielding: 1500, 8, -1818
+// Tuigreve: 1778, 100, -1673
+// kooldawgstar: 1714, 76, -1869
+// wolfman1357: 1375, 63, -1941
+// TheLordLogan: 961, 109, -1785
+// ZippyGB: 837, 63, -1895
+// CyanideKitten069: 783, 63, -1929
+// _cg: 3274, 69, -1205
+// Crede: 3714, 104, -4136
+// AMongoose: 1858, 62, 1679
+// huntelaypark: 1931, 70, 4149
+// jimibosmells: 1215, 79, -4230
+// ciaran474: 698, 67, -2474
+// the_noobtuber: -4200, 70, -900
+// Cerx: -2732, 69, -3985
+// Tommin: 1548, 64, -1501
+// Jakobrigtrup: 1295, 64, -1134
+// Cornelius_O: 743, 65, -1099
+// TheGaryCorp_Gary: 6370, 69, 11358
+// SuperReye: 462, 64, -1389

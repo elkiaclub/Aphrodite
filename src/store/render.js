@@ -52,12 +52,12 @@ export const useRenderStore = defineStore({
           await this.bluemap.destroy()
           this.bluemap = null
         }
-          this.season = season
-          this.locations = this.getNextLocationSequence()
-          this.bluemap = new BlueMapApp(this.bluemapContainer)
+        this.season = season
+        this.locations = this.getNextLocationSequence()
+        this.bluemap = new BlueMapApp(this.bluemapContainer)
 
-          this.bluemap.setDataUrl(this.season.dataUrl)
-          await this.bluemap.load()
+        this.bluemap.setDataUrl(this.season.dataUrl)
+        await this.bluemap.load()
       }
     },
 
@@ -83,7 +83,6 @@ export const useRenderStore = defineStore({
     // Selects a random location from the current season
     async nextLocation () {
       console.log('nextLocation')
-
       if (this.locations.length === 0) {
         if (!this.season || this.season.update) {
           const season = selectRandomSeason()
