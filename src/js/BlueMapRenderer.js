@@ -64,6 +64,7 @@ export class BlueMapApp {
 
     // set view
     this.resetCamera()
+    // loads initial square at the center of the map in lowres
     this.setDebug(true)
 
     // start app update loop
@@ -124,7 +125,7 @@ export class BlueMapApp {
     const map = this.mapViewer.map
     const controls = this.mapViewer.controlsManager
     if (map) {
-      controls.position.set(0,2048,0)
+      controls.position.set(0,1024,0)
       controls.distance = 0
       controls.angle = 0
       controls.rotation = 0

@@ -30,6 +30,7 @@ export class AnimationManager {
 
     }
     // this is where I wish I had typescript lol
+    this.mapViewer = mapViewer
     this.controls = mapViewer.controlsManager
     this.animation = null
     this.loop = null
@@ -97,32 +98,55 @@ export class AnimationManager {
   }
 
   // zooms out from the current position and quickly transitions over to a new location
-  async flyToNewPosition(startPosition, endPosition, duration) {
+  async flyToNewPosition(startPosition, endPosition, minDuration = 1000, maxDuration = 5500) {
+
+    function blocksApart(start, end) {
+      return Math.sqrt(
+        Math.pow(start.coordinates.x - end.coordinates.x, 2) +
+        Math.pow(start.coordinates.z - end.coordinates.z, 2)
+      )
+    }
+    const distance = blocksApart(startPosition, endPosition)
+    console.log('distance', distance)
+    // add 32ms per 64 blocks
+    const speed = distance / 64 *  32
+    const travelDuration = Math.max(Math.min(minDuration, speed), maxDuration)
+
+    let elevation = startPosition.coordinates.y <= 256 && endPosition.coordinates.y <= 256 ?
+      Math.max(startPosition.coordinates.y + 256, endPosition.coordinates.y + 256) : 512
+    if(distance <= 1024){
+      elevation = distance / 4
+    }
     // creates "zoomed out" mid-points for the animation
     const zoomOutStartPosition = {
       ...startPosition,
-      coordinates: { ...startPosition.coordinates, y: startPosition.coordinates.y <= 256 ? startPosition.coordinates.y + 512 : startPosition.coordinates.y },
+      coordinates: { ...startPosition.coordinates, y: startPosition.coordinates.y + elevation },
       angle: 0,
       distance: 0,
+      tilt: 0,
     }
     const zoomOutEndPosition = {
       ...endPosition,
       distance: 0,
-      coordinates: { ...endPosition.coordinates, y: endPosition.coordinates.y + 512 },
+      tilt: 0,
       angle: 0,
+      coordinates: { ...endPosition.coordinates, y: endPosition.coordinates.y + elevation },
     }
 
-    console.log(startPosition.coordinates)
-    console.log(endPosition.coordinates)
+    // console.log(startPosition.coordinates)
+    // console.log(endPosition.coordinates)
     // run animation
-    const animationStepDuration = duration / 4
-    this.controls.trackPosition.highRes = true
+    const animationStepDuration = 1200
+
     await this.transition(startPosition, zoomOutStartPosition, animationStepDuration, (p) => EasingFunctions.easeInQuint(p))
-    this.controls.trackPosition.highRes = false
-    await this.transition(zoomOutStartPosition, zoomOutEndPosition, animationStepDuration * 2, (p) => EasingFunctions.easeInOutQuart(p))
-    this.controls.trackPosition.highRes = true
+    this.controls.lastMapUpdatePosition.highRes = endPosition.coordinates
+    this.mapViewer.loadMapArea(endPosition.coordinates.x, endPosition.coordinates.z, 128, true)
+
+    this.controls.trackPosition.lowRes  = true
+    await this.transition(zoomOutStartPosition, zoomOutEndPosition, travelDuration , (p) => EasingFunctions.easeInOutCubic(p))
+    this.controls.trackPosition.lowRes  = false
+
     await this.transition(zoomOutEndPosition, endPosition, animationStepDuration, (p) => EasingFunctions.easeOutQuint(p))
-    this.controls.trackPosition.highRes = false
     return true
   }
 
@@ -195,9 +219,7 @@ export class AnimationManager {
       angle: Math.PI / 2 - randomAngle,
     }
     // load low poly
-    this.controls.trackPosition.lowRes = true
     await this.flyToNewPosition(startPosition, endPosition, 3500)
-    this.controls.trackPosition.lowRes = false
     this.idle = true
     this.ready = false
     await this.highlightLocation()

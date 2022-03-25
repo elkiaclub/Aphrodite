@@ -43,7 +43,7 @@ Lander
     top: 0
     left: 0
     z-index 2
-    animation fadeIn ease-in-out 1.2s
+    animation fadeIn ease-in-out .8s
   #map-container
     will-change transform
     height 100%
@@ -52,15 +52,23 @@ Lander
     z-index 1
     //background red
     box-sizing border-box
-    animation fadeIn linear 3.33s
+    animation fadeInMap linear 6.66s
     div
       //+minXs()
+      //animation fadeIn ease-in-out 8s
       animation growInVignette linear 2.22s forwards
   @keyframes fadeIn
     from
       opacity 0
     to
       opacity 1
+  @keyframes fadeInMap
+    from
+      opacity 0
+      filter: blur(22.2px)
+    to
+      opacity 1
+      filter: blur(0)
 
   @keyframes growInVignette
     from

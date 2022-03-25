@@ -1,5 +1,9 @@
 export const s5markers = [
   {
+    ign: 'Eman',
+    x: 10153, y: 64, z:-6638
+  },
+  {
     ign: 'MoneyMiner',
     x: 270, y: 68, z:2086
   },
@@ -34,10 +38,6 @@ export const s5markers = [
   {
     ign: 'DogsEatFood',
     x: 479, y: 64, z:-393
-  },
-  {
-    ign: 'Eman',
-    x: 10153, y: 64, z:-6638
   },
   {
     ign: 'Anubis',

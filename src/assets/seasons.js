@@ -28,30 +28,29 @@ export const seasons = [
   // },
   {
     name: 'Season 4',
-    date: 'Ended June 22nd 2020 ',
+    date: { end: 'June 22nd 2020' },
     worldDownloadUrl: 'https://mega.nz/file/mgdiXIBZ#UkccTCVuTU0b-pKLFfBS9TTP8pTZd_ZdpJrnsDVt5t4',
     dataUrl: '//olympus.elkia.club/s4mapData/web/data/',
     locations: s4markers,
   },
   {
     name: 'Season 5',
-    date: 'Started June 24th 2020 - Ended June 11th 2021',
+    date: { start: 'June 24th 2020', end: 'June 11th 2021' },
     worldDownloadUrl: 'https://mega.nz/file/VcMwnLIb#2FaWJ-92DKC8fnhW0t7ALBhoU-IRk2BGbrIVYIfTmGM',
     dataUrl: '//olympus.elkia.club/s5mapData/web/data/',
     locations: s5markers,
   },
   {
     name: 'Season 6',
-    date: 'Started June 11th 2021 - Ended June 11th 2021',
+    date: { start: 'June 11th 2021', end: 'December 3rd 2021' },
     // description: 'Used a custom preset for wild floating islands that presented a very challenging terrain.',
     worldDownloadUrl: 'https://mega.nz/file/II1W0ApR#Z8CfaunLHqlriJl_QuBznZRm8Dfn84U5mq7i3f95Yps',
     dataUrl: '//olympus.elkia.club/s6mapData/web/data/',
     locations: s6markers,
   },
-  // todo: make a backup & render
+  // todo: soon™
   // {
   //   name: 'Season 7',
-  //   date: 'Started December 3rd 2021 - Currently Active',
-  //   // description: '1.18 world generation!',
+  //   date: { start: 'December 3rd 2021' },
   // }
 ]

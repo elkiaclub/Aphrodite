@@ -47,9 +47,9 @@
       //top 0
       //left 0
 
-    &:hover
-      transform scale(1.05)
-      transition all 0.2s ease-in-out
+    //&:hover
+    //  transform scale(1.05)
+    //  transition all 0.2s ease-in-out
 
   svg
     transition all .2s ease-in-out

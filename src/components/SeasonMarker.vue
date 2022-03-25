@@ -16,7 +16,7 @@ function updateSeason(season) {
 // A simple dropdown menu for selecting a map to show.
 .container(v-if="!!render.season")
     header
-      h1 {{ render.season.name }}
+      i {{ render.season.name }}
     nav(class="dropdown")
       .season(v-for="season in seasons" :key="season")
         button(:disabled="!season.dataUrl || season.name === render.season.name" @click="updateSeason(season)")
@@ -57,5 +57,6 @@ function updateSeason(season) {
   &:hover
     .dropdown
       display flex
-
+header i
+  color red
 </style>
