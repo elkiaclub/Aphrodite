@@ -9,15 +9,12 @@ function degToRad(degrees) {
   return degrees * ( Math.PI / 180);
 }
 
-function keyframeCamera (position, lookingAt) {
-  // calculate the camera angle and rotation from the position and lookingAt
-  // vectors
-  let cameraAngle = Math.atan2(lookingAt.y, lookingAt.x)
-  let cameraRotation = Math.atan2(lookingAt.z, lookingAt.x)
-}
-
-import { useRenderStore } from "../store/render";
-
+// function keyframeCamera (position, lookingAt) {
+//   // calculate the camera angle and rotation from the position and lookingAt
+//   // vectors
+//   let cameraAngle = Math.atan2(lookingAt.y, lookingAt.x)
+//   let cameraRotation = Math.atan2(lookingAt.z, lookingAt.x)
+// }
 
 export class AnimationManager {
   constructor (mapViewer) {
@@ -33,32 +30,7 @@ export class AnimationManager {
     this.mapViewer = mapViewer
     this.controls = mapViewer.controlsManager
     this.animation = null
-    this.loop = null
-  }
-
-  cancel () {
-    console.log('cancelling animation')
-    if(this.loop){
-      clearInterval(this.loop)
-      this.loop = null
-    }
-    if(this.animation){
-      this.animation.cancel()
-      this.animation = null
-    }
-  }
-
-  // gets called when map is opened
-  async beginAnimation () {
-    const render = useRenderStore()
-
-    // animation runner
-    const animation = () => {
-      console.log('animation loop')
-      render.nextLocation()
-    }
-    setTimeout( animation(), this.transitionDuration)
-    this.loop = setInterval( animation, this.config.sceneDuration + this.config.transitionDuration)
+    this.ready = true
   }
 
   // animates a mapviewer transition between positions for a duration
@@ -69,7 +41,7 @@ export class AnimationManager {
     // console.log(startPosition,endPosition)
     // animate changed values for the duration
     return new Promise((resolve, reject) => {
-      const animation = animate(p => {
+      this.animation = animate(p => {
         // position
         if ( startPosition.coordinates !== endPosition.coordinates )
           this.controls.position =
@@ -92,8 +64,7 @@ export class AnimationManager {
           this.controls.angle = MathUtils.lerp(startPosition.angle, endPosition.angle, easingFunction(p))
 
       }, duration, resolve)
-      this.animation = animation
-      setTimeout(reject, duration+1000, 'A frame took too long to render')
+      setTimeout(reject, duration + 1000, 'A frame took too long to render')
     })
   }
 
@@ -106,10 +77,11 @@ export class AnimationManager {
         Math.pow(start.coordinates.z - end.coordinates.z, 2)
       )
     }
+
     const distance = blocksApart(startPosition, endPosition)
     console.log('distance', distance)
     // add 32ms per 64 blocks
-    const speed = distance / 64 *  32
+    const speed = distance / 64 *  100
     const travelDuration = Math.max(Math.min(minDuration, speed), maxDuration)
 
     let elevation = startPosition.coordinates.y <= 256 && endPosition.coordinates.y <= 256 ?
@@ -139,67 +111,74 @@ export class AnimationManager {
     const animationStepDuration = 1200
 
     await this.transition(startPosition, zoomOutStartPosition, animationStepDuration, (p) => EasingFunctions.easeInQuint(p))
-    this.controls.lastMapUpdatePosition.highRes = endPosition.coordinates
-    this.mapViewer.loadMapArea(endPosition.coordinates.x, endPosition.coordinates.z, 128, true)
+    // // this.controls.lastMapUpdatePosition.highRes = endPosition.coordinates
+    // if (this.mapViewer.map) {
+    //   console.log(endPosition.coordinates)
+    //   // this.mapViewer.loadMapArea(endPosition.coordinates.x, endPosition.coordinates.z, 128, true)
+    //   // this.mapViewer.loadMapArea(endPosition.coordinates.x, endPosition.coordinates.z, 128, false)
+    //   this.controls.trackPosition.lowRes  = true
+    // }
 
     this.controls.trackPosition.lowRes  = true
     await this.transition(zoomOutStartPosition, zoomOutEndPosition, travelDuration , (p) => EasingFunctions.easeInOutCubic(p))
     this.controls.trackPosition.lowRes  = false
+    // this.mapViewer.loadMapArea(endPosition.coordinates.x, endPosition.coordinates.z, 2048, false)
 
+    this.controls.trackPosition.highRes = true
     await this.transition(zoomOutEndPosition, endPosition, animationStepDuration, (p) => EasingFunctions.easeOutQuint(p))
-    return true
+    this.controls.trackPosition.highRes = false
+  }
+
+  generateHighlightKeyframe() {
+    const randomDistance = Math.random() * (64 - 22) + 22
+    const randomRotation = degToRad(Math.random() * 360)
+    const randomAngle = Math.random() * (Math.PI / 2 - 0.2)
+
+    const startPosition = {
+      distance: this.controls.distance,
+      rotation: this.controls.rotation,
+      angle: this.controls.angle,
+    }
+    const endPosition = {
+      distance: randomDistance,
+      rotation: randomRotation,
+      angle: Math.PI / 2 - randomAngle,
+    }
+
+    return {
+      startPosition,
+      endPosition,
+    }
   }
 
   async highlightLocation () {
     // Picks a random distance and angle to animate idle camera
-    while(this.idle) {
-      this.ready = false
-      const randomDistance = Math.random() * (64 - 22) + 22
-      const randomRotation = degToRad(Math.random() * 360)
-      const randomAngle = Math.random() * (Math.PI / 2 - 0.2)
-
-      const startPosition = {
-        distance: this.controls.distance,
-        rotation: this.controls.rotation,
-        angle: this.controls.angle,
-      }
-      const endPosition = {
-        distance: randomDistance,
-        rotation: randomRotation,
-        angle: Math.PI / 2 - randomAngle,
-      }
-      await this.transition(startPosition, endPosition, 6000)
-      if(!this.idle) {
-        this.ready = true
-      }
-    }
+    const {startPosition, endPosition} = this.generateHighlightKeyframe()
+    await this.transition(startPosition, endPosition, 6000, (p) => EasingFunctions.linear(p))
   }
 
-  async awaitReadyState(){
+  async waitForReady(){
     return new Promise(async (resolve, reject) => {
       setInterval(async () => {
         if(!!this.ready) {
           resolve()
-        } else {
-          await setTimeout(() => { return }, 100)
         }
       }, 100)
     })
   }
 
+
   async setLocation(position) {
-    console.log(position)
-    this.idle = false
-    if(this.animation) {
+    this.ready = false
+    if (this.animation) {
       this.animation.cancel()
       this.animation = null
-      await this.awaitReadyState()
-
     }
+
     // set location
     // this.controls.position = new Vector3(position.coordinates.x, position.coordinates.y, position.coordinates.z)
     const startPosition = {
-      coordinates: { x: this.controls.position.x, y: this.controls.position.y, z: this.controls.position.z },
+      coordinates: {x: this.controls.position.x, y: this.controls.position.y, z: this.controls.position.z},
       distance: this.controls.distance,
       rotation: this.controls.rotation,
       angle: this.controls.angle,
@@ -210,7 +189,7 @@ export class AnimationManager {
     const randomAngle = Math.random() * (Math.PI / 2 - 0.25)
 
     const endPosition = {
-      coordinates: { x: position.coordinates.x, y: position.coordinates.y, z: position.coordinates.z },
+      coordinates: {x: position.coordinates.x, y: position.coordinates.y, z: position.coordinates.z},
       // distance: position.distance,
       // rotation: position.rotation,
       // angle: position.angle,
@@ -218,10 +197,11 @@ export class AnimationManager {
       rotation: randomRotation,
       angle: Math.PI / 2 - randomAngle,
     }
-    // load low poly
-    await this.flyToNewPosition(startPosition, endPosition, 3500)
-    this.idle = true
-    this.ready = false
+    console.log('setLocation1')
+    await this.flyToNewPosition(startPosition, endPosition)
+    console.log('setLocation2')
     await this.highlightLocation()
+
+    this.ready = true
   }
 }

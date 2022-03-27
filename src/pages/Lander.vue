@@ -1,21 +1,28 @@
 <script setup>
 import Logo from '../components/Logo.vue'
 import LocationMarker from '../components/LocationMarker.vue'
-import SeasonMarker from "../components/SeasonMarker.vue";
+import SeasonMarker from "../components/SeasonMarker.vue"
+import {onMounted, reactive} from 'vue'
+import {useRenderStore} from "../store/render"
+import JoinTheDiscord from "../components/JoinTheDiscord.vue";
 
-import {useRenderStore} from "../store/render";
 const render = useRenderStore()
-
+// onMounted(async() => {
+//   await render.onlineOnDiscord()
+// })
 </script>
 
 <template lang="pug">
 
 .ui-container
   //| {{ render.season }}
-  header
-    SeasonMarker
+  //header
+  //  SeasonMarker
+
   main
-    Logo(@click="render.nextLocation()")
+    //(@click="render.nextLocation()")
+    Logo
+    JoinTheDiscord
   footer
     LocationMarker
 </template>

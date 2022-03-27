@@ -1,4 +1,4 @@
-#Aphrodite
+# Aphrodite
 | ![Elkia Logo](public/img/icons/icon.svg) |                                                                                  |
 |------------------------------------------|----------------------------------------------------------------------------------|
 | [elkia.club](https://elkia.club)         | live trough [Netlify](https://app.netlify.com/sites/elkia/deploys) and pure magic |

@@ -9,6 +9,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "axios": "^0.26.1",
     "bluemap": "file:./BlueMapWeb",
     "pinia": "^2.0.12",
     "vite": "^2.8.6",

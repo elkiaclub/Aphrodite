@@ -9,14 +9,15 @@ import { FileLoader, MathUtils } from 'three'
 import { Map as BlueMapMap } from 'bluemap/src/map/Map'
 import { alert, animate, EasingFunctions, generateCacheHash } from 'bluemap/src/util/Utils'
 import { AnimationManager } from "./AnimationManager";
+import { useRenderStore } from "../store/render";
 
 export class BlueMapApp {
   /**
    * @param rootElement {Element}
    */
   constructor (rootElement) {
-    this.mapViewer = new MapViewer(rootElement)
-
+    this.rootElement = rootElement
+    this.mapViewer = null
     /** @type {{useCookies: boolean, freeFlightEnabled: boolean, maps: []}} */
     this.settings = null
     /** @type BlueMapMap[] */
@@ -31,25 +32,15 @@ export class BlueMapApp {
     this.animationManager = null
 
     this.updateLoop = null
+    this.preventUpdate = false
   }
 
   /**
    * @returns {Promise<void|never>}
    */
   async load () {
-
     console.log('Loading BlueMap...')
-    console.log(this.mapViewer.renderer.info)
-
-    // clear maps
-    const oldMaps = this.maps
-    this.maps = []
-    this.mapsMap.clear()
-    // unload loaded maps
-    this.mapViewer.clearTileCache()
-    await this.mapViewer.switchMap(null);
-    oldMaps.forEach(map => map.dispose());
-
+    this.mapViewer = new MapViewer(this.rootElement)
     // load settings
     await this.getSettings()
 
@@ -64,35 +55,58 @@ export class BlueMapApp {
 
     // set view
     this.resetCamera()
-    // loads initial square at the center of the map in lowres
-    this.setDebug(true)
+
+    // this.setDebug(true)
 
     // start app update loop
     this.animationManager = new AnimationManager(this.mapViewer)
-    await this.animationManager.beginAnimation()
+    this.preventUpdate = false
+    this.update()
   }
 
   async unload () {
-    if(this.animationManager) this.animationManager.cancel()
+
     console.log('Unloading BlueMap...')
     //stop render loop
-    console.log(this.mapViewer.renderLoop)
-    await cancelAnimationFrame(this.mapViewer.nextFrame)
-    this.mapViewer.renderer.dispose()
+    this.preventUpdate = true
+    if(this.updateLoop) {
+      clearTimeout(this.updateLoop);
+      this.updateLoop = null;
+    }
 
+    if(this.animationManager) {
+      if(this.animationManager.animation) {
+        this.animationManager.animation.cancel()
+      }
+      await this.animationManager.waitForReady()
+    }
 
+    if(this.mapViewer) {
+      await cancelAnimationFrame(this.mapViewer.nextFrame)
+      this.mapViewer.renderer.dispose()
+      this.mapViewer.clearTileCache()
+      this.settings = null
 
-    console.log('penis')
-    // await this.mapViewer.switchMap(null)
-    // oldMaps.forEach(map => {
-    //   console.log('Unloading map:', map.data.id)
-    //   map.dispose()
-    // });
+      // clear maps
+      const oldMaps = this.maps
+      this.maps = []
+      this.mapsMap.clear()
 
+      // unload loaded maps
+      this.mapViewer.clearTileCache()
+      await this.mapViewer.switchMap(null);
+      oldMaps.forEach(map => map.dispose());
+    }
   }
 
-  async destroy () {
-    await this.unload()
+  async update () {
+    console.log('Updating BlueMap...')
+    const render = useRenderStore()
+    await render.nextLocation()
+    console.log('done')
+    console.log(this.preventUpdate)
+    if(!!this.preventUpdate) return;
+    this.updateLoop = setTimeout(this.update(), 200);
   }
 
   /**
