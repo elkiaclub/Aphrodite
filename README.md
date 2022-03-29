@@ -1,24 +1,11 @@
-# elkia-landing
+# Aphrodite
+| ![Elkia Logo](public/img/icons/icon.svg) |                                                                                  |
+|------------------------------------------|----------------------------------------------------------------------------------|
+| [elkia.club](https://elkia.club)         | live trough [Netlify](https://app.netlify.com/sites/elkia/deploys) and pure magic |
 
-## Project setup
-```
-npm install
-```
+____
+All the map seasons use a separate link for bluemap data directory.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Location data are hosted in this repo.
+___
+![No... Um! D-Don't look this way, ya hear me?](https://c.tenor.com/qJijUT2b180AAAAC/neko-akashic.gif)

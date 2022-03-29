@@ -9,16 +9,15 @@ import { FileLoader, MathUtils } from 'three'
 import { Map as BlueMapMap } from 'bluemap/src/map/Map'
 import { alert, animate, EasingFunctions, generateCacheHash } from 'bluemap/src/util/Utils'
 import { AnimationManager } from "./AnimationManager";
+import { useRenderStore } from "../store/render";
 
 export class BlueMapApp {
   /**
    * @param rootElement {Element}
    */
   constructor (rootElement) {
-    this.events = rootElement
-
-    this.mapViewer = new MapViewer(rootElement, this.events)
-
+    this.rootElement = rootElement
+    this.mapViewer = null
     /** @type {{useCookies: boolean, freeFlightEnabled: boolean, maps: []}} */
     this.settings = null
     /** @type BlueMapMap[] */
@@ -27,14 +26,11 @@ export class BlueMapApp {
     this.mapsMap = new Map()
 
     // map data
-    this.dataUrl = 'https://olympus.elkia.club/data/'
+    this.dataUrl = null
+    this.data = null
 
     // give animation manager access to controls
-    this.animationManager = new AnimationManager(this.mapViewer)
-
-    this.appState = {
-      maps: [],
-    }
+    this.animationManager = null
 
     this.updateLoop = null
   }
@@ -43,23 +39,15 @@ export class BlueMapApp {
    * @returns {Promise<void|never>}
    */
   async load () {
-    const oldMaps = this.maps
-    this.maps = []
-    this.appState.maps.splice(0, this.appState.maps.length)
-    this.mapsMap.clear()
-
+    console.log('Loading BlueMap...')
+    this.mapViewer = new MapViewer(this.rootElement)
     // load settings
     await this.getSettings()
-
-    // unload loaded maps
-    await this.mapViewer.switchMap(null)
-    oldMaps.forEach(map => map.dispose())
 
     // load maps
     this.maps = this.loadMaps()
     for (const map of this.maps) {
       this.mapsMap.set(map.data.id, map)
-      this.appState.maps.push(map.data)
     }
 
     // switch to map
@@ -68,8 +56,49 @@ export class BlueMapApp {
     // set view
     this.resetCamera()
 
+    // this.setDebug(true)
+
     // start app update loop
-    if (this.updateLoop) clearTimeout(this.updateLoop)
+    this.animationManager = new AnimationManager(this.mapViewer)
+  }
+
+  async unload () {
+    console.log('Unloading BlueMap...')
+    //stop render loop
+    if(this.updateLoop) {
+      clearTimeout(this.updateLoop);
+      this.updateLoop = null;
+    }
+
+    if(this.animationManager) {
+      if(this.animationManager.animation) {
+        this.animationManager.animation.cancel()
+      }
+      await this.animationManager.waitForReady()
+    }
+
+    if(this.mapViewer) {
+      await cancelAnimationFrame(this.mapViewer.nextFrame)
+      this.mapViewer.renderer.dispose()
+      this.mapViewer.clearTileCache()
+      this.settings = null
+
+      // clear maps
+      const oldMaps = this.maps
+      this.maps = []
+      this.mapsMap.clear()
+
+      // unload loaded maps
+      this.mapViewer.clearTileCache()
+      await this.mapViewer.switchMap(null);
+      oldMaps.forEach(map => map.dispose());
+    }
+  }
+
+  async update () {
+    console.log('Updating BlueMap...')
+    await useRenderStore().nextLocation()
+    this.updateLoop = setTimeout(this.update(), 200);
   }
 
   /**
@@ -79,6 +108,7 @@ export class BlueMapApp {
    */
   switchMap (mapId, resetCameraIfNewWorld = false) {
     const map = this.mapsMap.get(mapId)
+    console.log(map)
     if (!map) return Promise.reject(new Error(`There is no map with the id "${mapId}" loaded!`))
 
     const oldWorld = this.mapViewer.map ? this.mapViewer.map.data.world : null
@@ -91,22 +121,25 @@ export class BlueMapApp {
     })
   }
 
+  setDataUrl (dataUrl) {
+    this.dataUrl = dataUrl
+    // re-load maps
+    this.settings = null
+  }
+
   resetCamera () {
     const map = this.mapViewer.map
     const controls = this.mapViewer.controlsManager
     if (map) {
-      controls.position.set(0,128,0)
+      controls.position.set(0,1024,0)
       controls.distance = 0
-      controls.angle = Math.PI / 2
+      controls.angle = 0
       controls.rotation = 0
-      controls.tilt = 1
+      controls.tilt = 0
       controls.ortho = 0
     }
     // disable user controls
     controls.controls = null
-
-    // start animation
-    this.animationManager.beginAnimation()
   }
 
   /**
@@ -167,27 +200,16 @@ export class BlueMapApp {
     })
   }
 
-  // async beginAnimation () {
-  //   console.log('animating')
-  //   const controls = this.mapViewer.controlsManager
-  //   return this.transition(controls, controls.rotation, -Math.PI, 22000)
-  // }
-  //
-  // transition (controls, startRotation, targetRotation, duration) {
-  //   return animate(p => {
-  //     const ep = EasingFunctions.easeInOutQuint(p)
-  //     const rotation = MathUtils.lerp(startRotation, targetRotation, ep)
-  //     controls.rotation = rotation
-  //   }, duration)
-  // }
-
   setDebug (debug) {
-    this.appState.debug = debug
-
     if (debug) {
+      // fps
       this.mapViewer.stats.showPanel(0)
+      // memory
+      // this.mapViewer.stats.showPanel(3)
+      useRenderStore().debug = true
     } else {
       this.mapViewer.stats.showPanel(-1)
+      useRenderStore().debug = false
     }
   }
 }
