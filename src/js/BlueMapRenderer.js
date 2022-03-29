@@ -27,12 +27,12 @@ export class BlueMapApp {
 
     // map data
     this.dataUrl = null
+    this.data = null
 
     // give animation manager access to controls
     this.animationManager = null
 
     this.updateLoop = null
-    this.preventUpdate = false
   }
 
   /**
@@ -60,15 +60,11 @@ export class BlueMapApp {
 
     // start app update loop
     this.animationManager = new AnimationManager(this.mapViewer)
-    this.preventUpdate = false
-    this.update()
   }
 
   async unload () {
-
     console.log('Unloading BlueMap...')
     //stop render loop
-    this.preventUpdate = true
     if(this.updateLoop) {
       clearTimeout(this.updateLoop);
       this.updateLoop = null;
@@ -101,11 +97,7 @@ export class BlueMapApp {
 
   async update () {
     console.log('Updating BlueMap...')
-    const render = useRenderStore()
-    await render.nextLocation()
-    console.log('done')
-    console.log(this.preventUpdate)
-    if(!!this.preventUpdate) return;
+    await useRenderStore().nextLocation()
     this.updateLoop = setTimeout(this.update(), 200);
   }
 
@@ -214,9 +206,10 @@ export class BlueMapApp {
       this.mapViewer.stats.showPanel(0)
       // memory
       // this.mapViewer.stats.showPanel(3)
-
+      useRenderStore().debug = true
     } else {
       this.mapViewer.stats.showPanel(-1)
+      useRenderStore().debug = false
     }
   }
 }

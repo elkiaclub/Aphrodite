@@ -5,6 +5,7 @@ import SeasonMarker from "../components/SeasonMarker.vue"
 import {onMounted, reactive} from 'vue'
 import {useRenderStore} from "../store/render"
 import JoinTheDiscord from "../components/JoinTheDiscord.vue";
+import Debug from "../components/Debug.vue";
 
 const render = useRenderStore()
 // onMounted(async() => {
@@ -14,7 +15,7 @@ const render = useRenderStore()
 
 <template lang="pug">
 
-.ui-container
+.ui-container(v-if="!!render" )
   //| {{ render.season }}
   //header
   //  SeasonMarker
@@ -25,11 +26,14 @@ const render = useRenderStore()
     JoinTheDiscord
   footer
     LocationMarker
+
+  Debug(v-if="render.debug")
 </template>
 
 
 <style scoped lang="stylus">
 @import '../styles/media.styl'
+
 .ui-container
   background none
   height: 100%
@@ -38,6 +42,7 @@ const render = useRenderStore()
   flex-direction: column
   align-items: center
   justify-content: center
+  overflow hidden
   +maxXs()
     flex-direction column-reverse
   main
@@ -49,11 +54,8 @@ const render = useRenderStore()
     justify-content: center
     position static
     +maxXs()
-      position: absolute
-      top: .5em
-      left: 1em
-      height auto
-      width auto
+      justify-content flex-start
+      margin-top 8px
   header
     justify-self flex-start
     align-self flex-start
@@ -63,4 +65,23 @@ const render = useRenderStore()
     left: 0
     +maxXs()
       position: relative
+
+  footer
+    width: 100%
+    animation ascend 2.22s ease-in-out forwards
+    +maxXs
+      animation none
+      position: relative
+      top: auto
+      left: auto
+      width: 100%
+      margin-top: auto
+      margin-bottom: auto
+      justify-self flex-start
+      align-self flex-start
+@keyframes ascend
+  0%
+    bottom -100%
+  100%
+    bottom: 0
 </style>

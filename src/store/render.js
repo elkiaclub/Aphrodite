@@ -8,7 +8,10 @@ import { BlueMapApp } from "../js/BlueMapRenderer"
 import axios from 'axios'
 
 const validSeasons = seasons.filter(season => !!season.dataUrl && !!season.locations) // find seasons with valid dataUrl and markers
+
+// overrides the default season to always start with the current season
 // const selectedSeason = seasons.find(season => season.name === 'Season 6');
+const selectedSeason = null
 
 // initialize on a random season
 let lastIndex = -1;
@@ -27,21 +30,24 @@ const selectRandomSeason = () => {
 export const useRenderStore = defineStore({
   id: 'render',
   state: () => ({
-    season: selectRandomSeason(),
+    season: !!selectedSeason ? selectedSeason : selectRandomSeason(),
     bluemap: null,
     bluemapContainer: null,
     location: null,
     locations: [],
-    presentMembers: 0
+    presentMembers: 0,
+    progress: 0,
+    debug: false,
   }),
   actions: {
     // handles bluemap initialization
     async load() {
       this.bluemap = new BlueMapApp(this.bluemapContainer)
       await this.updateMap(this.season)
-      console.log('~~bluemap complete~~')
+      console.log('~~bluemap loaded~~')
+      // starts the animation
+      this.bluemap.update()
     },
-
     shuffleLocations() {
       if (this.state.season.locations) {
         this.state.season.locations = shuffle(this.state.season.locations);
@@ -56,7 +62,7 @@ export const useRenderStore = defineStore({
         }
         this.season = season
         this.locations = this.getNextLocationSequence()
-        this.bluemap.setDataUrl(this.season.dataUrl)
+        this.bluemap.setDataUrl(this.season.dataUrl) // switch map
         await this.bluemap.load()
       }
     },
@@ -80,6 +86,10 @@ export const useRenderStore = defineStore({
       return locationSequence
     },
 
+    // async getLocationDetails(location) {
+    //       this.bluemap.animationManager.lo
+    // },
+
     // Selects a random location from the current season
     async nextLocation() {
       console.log('nextLocation')
@@ -93,8 +103,8 @@ export const useRenderStore = defineStore({
         }
       }
       else {
-        const next = this.locations[[Math.floor(Math.random() * this.locations.length)]]
-        // update locations to remove the one we just visited
+        const next = this.locations[0] // always gets the first location (the array is already shuffled)
+        // remove it from the list and return it
         this.locations = this.locations.filter(location => location.id !== next.id)
         if (this.locations.length === 0) {
           this.season.update = true

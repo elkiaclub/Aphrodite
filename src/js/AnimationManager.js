@@ -64,12 +64,13 @@ export class AnimationManager {
           this.controls.angle = MathUtils.lerp(startPosition.angle, endPosition.angle, easingFunction(p))
 
       }, duration, resolve)
-      setTimeout(reject, duration + 1000, 'A frame took too long to render')
+      // TODO: avoid crashing the application with the following line of code if you run a potato pc
+      // setTimeout(reject, duration + 1000, 'A frame took too long to render')
     })
   }
 
   // zooms out from the current position and quickly transitions over to a new location
-  async flyToNewPosition(startPosition, endPosition, minDuration = 1000, maxDuration = 5500) {
+  async flyToNewPosition(startPosition, endPosition) {
 
     function blocksApart(start, end) {
       return Math.sqrt(
@@ -80,10 +81,8 @@ export class AnimationManager {
 
     const distance = blocksApart(startPosition, endPosition)
     console.log('distance', distance)
-    // add 32ms per 64 blocks
-    const speed = distance / 64 *  100
-    const travelDuration = Math.max(Math.min(minDuration, speed), maxDuration)
-
+    const speed = 1
+    const travelDuration = Math.max( 1000, distance / speed)
     let elevation = startPosition.coordinates.y <= 256 && endPosition.coordinates.y <= 256 ?
       Math.max(startPosition.coordinates.y + 256, endPosition.coordinates.y + 256) : 512
     if(distance <= 1024){
@@ -109,24 +108,24 @@ export class AnimationManager {
     // console.log(endPosition.coordinates)
     // run animation
     const animationStepDuration = 1200
+    this.travelDuration = Math.floor(animationStepDuration*2 + travelDuration)
 
     await this.transition(startPosition, zoomOutStartPosition, animationStepDuration, (p) => EasingFunctions.easeInQuint(p))
     // // this.controls.lastMapUpdatePosition.highRes = endPosition.coordinates
     // if (this.mapViewer.map) {
     //   console.log(endPosition.coordinates)
-    //   // this.mapViewer.loadMapArea(endPosition.coordinates.x, endPosition.coordinates.z, 128, true)
+    // this.mapViewer.loadMapArea(endPosition.coordinates.x, endPosition.coordinates.z, 128, true)
     //   // this.mapViewer.loadMapArea(endPosition.coordinates.x, endPosition.coordinates.z, 128, false)
     //   this.controls.trackPosition.lowRes  = true
     // }
 
-    this.controls.trackPosition.lowRes  = true
-    await this.transition(zoomOutStartPosition, zoomOutEndPosition, travelDuration , (p) => EasingFunctions.easeInOutCubic(p))
-    this.controls.trackPosition.lowRes  = false
-    // this.mapViewer.loadMapArea(endPosition.coordinates.x, endPosition.coordinates.z, 2048, false)
 
-    this.controls.trackPosition.highRes = true
+    await this.transition(zoomOutStartPosition, zoomOutEndPosition, travelDuration , (p) => EasingFunctions.easeInOutCubic(p))
+
+
+    // this.controls.trackPosition.highRes = true
     await this.transition(zoomOutEndPosition, endPosition, animationStepDuration, (p) => EasingFunctions.easeOutQuint(p))
-    this.controls.trackPosition.highRes = false
+    // this.controls.trackPosition.highRes = false
   }
 
   generateHighlightKeyframe() {
@@ -153,8 +152,11 @@ export class AnimationManager {
 
   async highlightLocation () {
     // Picks a random distance and angle to animate idle camera
-    const {startPosition, endPosition} = this.generateHighlightKeyframe()
-    await this.transition(startPosition, endPosition, 6000, (p) => EasingFunctions.linear(p))
+    // loop 2 times
+    for (let i = 0; i < 2; i++) {
+      const {startPosition, endPosition} = this.generateHighlightKeyframe()
+      await this.transition(startPosition, endPosition, 6000, (p) => EasingFunctions.easeInOutCubic(p))
+    }
   }
 
   async waitForReady(){
@@ -185,7 +187,7 @@ export class AnimationManager {
     }
 
     const randomDistance = Math.random() * (64 - 22) + 22
-    const randomRotation = Math.random() * Math.PI * 2 - Math.PI
+    const randomRotation = degToRad(Math.random() * 360)
     const randomAngle = Math.random() * (Math.PI / 2 - 0.25)
 
     const endPosition = {
