@@ -4,6 +4,14 @@ export const s6markers = [
     x: -45, y: 71, z: 130,
   },
   {
+    ign: 'wolfman1357',
+    x: -1, y: 81, z: 131,
+  },
+  {
+    ign: 'aLemonCat',
+    x: -844, y: 80, z: 24,
+  },
+  {
     ign: 'Czechland',
     lore: 'the Czech starting village.',
     x: 1853, y: 100, z: -217
@@ -16,7 +24,7 @@ export const s6markers = [
     x: 2170, y: 94, z: -67
   },
   {
-    ign: 'Dawnam',
+    ign: 'Dawnan',
     x: -756, y: 83, z: 817
   },
   {
