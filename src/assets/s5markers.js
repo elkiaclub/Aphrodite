@@ -16,6 +16,11 @@ export const s5markers = [
     x: -5948, y: 81, z:-1581
   },
   {
+    ign: 'aLemonCat',
+    lore: 'just a big tree',
+    x: -1047, y: 150, z:773
+  },
+  {
     ign: 'Reye',
     x: -6028, y: 55, z:-1995
   },
